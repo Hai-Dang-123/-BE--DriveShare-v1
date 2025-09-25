@@ -3,20 +3,36 @@
   "WorkspaceRootPath": "D:\\BE api capstone\\-BE--DriveShare-v1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api capstone\\-be--driveshare-v1\\bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\vehiclecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\vehiclecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\postvehiclecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\postvehiclecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{73704294-B100-41DC-9783-B1638BBEB88E}|DAL\\DAL.csproj|d:\\be api capstone\\-be--driveshare-v1\\dal\\repositories\\implement\\vehiclerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73704294-B100-41DC-9783-B1638BBEB88E}|DAL\\DAL.csproj|solutionrelative:dal\\repositories\\implement\\vehiclerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api capstone\\-be--driveshare-v1\\bll\\services\\interface\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\interface\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api capstone\\-be--driveshare-v1\\bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DD701FD2-E4C5-45F9-99D8-57E2F9ADE807}|Common\\Common.csproj|d:\\be api capstone\\-be--driveshare-v1\\common\\dtos\\createbookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,10 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api capstone\\-be--driveshare-v1\\bll\\services\\implement\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{73704294-B100-41DC-9783-B1638BBEB88E}|DAL\\DAL.csproj|d:\\be api capstone\\-be--driveshare-v1\\dal\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -58,11 +70,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "VehicleController.cs",
+              "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\VehicleController.cs",
+              "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\VehicleController.cs",
+              "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\VehicleController.cs",
+              "RelativeToolTip": "DriverShareProject\\Controllers\\VehicleController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T12:20:09.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PostVehicleController.cs",
+              "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\PostVehicleController.cs",
+              "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\PostVehicleController.cs",
+              "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\PostVehicleController.cs",
+              "RelativeToolTip": "DriverShareProject\\Controllers\\PostVehicleController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T12:20:08.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VehicleRepository.cs",
+              "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DAL\\Repositories\\Implement\\VehicleRepository.cs",
+              "RelativeDocumentMoniker": "DAL\\Repositories\\Implement\\VehicleRepository.cs",
+              "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\DAL\\Repositories\\Implement\\VehicleRepository.cs",
+              "RelativeToolTip": "DAL\\Repositories\\Implement\\VehicleRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T12:19:59.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\BookingController.cs",
@@ -75,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "CreateBookingDTO.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\Common\\DTOs\\CreateBookingDTO.cs",
               "RelativeDocumentMoniker": "Common\\DTOs\\CreateBookingDTO.cs",
@@ -83,12 +134,11 @@
               "RelativeToolTip": "Common\\DTOs\\CreateBookingDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T12:12:07.13Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T12:12:07.13Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "UserDTO.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\Common\\DTOs\\UserDTO.cs",
               "RelativeDocumentMoniker": "Common\\DTOs\\UserDTO.cs",
@@ -96,12 +146,11 @@
               "RelativeToolTip": "Common\\DTOs\\UserDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T12:11:04.681Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T12:11:04.681Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "UserService.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\UserService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\Implement\\UserService.cs",
@@ -109,12 +158,11 @@
               "RelativeToolTip": "BLL\\Services\\Implement\\UserService.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T11:12:24.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T11:12:24.278Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\UserController.cs",
@@ -122,11 +170,12 @@
               "RelativeToolTip": "DriverShareProject\\Controllers\\UserController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T11:10:16.684Z"
+              "WhenOpened": "2025-09-25T11:10:16.684Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\AuthController.cs",
@@ -134,12 +183,11 @@
               "RelativeToolTip": "DriverShareProject\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T11:10:14.989Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T11:10:14.989Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "ResponseDTO.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\Common\\DTOs\\ResponseDTO.cs",
               "RelativeDocumentMoniker": "Common\\DTOs\\ResponseDTO.cs",
@@ -147,38 +195,37 @@
               "RelativeToolTip": "Common\\DTOs\\ResponseDTO.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T10:41:53.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-25T10:41:53.967Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "IBookingService.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\BLL\\Services\\Interface\\IBookingService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\Interface\\IBookingService.cs",
               "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\BLL\\Services\\Interface\\IBookingService.cs",
               "RelativeToolTip": "BLL\\Services\\Interface\\IBookingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-25T10:39:07.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "BookingService.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\BookingService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\Implement\\BookingService.cs",
               "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\BookingService.cs",
               "RelativeToolTip": "BLL\\Services\\Implement\\BookingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAIwDQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-25T10:38:59.463Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "Booking.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DAL\\Entities\\Booking.cs",
               "RelativeDocumentMoniker": "DAL\\Entities\\Booking.cs",
@@ -190,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "20250925103754_aa.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DAL\\Migrations\\20250925103754_aa.cs",
               "RelativeDocumentMoniker": "DAL\\Migrations\\20250925103754_aa.cs",
@@ -202,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
               "RelativeDocumentMoniker": "DriverShareProject\\appsettings.json",
