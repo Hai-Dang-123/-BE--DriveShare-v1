@@ -20,7 +20,11 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+
             services.AddScoped<IVehicleService, VehicleService>();
+
+
+            services.AddScoped<IPostVehicleService, PostVehicleService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();
