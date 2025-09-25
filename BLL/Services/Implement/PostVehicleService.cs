@@ -3,6 +3,7 @@ using BLL.Utilities;
 using Common.DTOs;
 using Common.Enums;
 using Common.Messages;
+using DAL.Entities;
 using DAL.Repositories.Interface;
 using DAL.UnitOfWork;
 using System;
@@ -26,7 +27,11 @@ namespace BLL.Services.Implement
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            var newPostVehicle = new DAL.Entities.PostVehicle
+            if ( userId == Guid.Empty)
+            {
+                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+            }
+            var newPostVehicle = new PostVehicle
             {
                 PostVehicleId = Guid.NewGuid(),
                 VehicleId = dto.VehicleId,
