@@ -12,7 +12,6 @@ namespace Common.Enums
         APPROVED,
         REJECTED,
         RENTED,
-        COMPLETED,
         DELETED
     }
 }

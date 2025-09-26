@@ -1,6 +1,8 @@
-﻿using DAL.Context;
+﻿using Common.Enums;
+using DAL.Context;
 using DAL.Entities;
 using DAL.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,13 @@ namespace DAL.Repositories.Implement
         public PostVehicleRepository(DriverShareAppContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<PostVehicle>> GetAllByUserIdAsync(Guid userId)
+        {
+            return await _context.PostVehicles
+                .Where(v => v.OwnerId == userId && v.Status != PostStatus.DELETED)
+                .ToListAsync();
         }
     }
 }

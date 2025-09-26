@@ -16,10 +16,34 @@ namespace DriverShareProject.Controllers
             _postVehicleService = postVehicleService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePostVehicale(CreateRequestPostVehicleDTO dto)
+        [HttpPost("Create PostVehicle")]
+        public async Task<IActionResult> CreatePostVehicle(CreateRequestPostVehicleDTO dto)
         {
             var response = await _postVehicleService.CreatePostVehicleAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpPut("Update PostVehicle")]
+        public async Task<IActionResult> UpdatePostVehicle(UpdateRequestPostVehicleDTO dto)
+        {
+            var response = await _postVehicleService.UpdatePostVehicleAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get All PostVehicles of Owner")]
+        public async Task<IActionResult> GetAllPostVehiclesOfOwner()
+        {
+            var response = await _postVehicleService.GetAllPostVehiclesOwner();
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get PostVehicle by Id")]
+        public async Task<IActionResult> GetPostVehicleById(Guid postId)
+        {
+            var response = await _postVehicleService.GetPostVehicleByIdAsync(postId);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpDelete("Delete PostVehicle")]
+        public async Task<IActionResult> DeletePostVehicle(Guid postId)
+        {
+            var response = await _postVehicleService.DeletePostVehicleAsync(postId);
             return StatusCode(response.StatusCode, response);
         }
     }
