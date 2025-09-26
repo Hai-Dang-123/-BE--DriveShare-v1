@@ -10,5 +10,9 @@ namespace BLL.Services.Interface
     public interface IBookingService
     {
         Task<ResponseDTO> CreateBookingAsync(CreateBookingDTO dto);
+        Task<ResponseDTO> UpdateBookingAsync(Guid bookingId, CreateBookingDTO dto);
+        Task<ResponseDTO> DeleteBookingAsync(Guid bookingId);
+        Task<ResponseDTO> GetAllBookingsAsync();
+        Task<ResponseDTO> GetBookingByIdAsync(Guid bookingId);
     }
 }

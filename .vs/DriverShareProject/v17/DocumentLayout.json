@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< Updated upstream
   "WorkspaceRootPath": "D:\\BE api capstone\\-BE--DriveShare-v1\\",
   "Documents": [
     {
@@ -56,6 +57,60 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api capstone\\-be--driveshare-v1\\drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+=======
+  "WorkspaceRootPath": "D:\\Be APi\\-BE--DriveShare-v1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api\\-be--driveshare-v1\\drivershareproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api\\-be--driveshare-v1\\drivershareproject\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\interface\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\interface\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\vehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\sepayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\sepayservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\postvehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\postvehicleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\jwtprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\jwtprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|d:\\be api\\-be--driveshare-v1\\bll\\services\\implement\\demouploadfilefirebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3925E5A8-F1FA-4443-A76F-ED2A4A215D74}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\demouploadfilefirebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Be APi\\-BE--DriveShare-v1\\DAL\\Migrations\\20250926021945_aaa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DAL\\Migrations\\20250926021945_aaa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api\\-be--driveshare-v1\\drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+>>>>>>> Stashed changes
       "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
@@ -70,11 +125,142 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\Program.cs",
+              "RelativeDocumentMoniker": "DriverShareProject\\Program.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\Program.cs",
+              "RelativeToolTip": "DriverShareProject\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:29:49.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "DriverShareProject\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:25:39.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IBookingService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Interface\\IBookingService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Interface\\IBookingService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Interface\\IBookingService.cs",
+              "RelativeToolTip": "BLL\\Services\\Interface\\IBookingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:24:37.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VehicleService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\VehicleService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\VehicleService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\VehicleService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\VehicleService.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:40.889Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SepayService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\SepayService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\SepayService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\SepayService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\SepayService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:37.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "JwtProvider.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\JwtProvider.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\JwtProvider.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\JwtProvider.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\JwtProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:35.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\EmailService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\EmailService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\EmailService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\EmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:34.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DemoUploadFileFirebase.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\DemoUploadFileFirebase.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\DemoUploadFileFirebase.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\DemoUploadFileFirebase.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\DemoUploadFileFirebase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:32.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PostVehicleService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\PostVehicleService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\PostVehicleService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\PostVehicleService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\PostVehicleService.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:25.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\UserService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\UserService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\UserService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\UserService.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:23:13.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< Updated upstream
               "Title": "VehicleController.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\VehicleController.cs",
               "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\VehicleController.cs",
@@ -83,6 +269,42 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-25T12:20:09.236Z",
+=======
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\BookingService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\BookingService.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\BLL\\Services\\Implement\\BookingService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\BookingService.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwF0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:20:21.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "20250926021945_aaa.cs",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\DAL\\Migrations\\20250926021945_aaa.cs",
+              "RelativeDocumentMoniker": "DAL\\Migrations\\20250926021945_aaa.cs",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\DAL\\Migrations\\20250926021945_aaa.cs",
+              "RelativeToolTip": "DAL\\Migrations\\20250926021945_aaa.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T02:19:46.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
+              "RelativeDocumentMoniker": "DriverShareProject\\appsettings.json",
+              "ToolTip": "D:\\Be APi\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
+              "RelativeToolTip": "DriverShareProject\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-25T18:39:38.47Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
