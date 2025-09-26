@@ -35,7 +35,7 @@ namespace BLL.Services.Implement
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            if ( userId == Guid.Empty)
+            var newPostVehicle = new DAL.Entities.PostVehicle
             {
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
             }

@@ -9,5 +9,7 @@ namespace DAL.Repositories.Interface
 {
     public interface IVehicleRepository : IGenericRepository<Vehicle>
     {
+        Task<Vehicle?> FindByLicenseAsync(string plateNumber);
+        Task<IEnumerable<Vehicle>> GetAllByUserIdAsync(Guid userId);
     }
 }

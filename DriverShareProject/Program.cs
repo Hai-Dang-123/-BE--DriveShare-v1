@@ -1,9 +1,11 @@
-using DAL.Context;
+﻿using DAL.Context;
 using DriverShareProject.Extentions.PolicyExtensions;
 using DriverShareProject.Extentions.ServiceRegistration;
 using DriverShareProject.Extentions.Startup;
 using Microsoft.EntityFrameworkCore;
 using DriverShareProject.Extentions.BuilderExtensions;
+using BLL.Services.Implement;
+using BLL.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
+
+// Program.cs hoặc Startup.cs (trong ConfigureServices)
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.RegisterAllServices(builder.Configuration);
 
