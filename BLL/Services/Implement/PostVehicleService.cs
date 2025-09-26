@@ -25,7 +25,7 @@ namespace BLL.Services.Implement
         }
 
         // update bài post ( status pending ) -DONE
-        // delete bài post ( status deleted ) owner vs staff -DONE
+        // delete bài post ( status deleted ) owner vs staff
         // get all bài post của owner -DONE
         // get all bài post của driver
         // get all bài post with status Pendding( staff )
@@ -35,7 +35,7 @@ namespace BLL.Services.Implement
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            var newPostVehicle = new DAL.Entities.PostVehicle
+            if (userId == Guid.Empty)
             {
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
             }
@@ -54,20 +54,21 @@ namespace BLL.Services.Implement
                 VehicleId = dto.VehicleId,
                 OwnerId = userId,
                 DailyPrice = dto.DailyPrice,
-                Status = PostStatus.PENDING, 
+                Status = PostStatus.PENDING,
                 StartDate = dto.StartDate,
-                EndDate = dto.EndDate,               
+                EndDate = dto.EndDate,
             };
             try
             {
                 await _unitOfWork.PostVehicleRepo.AddAsync(newPostVehicle);
                 await _unitOfWork.SaveChangeAsync();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
-            
+
             }
-            return new ResponseDTO(PostMessages.POST_CREATED_SUCCESS,201,true);
+            return new ResponseDTO(PostMessages.POST_CREATED_SUCCESS, 201, true);
         }
 
         public async Task<ResponseDTO> DeletePostVehicleAsync(Guid postId)
@@ -77,20 +78,20 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
             }
-           
-                var existingPost = await _unitOfWork.PostVehicleRepo.GetByIdAsync(postId);
-                if (existingPost == null)
-                {
-                    return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
-                }
+
+            var existingPost = await _unitOfWork.PostVehicleRepo.GetByIdAsync(postId);
+            if (existingPost == null)
+            {
+                return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
+            }
             if (existingPost.OwnerId != userId && existingPost.Owner.Role.RoleName != "Staff" && existingPost.Owner.Role.RoleName != "Admin")
             {
                 return new ResponseDTO(PostMessages.FORBIDDEN, 403, false);
             }
             if (existingPost.Status == PostStatus.RENTED)
-                {
-                    return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
-                }
+            {
+                return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
+            }
             try
             {
                 existingPost.Status = PostStatus.DELETED;
@@ -184,7 +185,7 @@ namespace BLL.Services.Implement
             }
             if (existingPost.Status == PostStatus.RENTED || existingPost.Status == PostStatus.DELETED)
             {
-                return new ResponseDTO("Cannot update because post is already RENTED or DELETED.", 400, false); 
+                return new ResponseDTO("Cannot update because post is already RENTED or DELETED.", 400, false);
             }
             var postVehicle = _unitOfWork.PostVehicleRepo.GetByIdAsync(dto.PostVehicleId);
             if (dto.StartDate.Date < DateTime.UtcNow.Date)
