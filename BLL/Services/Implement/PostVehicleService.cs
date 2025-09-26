@@ -3,6 +3,7 @@ using BLL.Utilities;
 using Common.DTOs;
 using Common.Enums;
 using Common.Messages;
+using DAL.Entities;
 using DAL.Repositories.Interface;
 using DAL.UnitOfWork;
 using System;
@@ -24,7 +25,7 @@ namespace BLL.Services.Implement
         }
 
         // update bài post ( status pending ) -DONE
-        // delete bài post ( status deleted ) owner vs staff
+        // delete bài post ( status deleted ) owner vs staff -DONE
         // get all bài post của owner -DONE
         // get all bài post của driver
         // get all bài post with status Pendding( staff )
