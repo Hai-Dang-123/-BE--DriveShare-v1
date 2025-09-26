@@ -594,3 +594,5 @@ DriverShareProject/appsettings.Development.json
 .github/
 /DriverShareProject/firebase
 DriverShareProject/appsettings.json
+
+/DAL/Migration
