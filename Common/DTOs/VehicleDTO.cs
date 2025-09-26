@@ -24,6 +24,36 @@ namespace Common.DTOs
         [Required(ErrorMessage = "VehicleTypeId is required")]
         public Guid VehicleTypeId { get; set; }
     }
+    public class UpdateVehicleDTO
+    {
+        [Required]
+        public Guid VehicleId { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        public string PlateNumber { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(50)]
+        public string Model { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(50)]
+        public string Brand { get; set; } = string.Empty;
+
+        [Required]
+        public Guid VehicleTypeId { get; set; }
+    }
+
+    public class VehicleReadDTO
+    {
+        public Guid VehicleId { get; set; }
+        public string PlateNumber { get; set; } = string.Empty;
+        public string Model { get; set; } = string.Empty;
+        public string Brand { get; set; } = string.Empty;
+        public Guid VehicleTypeId { get; set; }
+        public Guid UserId { get; set; }
+        public string Status { get; set; } = string.Empty;
+    }
 
 }

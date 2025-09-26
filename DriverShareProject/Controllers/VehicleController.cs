@@ -29,5 +29,33 @@ namespace DriverShareProject.Controllers
             var response = await _vehicleService.CreateVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllVehicles()
+        {
+            var response = await _vehicleService.GetAllVehiclesAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicleById(Guid id)
+        {
+            var response = await _vehicleService.GetVehicleByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateVehicle([FromBody] UpdateVehicleDTO dto)
+        {
+            var response = await _vehicleService.UpdateVehicleAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(Guid id)
+        {
+            var response = await _vehicleService.DeleteVehicleAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
     }
 }
+
