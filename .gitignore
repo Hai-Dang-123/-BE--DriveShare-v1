@@ -590,3 +590,5 @@ obj/
 DriverShareProject/DriverShareProject/appsetting.json
 DriverShareProject/DriverShareProject/firebase/
 DriverShareProject/appsettings.Development.json
+
+.github/
