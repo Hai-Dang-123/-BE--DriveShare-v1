@@ -21,6 +21,8 @@ namespace BLL.Services.Implement
             _userUtility = userUtility;
         }
 
+        // upload images và verification lên firebase
+
         public async Task<ResponseDTO> CreateVehicleAsync(CreateVehicleDTO dto)
         {
             // ✅ 1. Check UserId từ token
@@ -30,28 +32,7 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 400, false);
             }
 
-            // ✅ 2. Validation input cơ bản
-            if (string.IsNullOrWhiteSpace(dto.PlateNumber))
-                return new ResponseDTO("Plate number is required", 400, false);
-
-            if (dto.PlateNumber.Length > 20)
-                return new ResponseDTO("Plate number cannot exceed 20 characters", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.Model))
-                return new ResponseDTO("Model is required", 400, false);
-
-            if (dto.Model.Length > 50)
-                return new ResponseDTO("Model cannot exceed 50 characters", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.Brand))
-                return new ResponseDTO("Brand is required", 400, false);
-
-            if (dto.Brand.Length > 50)
-                return new ResponseDTO("Brand cannot exceed 50 characters", 400, false);
-
-            if (dto.VehicleTypeId == Guid.Empty)
-                return new ResponseDTO("VehicleTypeId is required", 400, false);
-
+            
             // ✅ 3. Check biển số xe trùng
             var existed = await _unitOfWork.VehicleRepo.FindByLicenseAsync(dto.PlateNumber);
             if (existed != null)
@@ -150,15 +131,15 @@ namespace BLL.Services.Implement
             if (dto.VehicleId == Guid.Empty)
                 return new ResponseDTO("VehicleId is required", 400, false);
 
-            // input validation
-            if (string.IsNullOrWhiteSpace(dto.PlateNumber) || dto.PlateNumber.Length > 20)
-                return new ResponseDTO("Invalid plate number", 400, false);
-            if (string.IsNullOrWhiteSpace(dto.Model) || dto.Model.Length > 50)
-                return new ResponseDTO("Invalid model", 400, false);
-            if (string.IsNullOrWhiteSpace(dto.Brand) || dto.Brand.Length > 50)
-                return new ResponseDTO("Invalid brand", 400, false);
-            if (dto.VehicleTypeId == Guid.Empty)
-                return new ResponseDTO("Vehicle type is required", 400, false);
+            //// input validation
+            //if (string.IsNullOrWhiteSpace(dto.PlateNumber) || dto.PlateNumber.Length > 20)
+            //    return new ResponseDTO("Invalid plate number", 400, false);
+            //if (string.IsNullOrWhiteSpace(dto.Model) || dto.Model.Length > 50)
+            //    return new ResponseDTO("Invalid model", 400, false);
+            //if (string.IsNullOrWhiteSpace(dto.Brand) || dto.Brand.Length > 50)
+            //    return new ResponseDTO("Invalid brand", 400, false);
+            //if (dto.VehicleTypeId == Guid.Empty)
+            //    return new ResponseDTO("Vehicle type is required", 400, false);
 
             var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
             if (vehicle == null)

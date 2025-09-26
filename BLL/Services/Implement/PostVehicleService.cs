@@ -23,7 +23,14 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
             _userUtility = userUtility;
         }
-       
+
+        // update bài post ( status pending )
+        // delete bài post ( status deleted )
+        // get all bài post của owner
+        // get all bài post của driver
+        // get bài post theo id
+        // change status bài post ( request status )
+
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();

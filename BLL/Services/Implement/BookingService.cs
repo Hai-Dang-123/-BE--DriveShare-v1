@@ -16,6 +16,10 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
+        // create booking ( status pending )
+
+        // change status booking ( confirmed, completed, cancelled, deleted )
+
 
         public async Task<ResponseDTO> CreateBookingAsync(CreateBookingDTO dto)
         {
