@@ -1,6 +1,6 @@
 {
   "Version": 1,
-<<<<<<< Updated upstream
+
   "WorkspaceRootPath": "D:\\BE api capstone\\-BE--DriveShare-v1\\",
   "Documents": [
     {
@@ -110,12 +110,13 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\be api\\-be--driveshare-v1\\drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
->>>>>>> Stashed changes
-      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
+
+  "WorkspaceRootPath": "D:\\Big_Project\\-BE--DriveShare-v1\\",
+  "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{73704294-B100-41DC-9783-B1638BBEB88E}|DAL\\DAL.csproj|d:\\be api capstone\\-be--driveshare-v1\\dal\\migrations\\20250925103754_aa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73704294-B100-41DC-9783-B1638BBEB88E}|DAL\\DAL.csproj|solutionrelative:dal\\migrations\\20250925103754_aa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|d:\\big_project\\-be--driveshare-v1\\drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+
+      "RelativeMoniker": "D:0:0:{587DB7CA-F691-4825-AC52-7915ABC6650D}|DriverShareProject\\DriverShareProject.csproj|solutionrelative:drivershareproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -260,7 +261,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-<<<<<<< Updated upstream
+
               "Title": "VehicleController.cs",
               "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\Controllers\\VehicleController.cs",
               "RelativeDocumentMoniker": "DriverShareProject\\Controllers\\VehicleController.cs",
@@ -304,7 +305,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-09-25T18:39:38.47Z",
->>>>>>> Stashed changes
+
               "EditorCaption": ""
             },
             {
@@ -472,14 +473,16 @@
             {
               "$type": "Document",
               "DocumentIndex": 13,
+
               "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
+              "DocumentMoniker": "D:\\Big_Project\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
               "RelativeDocumentMoniker": "DriverShareProject\\appsettings.json",
-              "ToolTip": "D:\\BE api capstone\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
+              "ToolTip": "D:\\Big_Project\\-BE--DriveShare-v1\\DriverShareProject\\appsettings.json",
               "RelativeToolTip": "DriverShareProject\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-25T10:36:39.761Z"
+              "WhenOpened": "2025-09-25T18:39:38.47Z",
+              "EditorCaption": ""
             }
           ]
         }
