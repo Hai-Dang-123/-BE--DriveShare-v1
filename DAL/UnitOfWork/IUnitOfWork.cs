@@ -1,8 +1,5 @@
 ﻿using DAL.Repositories.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
@@ -28,7 +25,14 @@ namespace DAL.UnitOfWork
         IVehicleRepository VehicleRepo { get; }
         IVehicleTypeRepository VehicleTypeRepo { get; }
         IWalletRepository WalletRepo { get; }
+
+        // Save changes
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
+
+        // Transaction methods
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }
