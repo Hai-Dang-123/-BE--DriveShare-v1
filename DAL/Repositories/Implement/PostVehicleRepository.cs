@@ -23,7 +23,21 @@ namespace DAL.Repositories.Implement
         {
             return await _context.PostVehicles
                 .Where(v => v.OwnerId == userId && v.Status != PostStatus.DELETED)
+                .Include(v => v.Vehicle)
+                    .ThenInclude(v => v.VehicleType)
+                .Include(v => v.Owner)
                 .ToListAsync();
         }
+
+        public async Task<PostVehicle?> GetPostByIdAsync(Guid postId)
+        {
+            return await _context.PostVehicles
+                .Where(v => v.PostVehicleId == postId && v.Status != PostStatus.DELETED)
+                .Include(v => v.Vehicle)
+                    .ThenInclude(v => v.VehicleType)
+                .Include(v => v.Owner)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }

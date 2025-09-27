@@ -40,7 +40,7 @@ namespace Common.DTOs
         public DateTime EndDate { get; set; }
 
     }
-    public class GetPostVeVehicleDTO
+    public class GetPostVehicleDTO
     {  
         public string OwnerPhone{ get; set; }
         public string OwnerName{ get; set; }

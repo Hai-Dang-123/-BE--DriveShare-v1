@@ -10,5 +10,7 @@ namespace DAL.Repositories.Interface
     public interface IPostVehicleRepository : IGenericRepository<PostVehicle>
     {
         Task<IEnumerable<PostVehicle>> GetAllByUserIdAsync(Guid userId);
+      
+        Task<PostVehicle> GetPostByIdAsync(Guid PostId);
     }
 }

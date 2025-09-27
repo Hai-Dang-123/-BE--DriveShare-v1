@@ -116,24 +116,29 @@ namespace BLL.Services.Implement
             {
                 var posts = await _unitOfWork.PostVehicleRepo.GetAllByUserIdAsync(userId);
 
-                posts.Select(p => new GetPostVeVehicleDTO
+                var result = posts.Select(p => new GetPostVehicleDTO
                 {
+                    
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
+                    OwnerName = p.Owner.UserName,
+                    OwnerPhone = p.Owner.PhoneNumber,
                     StartDate = p.StartDate,
                     Status = p.Status,
                     VehicleBrand = p.Vehicle.Brand,
                     VehicleModel = p.Vehicle.Model,
                     VehicleType = p.Vehicle.VehicleType.VehicleTypeName,
                     PlateNumber = p.Vehicle.PlateNumber,
-                });
-                return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, posts);
+                }).ToList();
+
+                return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
             }
             catch (Exception ex)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
+
         public async Task<ResponseDTO> GetPostVehicleByIdAsync(Guid postId)
         {
             if (postId == Guid.Empty)
@@ -142,12 +147,12 @@ namespace BLL.Services.Implement
             }
             try
             {
-                var postVehicle = await _unitOfWork.PostVehicleRepo.GetByIdAsync(postId);
+                var postVehicle = await _unitOfWork.PostVehicleRepo.GetPostByIdAsync(postId);
                 if (postVehicle == null)
                 {
                     return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
                 }
-                var result = new GetPostVeVehicleDTO
+                var result = new GetPostVehicleDTO
                 {
                     OwnerName = postVehicle.Owner.UserName,
                     OwnerPhone = postVehicle.Owner.PhoneNumber,
