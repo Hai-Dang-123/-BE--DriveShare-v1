@@ -54,4 +54,12 @@ namespace Common.DTOs
         public DateTime EndDate { get; set; }
     }
 
+    public class ChangeStatusPostVehicleDTO
+    {
+        [Required(ErrorMessage = "PostVehicleId is required")]
+        public Guid PostVehicleId { get; set; }
+        [Required(ErrorMessage = "Status is required")]
+        public PostStatus Status { get; set; }
+    }
+
 }

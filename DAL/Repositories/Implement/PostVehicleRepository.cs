@@ -19,6 +19,26 @@ namespace DAL.Repositories.Implement
             _context = context;
         }
 
+        public async Task<IEnumerable<PostVehicle>> GetAllByPostAsync()
+        {
+            return await _context.PostVehicles
+               .Where(v => v.Status != PostStatus.DELETED)
+               .Include(v => v.Vehicle)
+                   .ThenInclude(v => v.VehicleType)
+               .Include(v => v.Owner)
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<PostVehicle>> GetAllByStatusAsync(PostStatus status)
+        {
+            return await _context.Set<PostVehicle>()
+                .Include(p => p.Owner)
+                .Include(p => p.Vehicle)
+                    .ThenInclude(v => v.VehicleType)
+                .Where(p => p.Status == status)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<PostVehicle>> GetAllByUserIdAsync(Guid userId)
         {
             return await _context.PostVehicles

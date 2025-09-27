@@ -17,6 +17,6 @@ namespace Common.Messages
         public const string FORBIDDEN = "You do not have permission to perform this action.";
         public const string GET_ALL_POST_SUCCESS = "Get all posts successfully.";
         public const string GET_POST_SUCCESS = "Get post successfully.";
-        public const string POST_RENTED = "Cannot delete because post is already RENTED";
+        public const string POST_RENTED = "Cannot delete because post is already RENTED or DELETED";
     }
 }

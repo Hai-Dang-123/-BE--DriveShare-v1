@@ -1,6 +1,7 @@
 ﻿using BLL.Services.Implement;
 using BLL.Services.Interface;
 using Common.DTOs;
+using Common.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +45,24 @@ namespace DriverShareProject.Controllers
         public async Task<IActionResult> DeletePostVehicle(Guid postId)
         {
             var response = await _postVehicleService.DeletePostVehicleAsync(postId);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get All PostVehicles")]
+        public async Task<IActionResult> GetAllPostVehicles()
+        {
+            var response = await _postVehicleService.GetAllPostVehicleAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get All PostVehicles by Status")]
+        public async Task<IActionResult> GetAllPostVehiclesByStatus(PostStatus postStatus)
+        {
+            var response = await _postVehicleService.GetAllPostVehiclesByStatusAsync(postStatus);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpPut("Update Status")]
+        public async Task<IActionResult> ChangePostVehicleStatus(ChangeStatusPostVehicleDTO dto)
+        {
+            var response = await _postVehicleService.ChangePostVehicleStatusAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
     }

@@ -24,13 +24,15 @@ namespace BLL.Services.Implement
             _userUtility = userUtility;
         }
 
+        
+
         // update bài post ( status pending ) -DONE
-        // delete bài post ( status deleted ) owner vs staff
+        // delete bài post ( status deleted ) owner vs staff - DONE
         // get all bài post của owner -DONE
-        // get all bài post của driver
-        // get all bài post with status Pendding( staff )
+        // get all bài post của driver -DONE
+        // get all bài post with status Pendding( staff ) -DONE
         // get bài post theo id  -DONE
-        // change status bài post ( request status ) 
+        // change status bài post ( request status ) - DONE
 
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
@@ -100,6 +102,62 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.POST_DELETED_SUCCESS, 200, true);
             }
             catch (Exception ex)
+            {
+                return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
+            }
+        }
+
+        public async Task<ResponseDTO> GetAllPostVehicleAsync()
+        {
+            try
+            {
+                var posts = await _unitOfWork.PostVehicleRepo.GetAllByPostAsync();
+
+                var result = posts.Select(p => new GetPostVehicleDTO
+                {
+                    DailyPrice = p.DailyPrice,
+                    EndDate = p.EndDate,
+                    OwnerName = p.Owner?.UserName,
+                    OwnerPhone = p.Owner?.PhoneNumber,
+                    StartDate = p.StartDate,
+                    Status = p.Status,
+                    VehicleBrand = p.Vehicle?.Brand,
+                    VehicleModel = p.Vehicle?.Model,
+                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName,
+                    PlateNumber = p.Vehicle?.PlateNumber,
+                }).ToList();
+
+                return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
+            }
+            catch (Exception)
+            {
+                return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
+            }
+        }
+
+        public async Task<ResponseDTO> GetAllPostVehiclesByStatusAsync(PostStatus postStatus)
+        {
+            try
+            {
+                var posts = await _unitOfWork.PostVehicleRepo.GetAllByStatusAsync(postStatus);
+
+                var result = posts.Select(p => new GetPostVehicleDTO
+                {
+                    DailyPrice = p.DailyPrice,
+                    EndDate = p.EndDate,
+                    OwnerName = p.Owner?.UserName,
+                    OwnerPhone = p.Owner?.PhoneNumber,
+                    StartDate = p.StartDate,
+                    Status = p.Status,
+                    VehicleBrand = p.Vehicle?.Brand,
+                    VehicleModel = p.Vehicle?.Model,
+                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName,
+                    PlateNumber = p.Vehicle?.PlateNumber,
+                }).ToList();
+
+                return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
+            }
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
@@ -221,6 +279,44 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
+        }
+        public async Task<ResponseDTO> ChangePostVehicleStatusAsync(ChangeStatusPostVehicleDTO dto)
+        {
+            if (dto.PostVehicleId == Guid.Empty)
+            {
+                return new ResponseDTO("PostVehicleId is required.", 400, false);
+            }
+
+            try
+            {
+                var postVehicle = await _unitOfWork.PostVehicleRepo.GetByIdAsync(dto.PostVehicleId);
+                if (postVehicle == null)
+                {
+                    return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
+                }
+
+                // Nếu đã bị xóa hoặc đang thuê thì không cho đổi trạng thái
+                if (postVehicle.Status == PostStatus.DELETED || postVehicle.Status == PostStatus.RENTED)
+                {
+                    return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
+                }
+
+                postVehicle.Status = dto.Status;
+
+                await _unitOfWork.PostVehicleRepo.UpdateAsync(postVehicle);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO(PostMessages.POST_UPDATED_SUCCESS, 200, true);
+            }
+            catch (Exception)
+            {
+                return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
+            }
+        }
+
+        public Task<ResponseDTO> ChangePostVehicleStatusAsync(PostStatus postStatus)
+        {
+            throw new NotImplementedException();
         }
     }
 }
