@@ -137,6 +137,13 @@ namespace DAL.Context
                 .HasForeignKey(c => c.BookingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // PostVehicle & ContractTerm
+            modelBuilder.Entity<ContractTerm>()
+                .HasOne(ct => ct.PostVehicle)
+                .WithMany(pv => pv.ContractTerms)
+                .HasForeignKey(ct => ct.PostVehicleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Contract & ContractTerm
             modelBuilder.Entity<ContractTerm>()
                 .HasOne(ct => ct.Contract)

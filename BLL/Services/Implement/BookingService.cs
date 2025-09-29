@@ -46,6 +46,7 @@ namespace BLL.Services.Implement
                 await _unitOfWork.BookingRepo.AddAsync(booking);
                 await _unitOfWork.SaveChangeAsync();
             }
+
             catch (Exception ex)
             {
                 return new ResponseDTO("Có lỗi xảy ra khi tạo booking", 500, false);

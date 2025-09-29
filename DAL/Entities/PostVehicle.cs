@@ -15,10 +15,10 @@ namespace DAL.Entities
         public Guid OwnerId { get; set; } 
         public User Owner { get; set; } = null!;
         public decimal DailyPrice { get; set; }
-        public bool IsDeleted { get; set; }
         public PostStatus Status { get; set; } 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public ICollection<ContractTerm> ContractTerms { get; set; } = new List<ContractTerm>();
     }
 }

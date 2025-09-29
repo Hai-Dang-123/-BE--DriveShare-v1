@@ -41,6 +41,13 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
             }
+
+            var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
+            if (vehicle == null)
+            {
+                return new ResponseDTO(VehicleMessages.VEHICLE_NOT_FOUND, 404, false);
+            }
+
             if (dto.StartDate.Date < DateTime.UtcNow.Date)
             {
                 return new ResponseDTO("StartDate must be today or later.", 400, false);
@@ -65,7 +72,7 @@ namespace BLL.Services.Implement
                 await _unitOfWork.PostVehicleRepo.AddAsync(newPostVehicle);
                 await _unitOfWork.SaveChangeAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
 
@@ -81,7 +88,7 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
             }
 
-            var existingPost = await _unitOfWork.PostVehicleRepo.GetByIdAsync(postId);
+            var existingPost = await _unitOfWork.PostVehicleRepo.GetPostByIdAsync(postId);
             if (existingPost == null)
             {
                 return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
@@ -94,17 +101,22 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
             }
+
+            existingPost.Status = PostStatus.DELETED;
+
             try
             {
-                existingPost.Status = PostStatus.DELETED;
+                
                 await _unitOfWork.PostVehicleRepo.UpdateAsync(existingPost);
                 await _unitOfWork.SaveChangeAsync();
-                return new ResponseDTO(PostMessages.POST_DELETED_SUCCESS, 200, true);
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
+
+            return new ResponseDTO(PostMessages.POST_DELETED_SUCCESS, 200, true);
         }
 
         public async Task<ResponseDTO> GetAllPostVehicleAsync()
@@ -117,14 +129,14 @@ namespace BLL.Services.Implement
                 {
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
-                    OwnerName = p.Owner?.UserName,
-                    OwnerPhone = p.Owner?.PhoneNumber,
+                    OwnerName = p.Owner?.UserName ?? "N/A",
+                    OwnerPhone = p.Owner?.PhoneNumber ?? "N/A",
                     StartDate = p.StartDate,
                     Status = p.Status,
-                    VehicleBrand = p.Vehicle?.Brand,
-                    VehicleModel = p.Vehicle?.Model,
-                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName,
-                    PlateNumber = p.Vehicle?.PlateNumber,
+                    VehicleBrand = p.Vehicle?.Brand ?? "N/A",
+                    VehicleModel = p.Vehicle?.Model ?? "N/A",
+                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName ?? "N/A",
+                    PlateNumber = p.Vehicle?.PlateNumber ?? "N/A" ,
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -145,14 +157,14 @@ namespace BLL.Services.Implement
                 {
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
-                    OwnerName = p.Owner?.UserName,
-                    OwnerPhone = p.Owner?.PhoneNumber,
+                    OwnerName = p.Owner?.UserName ?? "N/A",
+                    OwnerPhone = p.Owner?.PhoneNumber ?? "N/A",
                     StartDate = p.StartDate,
                     Status = p.Status,
-                    VehicleBrand = p.Vehicle?.Brand,
-                    VehicleModel = p.Vehicle?.Model,
-                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName,
-                    PlateNumber = p.Vehicle?.PlateNumber,
+                    VehicleBrand = p.Vehicle?.Brand ?? "N/A",
+                    VehicleModel = p.Vehicle?.Model ?? "N/A",
+                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName ?? "N/A",
+                    PlateNumber = p.Vehicle?.PlateNumber ?? "N/A",
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -191,7 +203,7 @@ namespace BLL.Services.Implement
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
@@ -225,7 +237,7 @@ namespace BLL.Services.Implement
                 };
                 return new ResponseDTO(PostMessages.GET_POST_SUCCESS, 200, true, result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
@@ -275,7 +287,7 @@ namespace BLL.Services.Implement
                 await _unitOfWork.SaveChangeAsync();
                 return new ResponseDTO(PostMessages.POST_UPDATED_SUCCESS, 200, true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }

@@ -18,5 +18,8 @@ namespace DAL.Entities
         public TermType TermType { get; set; }
         public string Content { get; set; } = null!;
         public bool IsMandatory { get; set; }
+        public Guid PostVehicleId { get; set; }
+        public PostVehicle PostVehicle { get; set; } = null!;
+
     }
 }

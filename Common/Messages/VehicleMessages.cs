@@ -11,5 +11,6 @@ namespace Common.Messages
         public const string VEHICLE_CREATED_SUCCESS = "Vehicle created successfully";
         public const string DUPLICATED_VEHICLE = "Vehicle already exists";
         public const string ERROR_OCCURRED = "An error occurred while creating vehicle";
+        public const string VEHICLE_NOT_FOUND = "Vehicle not found";
     }
 }
