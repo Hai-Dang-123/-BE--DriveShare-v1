@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using DriverShareProject.Extentions.BuilderExtensions;
 using BLL.Services.Implement;
 using BLL.Services.Interface;
+using Common.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
+
+// Register Firebase config + upload service
+builder.Services.Configure<FirebaseSetting>(
+    builder.Configuration.GetSection("Firebase"));
+builder.Services.AddScoped<FirebaseUploadService>();
+
 
 // Program.cs hoặc Startup.cs (trong ConfigureServices)
 builder.Services.AddScoped<IBookingService, BookingService>();
