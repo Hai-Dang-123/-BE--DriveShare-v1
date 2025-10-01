@@ -62,6 +62,25 @@ namespace DAL.Migrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Clause", b =>
+                {
+                    b.Property<Guid>("ClauseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClauseContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClauseVersion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClauseId");
+
+                    b.ToTable("Clauses");
+                });
+
             modelBuilder.Entity("DAL.Entities.Contract", b =>
                 {
                     b.Property<Guid>("ContractId")
@@ -209,15 +228,15 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ClauseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("DailyPrice")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
@@ -232,6 +251,8 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PostVehicleId");
+
+                    b.HasIndex("ClauseId");
 
                     b.HasIndex("OwnerId");
 
@@ -818,6 +839,12 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.PostVehicle", b =>
                 {
+                    b.HasOne("DAL.Entities.Clause", "Clause")
+                        .WithMany("Posts")
+                        .HasForeignKey("ClauseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("DAL.Entities.User", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
@@ -829,6 +856,8 @@ namespace DAL.Migrations
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Clause");
 
                     b.Navigation("Owner");
 
@@ -996,6 +1025,11 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.Booking", b =>
                 {
                     b.Navigation("Contracts");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Clause", b =>
+                {
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("DAL.Entities.Contract", b =>

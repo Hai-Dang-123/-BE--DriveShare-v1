@@ -27,6 +27,7 @@ namespace DAL.Context
         public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<VehicleImages> VehicleImages { get; set; }
         public DbSet<PostVehicle> PostVehicles { get; set; }
+        public DbSet<Clause> Clauses { get; set; }
 
         // ---------------------- Booking & Contracts ----------------------
         public DbSet<Booking> Bookings { get; set; }
@@ -121,6 +122,12 @@ namespace DAL.Context
                 .HasOne(pv => pv.Owner)
                 .WithMany()
                 .HasForeignKey(pv => pv.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+            // PostVehicle & Clause 
+            modelBuilder.Entity<PostVehicle>()
+                .HasOne(pv => pv.Clause)
+                .WithMany(c => c.Posts)
+                .HasForeignKey(pv => pv.ClauseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Booking & PostVehicle
