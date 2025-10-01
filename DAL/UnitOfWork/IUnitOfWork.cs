@@ -28,6 +28,7 @@ namespace DAL.UnitOfWork
         IVehicleRepository VehicleRepo { get; }
         IVehicleTypeRepository VehicleTypeRepo { get; }
         IWalletRepository WalletRepo { get; }
+        IClausesRepository ClausesRepo { get; }
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
     }

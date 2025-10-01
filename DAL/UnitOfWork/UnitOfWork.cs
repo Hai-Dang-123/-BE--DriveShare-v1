@@ -35,7 +35,7 @@ namespace DAL.UnitOfWork
             VehicleTypeRepo = new VehicleTypeRepository(_context);
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
-
+            ClausesRepo = new ClausesRepository(_context);
 
         }
 
@@ -58,6 +58,7 @@ namespace DAL.UnitOfWork
         public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
+        public IClausesRepository ClausesRepo { get; private set; }
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();

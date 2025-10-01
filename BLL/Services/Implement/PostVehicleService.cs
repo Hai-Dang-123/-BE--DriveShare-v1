@@ -314,9 +314,5 @@ namespace BLL.Services.Implement
             }
         }
 
-        public Task<ResponseDTO> ChangePostVehicleStatusAsync(PostStatus postStatus)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
