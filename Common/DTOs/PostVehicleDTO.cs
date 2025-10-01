@@ -15,6 +15,8 @@ namespace Common.DTOs
     }
     public class CreateRequestPostVehicleDTO
     {
+        [Required(ErrorMessage = "ClauseId is required")]
+        public Guid ClauseId { get; set; }
         [Required(ErrorMessage = "VehicleId is required")]
         public Guid VehicleId { get; set; }
 
@@ -29,8 +31,10 @@ namespace Common.DTOs
         public DateTime EndDate { get; set; }
 
     }
-    public class UpdateRequestPostVehicleDTO { 
-         public Guid PostVehicleId { get; set; }
+    public class UpdateRequestPostVehicleDTO {
+        [Required(ErrorMessage = "ClauseId is required")]
+        public Guid ClauseId { get; set; }
+        public Guid PostVehicleId { get; set; }
         [Required(ErrorMessage = "DailyPrice is required")]
         [Range(1, double.MaxValue, ErrorMessage = "DailyPrice must be greater than 0")]
         public decimal DailyPrice { get; set; }
@@ -41,7 +45,8 @@ namespace Common.DTOs
 
     }
     public class GetPostVehicleDTO
-    {  
+    {
+        public Guid ClauseId { get; set; }
         public string OwnerPhone{ get; set; }
         public string OwnerName{ get; set; }
         public string VehicleModel { get; set; }

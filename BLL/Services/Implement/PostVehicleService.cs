@@ -52,6 +52,7 @@ namespace BLL.Services.Implement
             }
             var newPostVehicle = new PostVehicle
             {
+                ClauseId = dto.ClauseId,
                 PostVehicleId = Guid.NewGuid(),
                 VehicleId = dto.VehicleId,
                 OwnerId = userId,
@@ -115,6 +116,7 @@ namespace BLL.Services.Implement
 
                 var result = posts.Select(p => new GetPostVehicleDTO
                 {
+                    ClauseId = p.ClauseId,
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
                     OwnerName = p.Owner?.UserName,
@@ -142,7 +144,7 @@ namespace BLL.Services.Implement
                 var posts = await _unitOfWork.PostVehicleRepo.GetAllByStatusAsync(postStatus);
 
                 var result = posts.Select(p => new GetPostVehicleDTO
-                {
+                {ClauseId = p.ClauseId,
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
                     OwnerName = p.Owner?.UserName,
@@ -176,7 +178,7 @@ namespace BLL.Services.Implement
 
                 var result = posts.Select(p => new GetPostVehicleDTO
                 {
-                    
+                    ClauseId = p.ClauseId,
                     DailyPrice = p.DailyPrice,
                     EndDate = p.EndDate,
                     OwnerName = p.Owner.UserName,
@@ -211,7 +213,7 @@ namespace BLL.Services.Implement
                     return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
                 }
                 var result = new GetPostVehicleDTO
-                {
+                {   ClauseId = postVehicle.ClauseId,
                     OwnerName = postVehicle.Owner.UserName,
                     OwnerPhone = postVehicle.Owner.PhoneNumber,
                     DailyPrice = postVehicle.DailyPrice,
@@ -259,6 +261,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO("EndDate must be greater than StartDate.", 400, false);
             }
+            existingPost.ClauseId = dto.ClauseId;
             existingPost.PostVehicleId = dto.PostVehicleId;
             existingPost.DailyPrice = dto.DailyPrice;
             existingPost.StartDate = dto.StartDate;
