@@ -19,16 +19,15 @@ namespace DriverShareProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] CreateVehicleDTO dto)
+        public async Task<IActionResult> CreateVehicle([FromForm] CreateVehicleDTO dto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new ResponseDTO("Validation failed", 400, false, ModelState));
-            }
 
             var response = await _vehicleService.CreateVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllVehicles()
         {
@@ -44,7 +43,7 @@ namespace DriverShareProject.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateVehicle([FromBody] UpdateVehicleDTO dto)
+        public async Task<IActionResult> UpdateVehicle([FromForm] UpdateVehicleDTO dto)
         {
             var response = await _vehicleService.UpdateVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
