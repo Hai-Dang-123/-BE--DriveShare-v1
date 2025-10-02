@@ -8,8 +8,8 @@ namespace Common.Settings
 {
     public class FirebaseSetting
     {
-        public string BucketName { get; set; }
-        public string TokenPath { get; set; }
-
+        public string BucketName { get; set; }            
+        public string TokenPath { get; set; }            
+        public bool IsProduction { get; set; } = false;  // false = dev-test, true = production
     }
 }

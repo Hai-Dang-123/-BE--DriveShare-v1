@@ -19,7 +19,6 @@ namespace DAL.Entities
         public bool Confirmed { get; set; }
         public BookingStatus Status { get; set; }
         //public ICollection<VehicleInspection> VehicleInspections { get; set; }
-
         public DateTime CreatedAt { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
