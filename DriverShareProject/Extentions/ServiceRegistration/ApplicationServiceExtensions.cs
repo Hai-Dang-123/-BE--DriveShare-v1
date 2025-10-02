@@ -23,7 +23,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
 
             services.AddScoped<IVehicleService, VehicleService>();
 
-
+            services.AddScoped<IClausesService, ClausesService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

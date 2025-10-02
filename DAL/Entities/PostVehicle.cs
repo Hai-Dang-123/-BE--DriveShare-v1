@@ -18,6 +18,8 @@ namespace DAL.Entities
         public PostStatus Status { get; set; } 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public Guid ClauseId { get; set; }   
+        public Clause Clause { get; set; }
 
         public ICollection<ContractTerm> ContractTerms { get; set; } = new List<ContractTerm>();
     }
