@@ -140,9 +140,10 @@ namespace DAL.Context
             // Booking & Contract
             modelBuilder.Entity<Contract>()
                 .HasOne(c => c.Booking)
-                .WithMany(b => b.Contracts)
-                .HasForeignKey(c => c.BookingId)
+                .WithOne(b => b.Contract)
+                .HasForeignKey<Contract>(c => c.BookingId)
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             // PostVehicle & ContractTerm
             modelBuilder.Entity<ContractTerm>()

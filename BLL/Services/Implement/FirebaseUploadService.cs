@@ -55,6 +55,7 @@ namespace BLL.Services.Implement
             }
 
             return $"https://firebasestorage.googleapis.com/v0/b/{bucketName}/o/{Uri.EscapeDataString(objectPath)}?alt=media";
+
         }
     }
 }

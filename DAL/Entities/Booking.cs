@@ -18,10 +18,14 @@ namespace DAL.Entities
         public decimal TotalPrice { get; set; }
         public bool Confirmed { get; set; }
         public BookingStatus Status { get; set; }
+
         //public ICollection<VehicleInspection> VehicleInspections { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
+        //public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
+        public Guid ContractId { get; set; }
+        public Contract Contract { get; set; } = null!;
     }
+
 }

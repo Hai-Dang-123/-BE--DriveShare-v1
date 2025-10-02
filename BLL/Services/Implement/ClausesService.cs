@@ -53,6 +53,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO($"Error: {ex.Message}", 500, false);
             }
+
             return new ResponseDTO(ClauseMessages.ClauseCreated, 201, true);
 
         }
@@ -60,7 +61,7 @@ namespace BLL.Services.Implement
         public  async Task<ResponseDTO> DeleteClauseAsync(Guid id)
         {
            var userId = _userUtility.GetUserIdFromToken();
-            if (userId == null)
+            if (userId == Guid.Empty)
             {
                 return new ResponseDTO("Unauthorized", 401, false);
             }
@@ -78,6 +79,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO($"Error: {ex.Message}", 500, false);
             }
+
             return new ResponseDTO(ClauseMessages.ClauseDeleted, 200, true);
         }
 
@@ -147,7 +149,7 @@ namespace BLL.Services.Implement
             {
                 clause.ClauseVersion = updateClauseDTO.Version;
                 clause.ClauseContent = updateClauseDTO.Description;
-                _unitOfWork.ClausesRepo.UpdateAsync(clause);
+                await _unitOfWork.ClausesRepo.UpdateAsync(clause);
                 await _unitOfWork.SaveAsync();
             }
             catch (Exception ex)
