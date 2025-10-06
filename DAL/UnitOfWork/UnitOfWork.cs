@@ -11,29 +11,9 @@ namespace DAL.UnitOfWork
     {
         private readonly DriverShareAppContext _context;
         private bool _disposed = false;
-        private IDbContextTransaction _transaction;
+        private IDbContextTransaction? _transaction;
 
-        // Repo properties (auto-property)
-        public IBookingRepository BookingRepo { get; private set; }
-        public IContractRepository ContractRepo { get; private set; }
-        public IContractTermRepository ContractTermRepo { get; private set; }
-        public INotificationRepository NotificationRepo { get; private set; }
-        public IReviewRepository ReviewRepo { get; private set; }
-        public IRoleRepository RoleRepo { get; private set; }
-        public ITripRepository TripRepo { get; private set; }
-        public ITripDriverRepository TripDriverRepo { get; private set; }
-        public ITripStepInPlanRepository TripStepInPlanRepo { get; private set; }
-        public IRuleRepository RuleRepo { get; private set; }
-        public IUserRepository UserRepo { get; private set; }
-        public IUserTokenRepository UserTokenRepo { get; private set; }
-        public IVerificationRepository VerificationRepo { get; private set; }
-        public IWalletRepository WalletRepo { get; private set; }
-        public ITransactionRepository TransactionRepo { get; private set; }
-        public IVehicleRepository VehicleRepo { get; private set; }
-        public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
-        public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
-        public IPostVehicleRepository PostVehicleRepo { get; private set; }
-        public IClausesRepository ClausesRepo { get; private set; }
+
 
         public UnitOfWork(DriverShareAppContext context)
         {
@@ -59,13 +39,17 @@ namespace DAL.UnitOfWork
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
             ClausesRepo = new ClausesRepository(_context);
+
         }
+
+
 
         // Transaction methods
         public async Task BeginTransactionAsync()
         {
             _transaction = await _context.Database.BeginTransactionAsync();
         }
+
 
         public async Task CommitTransactionAsync()
         {
@@ -88,6 +72,28 @@ namespace DAL.UnitOfWork
             }
         }
 
+
+        public IBookingRepository BookingRepo { get; private set; }
+        public IContractRepository ContractRepo { get; private set; }
+        public IContractTermRepository ContractTermRepo { get; private set; }
+        public INotificationRepository NotificationRepo { get; private set; }
+        public IReviewRepository ReviewRepo { get; private set; }
+        public IRoleRepository RoleRepo { get; private set; }
+        public ITripRepository TripRepo { get; private set; }
+        public ITripDriverRepository TripDriverRepo { get; private set; }
+        public ITripStepInPlanRepository TripStepInPlanRepo { get; private set; }
+        public IRuleRepository RuleRepo { get; private set; }
+        public IUserRepository UserRepo { get; private set; }
+        public IUserTokenRepository UserTokenRepo { get; private set; }
+        public IVerificationRepository VerificationRepo { get; private set; }
+        public IWalletRepository WalletRepo { get; private set; }
+        public ITransactionRepository TransactionRepo { get; private set; }
+        public IVehicleRepository VehicleRepo { get; private set; }
+        public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
+        public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
+        public IPostVehicleRepository PostVehicleRepo { get; private set; }
+        public IClausesRepository ClausesRepo { get; private set; }
+
         public async Task RollbackTransactionAsync()
         {
             if (_transaction != null)
@@ -98,6 +104,7 @@ namespace DAL.UnitOfWork
         }
 
         // Save changes
+
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();

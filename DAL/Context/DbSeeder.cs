@@ -44,8 +44,8 @@ namespace DAL.Context
             SeedRole(modelBuilder);
             SeedUser(modelBuilder);
             SeedVehicleType(modelBuilder);
-            SeedContractTemplate(modelBuilder);
-            SeedContractTerms(modelBuilder);
+            //SeedContractTemplate(modelBuilder);
+            //SeedContractTerms(modelBuilder);
         }
 
         private static void SeedRole(ModelBuilder modelBuilder)

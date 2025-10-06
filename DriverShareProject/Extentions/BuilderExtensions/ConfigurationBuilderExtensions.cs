@@ -26,6 +26,9 @@ namespace DriverShareProject.Extentions.BuilderExtensions
             //VietMap
             builder.Services.Configure<VietMapSetting>(builder.Configuration.GetSection("VietMap"));
 
+            // VNPT Auth
+            builder.Services.Configure<VNPTAuthSettings>(builder.Configuration.GetSection("VNPTAuth"));
+
 
 
             return builder;

@@ -31,6 +31,9 @@ namespace DAL.Migrations
                     b.Property<bool>("Confirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("ContractId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -108,7 +111,8 @@ namespace DAL.Migrations
 
                     b.HasKey("ContractId");
 
-                    b.HasIndex("BookingId");
+                    b.HasIndex("BookingId")
+                        .IsUnique();
 
                     b.HasIndex("ContractTemplateId");
 
@@ -128,13 +132,6 @@ namespace DAL.Migrations
                     b.HasKey("ContractTemplateId");
 
                     b.ToTable("ContractTemplate");
-
-                    b.HasData(
-                        new
-                        {
-                            ContractTemplateId = new Guid("62345678-90ab-cdef-1234-567890abcdef"),
-                            Version = "v1.0"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.ContractTerm", b =>
@@ -156,6 +153,9 @@ namespace DAL.Migrations
                     b.Property<bool>("IsMandatory")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("PostVehicleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TermType")
                         .HasColumnType("int");
 
@@ -165,27 +165,11 @@ namespace DAL.Migrations
 
                     b.HasIndex("ContractTemplateId");
 
+                    b.HasIndex("PostVehicleId");
+
                     b.ToTable("ContractTerms", t =>
                         {
                             t.HasCheckConstraint("CK_ContractTerm_Parent", "(ContractTemplateId IS NOT NULL AND ContractId IS NULL) \r\n              OR (ContractTemplateId IS NULL AND ContractId IS NOT NULL)");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            ContractTermId = new Guid("72345678-90ab-cdef-1234-567890abcdef"),
-                            Content = "Bên thuê phải trả xe đúng giờ, đúng tình trạng ban đầu.",
-                            ContractTemplateId = new Guid("62345678-90ab-cdef-1234-567890abcdef"),
-                            IsMandatory = true,
-                            TermType = 0
-                        },
-                        new
-                        {
-                            ContractTermId = new Guid("82345678-90ab-cdef-1234-567890abcdef"),
-                            Content = "Chủ xe có quyền kiểm tra xe sau khi hợp đồng kết thúc.",
-                            ContractTemplateId = new Guid("62345678-90ab-cdef-1234-567890abcdef"),
-                            IsMandatory = true,
-                            TermType = 0
                         });
                 });
 
@@ -718,17 +702,30 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("BackDocumentUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BackVNPTFileHash")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DocType")
                         .HasColumnType("int");
 
-                    b.Property<string>("DocumentUrl")
+                    b.Property<string>("FrontDocumentUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FrontVNPTFileHash")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RawResultJson")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -793,8 +790,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.Contract", b =>
                 {
                     b.HasOne("DAL.Entities.Booking", "Booking")
-                        .WithMany("Contracts")
-                        .HasForeignKey("BookingId")
+                        .WithOne("Contract")
+                        .HasForeignKey("DAL.Entities.Contract", "BookingId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -821,9 +818,17 @@ namespace DAL.Migrations
                         .HasForeignKey("ContractTemplateId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("DAL.Entities.PostVehicle", "PostVehicle")
+                        .WithMany("ContractTerms")
+                        .HasForeignKey("PostVehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Contract");
 
                     b.Navigation("ContractTemplate");
+
+                    b.Navigation("PostVehicle");
                 });
 
             modelBuilder.Entity("DAL.Entities.Notification", b =>
@@ -1024,7 +1029,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Booking", b =>
                 {
-                    b.Navigation("Contracts");
+                    b.Navigation("Contract")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Entities.Clause", b =>
@@ -1040,6 +1046,11 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.ContractTemplate", b =>
                 {
                     b.Navigation("ContractTerm");
+                });
+
+            modelBuilder.Entity("DAL.Entities.PostVehicle", b =>
+                {
+                    b.Navigation("ContractTerms");
                 });
 
             modelBuilder.Entity("DAL.Entities.Role", b =>

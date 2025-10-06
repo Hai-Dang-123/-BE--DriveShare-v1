@@ -17,6 +17,10 @@ namespace BLL.Services.Implement
         private readonly UserUtility _userUtility;
         private readonly FirebaseUploadService _firebaseUpload;
 
+        // ekyc
+        // change status
+        // get all 
+        
 
         public VehicleService(IUnitOfWork unitOfWork, UserUtility userUtility, FirebaseUploadService firebaseUpload)
         {

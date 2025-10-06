@@ -14,10 +14,18 @@ namespace DAL.Entities
         public User? User { get; set; } = null!;
         public Guid? VehicleId { get; set; }
         public Vehicle? Vehicle { get; set; } = null!;
-        public DocumentType DocType { get; set; } 
-        public string DocumentUrl { get; set; }
+        public DocumentType DocType { get; set; }
+        // Firebase URL để staff xem
+        public string FrontDocumentUrl { get; set; } = null!;
+        public string BackDocumentUrl { get; set; } = null!;
+
+        // Hash để gọi OCR
+        public string? FrontVNPTFileHash { get; set; }
+        public string? BackVNPTFileHash { get; set; }
         public VerificationStatus Status { get; set; }
         public string? Note { get; set; }
         public DateTime CreatedAt { get; set; }
+        // JSON trả về từ OCR/eKYC (để staff xem chi tiết)
+        public string? RawResultJson { get; set; }
     }
 }
