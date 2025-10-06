@@ -11,5 +11,6 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> LoginAsync (LoginDTO dto);
         Task<ResponseDTO> RegisterAsync(RegisterDTO dto);
+        Task<ResponseDTO> LogoutAsync();
     }
 }

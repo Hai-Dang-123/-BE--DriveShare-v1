@@ -1,4 +1,5 @@
-﻿using Common.Settings;
+﻿using BLL.Services.Interface;
+using Common.Settings;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Implement
 {
-    public class FirebaseUploadService
+    public class FirebaseUploadService : IFirebaseUploadService
     {
         private readonly FirebaseSetting _firebaseSetting;
         private readonly StorageClient _storageClient;

@@ -1,5 +1,5 @@
 ﻿using Common.DTOs;
-using Common.Enums;
+using Common.Settings;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Interface
 {
-    public interface IEKYCService
+    public interface IFirebaseUploadService
     {
-        Task<ResponseDTO> UploadFileAsync(EKYCUploadRequestDTO requestDto);
-        Task<ResponseDTO> OcrAsync(EKYCOcrRequestDTO dto);
+        Task<string> UploadFileAsync(IFormFile file, Guid userId, FirebaseFileType fileType);
     }
 }

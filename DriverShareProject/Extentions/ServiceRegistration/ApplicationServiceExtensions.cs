@@ -24,7 +24,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IVehicleService, VehicleService>();
 
             services.AddScoped<IBookingService, BookingService>();
-            services.AddScoped<FirebaseUploadService>();
+            services.AddScoped<IFirebaseUploadService , FirebaseUploadService>();
 
             services.AddScoped<IClausesService, ClausesService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
