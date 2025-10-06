@@ -25,5 +25,11 @@ namespace DAL.Repositories.Implement
                 .Where(rt => rt.UserTokenId == userId && !rt.IsRevoked)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<UserToken> GetByTokenValueAsync (string tokenValue)
+        {
+            return await _context.UserTokens
+                .FirstOrDefaultAsync(ut => ut.TokenValue == tokenValue);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace DAL.Entities
         public Guid ContractTermId { get; set; }
         public Guid? ContractId { get; set; }
         public Contract? Contract { get; set; } = null!;
+
         // Một điều khoản có thể thuộc về template hoặc contract cụ thể
         public Guid? ContractTemplateId { get; set; }
         public ContractTemplate? ContractTemplate { get; set; }

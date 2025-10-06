@@ -29,6 +29,13 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();
 
+            services.AddHttpClient<IVNPTTokenService, VNPTTokenService>();
+            services.AddHttpClient<IEKYCService, EKYCService>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["VNPT:BaseUrl"]);
+                client.Timeout = TimeSpan.FromMinutes(5);
+            });
+
             return services;
         }
     }

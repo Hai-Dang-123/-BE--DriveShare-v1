@@ -11,28 +11,9 @@ namespace DAL.UnitOfWork
     {
         private readonly DriverShareAppContext _context;
         private bool _disposed = false;
-        private IDbContextTransaction _transaction;
+        private IDbContextTransaction? _transaction;
 
-        // Lazy repositories
-        private IBookingRepository _bookingRepo;
-        private IContractRepository _contractRepo;
-        private IContractTermRepository _contractTermRepo;
-        private INotificationRepository _notificationRepo;
-        private IReviewRepository _reviewRepo;
-        private IRoleRepository _roleRepo;
-        private ITripRepository _tripRepo;
-        private ITripDriverRepository _tripDriverRepo;
-        private ITripStepInPlanRepository _tripStepInPlanRepo;
-        private IRuleRepository _ruleRepo;
-        private IUserRepository _userRepo;
-        private IUserTokenRepository _userTokenRepo;
-        private IVerificationRepository _verificationRepo;
-        private IWalletRepository _walletRepo;
-        private ITransactionRepository _transactionRepo;
-        private IVehicleRepository _vehicleRepo;
-        private IVehicleTypeRepository _vehicleTypeRepo;
-        private IVehicleImagesRepository _vehicleImagesRepo;
-        private IPostVehicleRepository _postVehicleRepo;
+        
 
         public UnitOfWork(DriverShareAppContext context)
         {
@@ -61,26 +42,7 @@ namespace DAL.UnitOfWork
 
         }
 
-        // Repository properties
-        public IBookingRepository BookingRepo => _bookingRepo ??= new BookingRepository(_context);
-        public IContractRepository ContractRepo => _contractRepo ??= new ContractRepository(_context);
-        public IContractTermRepository ContractTermRepo => _contractTermRepo ??= new ContractTermRepository(_context);
-        public INotificationRepository NotificationRepo => _notificationRepo ??= new NotificationRepository(_context);
-        public IReviewRepository ReviewRepo => _reviewRepo ??= new ReviewRepository(_context);
-        public IRoleRepository RoleRepo => _roleRepo ??= new RoleRepository(_context);
-        public ITripRepository TripRepo => _tripRepo ??= new TripRepository(_context);
-        public ITripDriverRepository TripDriverRepo => _tripDriverRepo ??= new TripDriverRepository(_context);
-        public ITripStepInPlanRepository TripStepInPlanRepo => _tripStepInPlanRepo ??= new TripStepInPlanRepository(_context);
-        public IRuleRepository RuleRepo => _ruleRepo ??= new RuleRepository(_context);
-        public IUserRepository UserRepo => _userRepo ??= new UserRepository(_context);
-        public IUserTokenRepository UserTokenRepo => _userTokenRepo ??= new UserTokenRepository(_context);
-        public IVerificationRepository VerificationRepo => _verificationRepo ??= new VerificationRepository(_context);
-        public IWalletRepository WalletRepo => _walletRepo ??= new WalletRepository(_context);
-        public ITransactionRepository TransactionRepo => _transactionRepo ??= new TransactionRepository(_context);
-        public IVehicleRepository VehicleRepo => _vehicleRepo ??= new VehicleRepository(_context);
-        public IVehicleTypeRepository VehicleTypeRepo => _vehicleTypeRepo ??= new VehicleTypeRepository(_context);
-        public IVehicleImagesRepository VehicleImagesRepo => _vehicleImagesRepo ??= new VehicleImagesRepository(_context);
-        public IPostVehicleRepository PostVehicleRepo => _postVehicleRepo ??= new PostVehicleRepository(_context);
+        
 
         // Transaction methods
         public async Task BeginTransactionAsync()
