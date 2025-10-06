@@ -23,11 +23,21 @@ namespace DriverShareProject.Extentions.ServiceRegistration
 
             services.AddScoped<IVehicleService, VehicleService>();
 
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IFirebaseUploadService , FirebaseUploadService>();
+
             services.AddScoped<IClausesService, ClausesService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();
+
+            services.AddHttpClient<IVNPTTokenService, VNPTTokenService>();
+            services.AddHttpClient<IEKYCService, EKYCService>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["VNPT:BaseUrl"]);
+                client.Timeout = TimeSpan.FromMinutes(5);
+            });
 
             return services;
         }
