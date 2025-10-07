@@ -11,5 +11,7 @@ namespace DAL.Repositories.Interface
     {
         Task<Vehicle?> FindByLicenseAsync(string plateNumber);
         Task<IEnumerable<Vehicle>> GetAllByUserIdAsync(Guid userId);
+        Task<IEnumerable<Vehicle>> GetAllWithImagesByUserIdAsync(Guid userId);
+        Task<Vehicle?> GetByIdWithImagesAsync(Guid id);
     }
 }
