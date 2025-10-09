@@ -8,8 +8,10 @@ namespace Common.Enums
 {
     public enum ReviewCategory
     {
-        SERVICE,
         VEHICLE,
-        DRIVER
+        RENTER,
+        OWNER,
+        DRIVER,
+        SERVICE
     }
 }

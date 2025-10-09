@@ -12,19 +12,22 @@ namespace DAL.Entities
         public Guid VehicleBookingId { get; set; }
 
         public Guid PostVehicleId { get; set; }
-        public PostVehicle PostVehicle { get; set; } = null!;
+        public PostVehicle PostVehicle { get; set; } = null!; // Bài đăng xe được thuê
 
-        public Guid RenterId { get; set; }   // người thuê xe
-        public User Renter { get; set; } = null!;
+        public Guid RenterUserId { get; set; } // Đổi RenterId thành RenterUserId
+        public User RenterUser { get; set; } = null!;
 
         public decimal TotalPrice { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime RentalStartDate { get; set; } // Đổi StartDate
+        public DateTime RentalEndDate { get; set; } // Đổi EndDate
         public BookingStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public Contract Contract { get; set; } = null!;
-        public Guid ContractId { get; set; }
-        public ICollection<Report> Reports { get; set; } = new List<Report>();
+        // Một VehicleBooking sẽ có một VehicleContract
+        public Guid VehicleContractId { get; set; }
+        public VehicleContract VehicleContract { get; set; } = null!;
+
+        public ICollection<VehicleBookingReport> Reports { get; set; } = new List<VehicleBookingReport>();
     }
 
 }
