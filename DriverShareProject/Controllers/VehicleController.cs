@@ -55,6 +55,17 @@ namespace DriverShareProject.Controllers
             var response = await _vehicleService.DeleteVehicleAsync(id);
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpPut("status")]
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeVehicleStatusDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ResponseDTO("Invalid input", 400, false, ModelState));
+
+            var response = await _vehicleService.ChangeStatusAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
     }
 }
 

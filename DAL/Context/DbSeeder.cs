@@ -138,38 +138,38 @@ namespace DAL.Context
             );
         }
 
-        private static void SeedContractTemplate(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ContractTemplate>().HasData(
-                new ContractTemplate
-                {
-                    ContractTemplateId = BaseContractTemplateId,
-                    Version = "v1.0"
-                }
-            );
-        }
-        private static void SeedContractTerms(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ContractTerm>().HasData(
-                new ContractTerm
-                {
-                    ContractTermId = Term1Id,
-                    ContractTemplateId = BaseContractTemplateId,
-                    ContractId = null,
-                    TermType = TermType.CONTRACT,
-                    Content = "Bên thuê phải trả xe đúng giờ, đúng tình trạng ban đầu.",
-                    IsMandatory = true
-                },
-                new ContractTerm
-                {
-                    ContractTermId = Term2Id,
-                    ContractTemplateId = BaseContractTemplateId,
-                    ContractId = null,
-                    TermType = TermType.CONTRACT,
-                    Content = "Chủ xe có quyền kiểm tra xe sau khi hợp đồng kết thúc.",
-                    IsMandatory = true
-                }
-            );
-        }
+        //private static void SeedContractTemplate(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<ContractTemplate>().HasData(
+        //        new ContractTemplate
+        //        {
+        //            ContractTemplateId = BaseContractTemplateId,
+        //            Version = "v1.0"
+        //        }
+        //    );
+        //}
+        //private static void SeedContractTerms(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<ContractTerm>().HasData(
+        //        new ContractTerm
+        //        {
+        //            ContractTermId = Term1Id,
+        //            ContractTemplateId = BaseContractTemplateId,
+        //            ContractId = null,
+        //            TermType = TermType.CONTRACT,
+        //            Content = "Bên thuê phải trả xe đúng giờ, đúng tình trạng ban đầu.",
+        //            IsMandatory = true
+        //        },
+        //        new ContractTerm
+        //        {
+        //            ContractTermId = Term2Id,
+        //            ContractTemplateId = BaseContractTemplateId,
+        //            ContractId = null,
+        //            TermType = TermType.CONTRACT,
+        //            Content = "Chủ xe có quyền kiểm tra xe sau khi hợp đồng kết thúc.",
+        //            IsMandatory = true
+        //        }
+        //    );
+        //}
     }
 }
