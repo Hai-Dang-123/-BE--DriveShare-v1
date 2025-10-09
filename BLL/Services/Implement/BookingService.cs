@@ -23,10 +23,31 @@ namespace BLL.Services.Implement
 
         public async Task<ResponseDTO> CreateBookingAsync(CreateBookingDTO dto)
         {
-
             if (dto == null)
                 return new ResponseDTO("Dữ liệu không hợp lệ", 400, false);
 
+            if (dto.PostVehicleId == Guid.Empty)
+                return new ResponseDTO("PostVehicleId không được để trống", 400, false);
+
+            if (dto.UserId == Guid.Empty)
+                return new ResponseDTO("UserId không được để trống", 400, false);
+
+            if (dto.TotalPrice <= 0)
+                return new ResponseDTO("TotalPrice phải lớn hơn 0", 400, false);
+
+            if (dto.StartDate.Value.Date < DateTime.UtcNow.Date)
+                return new ResponseDTO("StartDate phải là hôm nay hoặc sau hôm nay", 400, false);
+
+            if (dto.EndDate <= dto.StartDate)
+                return new ResponseDTO("EndDate phải lớn hơn StartDate", 400, false);
+
+            var postVehicle = await _unitOfWork.PostVehicleRepo.GetPostByIdAsync(dto.PostVehicleId);
+            if (postVehicle == null)
+                return new ResponseDTO("PostVehicle không tồn tại", 404, false);
+
+            var user = await _unitOfWork.UserRepo.GetByIdAsync(dto.UserId);
+            if (user == null)
+                return new ResponseDTO("User không tồn tại", 404, false);
 
             var booking = new Booking
             {
@@ -47,18 +68,46 @@ namespace BLL.Services.Implement
                 await _unitOfWork.SaveChangeAsync();
             }
 
-            catch (Exception ex)
+            catch (Exception)
+
             {
                 return new ResponseDTO("Có lỗi xảy ra khi tạo booking", 500, false);
             }
 
             return new ResponseDTO("Tạo booking thành công", 201, true, booking.BookingId);
         }
+
         public async Task<ResponseDTO> UpdateBookingAsync(Guid bookingId, CreateBookingDTO dto)
         {
+            if (dto == null)
+                return new ResponseDTO("Dữ liệu không hợp lệ", 400, false);
+
+            if (dto.PostVehicleId == Guid.Empty)
+                return new ResponseDTO("PostVehicleId không được để trống", 400, false);
+
+            if (dto.UserId == Guid.Empty)
+                return new ResponseDTO("UserId không được để trống", 400, false);
+
+            if (dto.TotalPrice <= 0)
+                return new ResponseDTO("TotalPrice phải lớn hơn 0", 400, false);
+
+            if (!dto.StartDate.HasValue || dto.StartDate.Value.Date < DateTime.UtcNow.Date)
+                return new ResponseDTO("StartDate phải là hôm nay hoặc sau hôm nay", 400, false);
+
+            if (!dto.EndDate.HasValue || dto.EndDate <= dto.StartDate)
+                return new ResponseDTO("EndDate phải lớn hơn StartDate", 400, false);
+
             var booking = await _unitOfWork.BookingRepo.GetByIdAsync(bookingId);
             if (booking == null)
                 return new ResponseDTO("Booking không tồn tại", 404, false);
+
+            var postVehicle = await _unitOfWork.PostVehicleRepo.GetPostByIdAsync(dto.PostVehicleId);
+            if (postVehicle == null)
+                return new ResponseDTO("PostVehicle không tồn tại", 404, false);
+
+            var user = await _unitOfWork.UserRepo.GetByIdAsync(dto.UserId);
+            if (user == null)
+                return new ResponseDTO("User không tồn tại", 404, false);
 
             booking.PostVehicleId = dto.PostVehicleId;
             booking.UserId = dto.UserId;
