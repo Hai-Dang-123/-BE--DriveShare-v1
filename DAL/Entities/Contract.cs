@@ -19,7 +19,7 @@ namespace DAL.Entities
         // Tham chiếu đến Template gốc
         public Guid ContractTemplateId { get; set; }
         public ContractTemplate ContractTemplate { get; set; } = null!;
-        public ICollection<ContractTerm> Terms { get; set; } = new List<ContractTerm>();    
+       
         public ContractStatus Status { get; set; }
     }
 }

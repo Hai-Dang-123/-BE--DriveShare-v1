@@ -11,8 +11,10 @@ namespace DAL.Entities
     public class Booking
     {
         public Guid BookingId { get; set; }
-        public Guid PostVehicleId { get; set; }
-        public PostVehicle PostVehicle { get; set; } = null!;
+        public Guid? PostVehicleId { get; set; }
+        public PostVehicle? PostVehicle { get; set; } = null!;
+        public Guid? PostItemId { get; set; }
+        public PostItem? PostItem { get; set; } = null!;
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
         public decimal TotalPrice { get; set; }
@@ -26,6 +28,11 @@ namespace DAL.Entities
         //public ICollection<Contract> Contracts { get; set; } = new List<Contract>();
         public Guid ContractId { get; set; }
         public Contract Contract { get; set; } = null!;
+        public Guid ReportCheckinId { get; set; }
+        public Report ReportCheckin { get; set; } = null!;
+        public Guid ReportCheckoutId { get; set; }
+        public Report ReportCheckout { get; set; } = null!;
+
     }
 
 }

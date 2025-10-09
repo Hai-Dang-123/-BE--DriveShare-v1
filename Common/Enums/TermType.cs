@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace Common.Enums
-{
-    public enum TermType
-    {
-        CONTRACT,
-        HANDOVER_REPORT,
-        RETURN_REPORT,
-    }
-}
+//namespace Common.Enums
+//{
+//    public enum TermType
+//    {
+//        CONTRACT,
+//        HANDOVER_REPORT,
+//        RETURN_REPORT,
+//    }
+//}

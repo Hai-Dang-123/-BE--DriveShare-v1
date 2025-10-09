@@ -23,6 +23,7 @@ namespace DAL.Entities
         public ICollection<UserToken> Tokens { get; set; } = new List<UserToken>();
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public ICollection<UserViolation> UserViolations { get; set; } = new List<UserViolation>();
 
     }
 }
