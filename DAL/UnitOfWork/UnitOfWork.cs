@@ -39,6 +39,7 @@ namespace DAL.UnitOfWork
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
             ClausesRepo = new ClausesRepository(_context);
+            ContractTemplateRepo = new ContractTemplateRepository(_context);
 
         }
 
@@ -93,7 +94,7 @@ namespace DAL.UnitOfWork
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
         public IClausesRepository ClausesRepo { get; private set; }
-
+        public IContractTemplateRepository ContractTemplateRepo { get; private set; }
         public async Task RollbackTransactionAsync()
         {
             if (_transaction != null)
