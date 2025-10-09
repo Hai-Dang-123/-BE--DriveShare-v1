@@ -20,6 +20,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 
+// ✅ Đăng ký DbContext (fix lỗi ConnectionString)
+builder.Services.AddApplicationServices(builder.Configuration);
+
+
 // Register Firebase config + upload service
 //builder.Services.Configure<FirebaseSetting>(
 //    builder.Configuration.GetSection("Firebase"));
