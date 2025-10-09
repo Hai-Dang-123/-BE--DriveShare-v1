@@ -31,6 +31,13 @@ namespace BLL.Services.Implement
 
         // upload images và verification lên firebase
 
+        // thêm images giấy tờ
+        // ekyc upload giấy tờ trước - sau 
+        // orc - trả về json
+        // create verification 
+
+
+
         public async Task<ResponseDTO> CreateVehicleAsync(CreateVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -86,13 +93,14 @@ namespace BLL.Services.Implement
             return new ResponseDTO("Vehicle created successfully", 201, true, newVehicle.VehicleId);
         }
 
+        // GET ALL (có ảnh)
         public async Task<ResponseDTO> GetAllVehiclesAsync()
         {
             var userId = _userUtility.GetUserIdFromToken();
             if (userId == Guid.Empty)
                 return new ResponseDTO(UserMessages.UNAUTHORIZED, 400, false);
 
-            var vehicles = await _unitOfWork.VehicleRepo.GetAllByUserIdAsync(userId);
+            var vehicles = await _unitOfWork.VehicleRepo.GetAllWithImagesByUserIdAsync(userId);
             if (vehicles == null || !vehicles.Any())
                 return new ResponseDTO("No vehicles found", 404, false);
 
@@ -104,19 +112,20 @@ namespace BLL.Services.Implement
                 Brand = v.Brand,
                 VehicleTypeId = v.VehicleTypeId,
                 UserId = v.UserId,
-                Status = v.Status.ToString()
+                Status = v.Status.ToString(),
+                ImageUrls = v.VehicleImages.Select(img => img.ImageUrl).ToList()
             });
 
             return new ResponseDTO("Vehicles retrieved successfully", 200, true, result);
         }
 
-        // READ BY ID
+        // GET BY ID (có ảnh)
         public async Task<ResponseDTO> GetVehicleByIdAsync(Guid id)
         {
             if (id == Guid.Empty)
                 return new ResponseDTO("Invalid vehicle id", 400, false);
 
-            var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(id);
+            var vehicle = await _unitOfWork.VehicleRepo.GetByIdWithImagesAsync(id);
             if (vehicle == null)
                 return new ResponseDTO("Vehicle not found", 404, false);
 
@@ -128,13 +137,13 @@ namespace BLL.Services.Implement
                 Brand = vehicle.Brand,
                 VehicleTypeId = vehicle.VehicleTypeId,
                 UserId = vehicle.UserId,
-                Status = vehicle.Status.ToString()
+                Status = vehicle.Status.ToString(),
+                ImageUrls = vehicle.VehicleImages.Select(img => img.ImageUrl).ToList()
             };
 
             return new ResponseDTO("Vehicle retrieved successfully", 200, true, dto);
         }
 
-        // UPDATE
         public async Task<ResponseDTO> UpdateVehicleAsync(UpdateVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -227,5 +236,34 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle deleted successfully", 200, true);
         }
+
+        public async Task<ResponseDTO> ChangeStatusAsync(ChangeVehicleStatusDTO dto)
+        {
+            var userId = _userUtility.GetUserIdFromToken();
+            if (userId == Guid.Empty)
+                return new ResponseDTO(UserMessages.UNAUTHORIZED, 400, false);
+
+            var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
+            if (vehicle == null)
+                return new ResponseDTO("Vehicle not found", 404, false);
+
+            if (vehicle.UserId != userId)
+                return new ResponseDTO("You do not own this vehicle", 403, false);
+
+            vehicle.Status = dto.NewStatus;
+
+            try
+            {
+                await _unitOfWork.VehicleRepo.UpdateAsync(vehicle);
+                await _unitOfWork.SaveChangeAsync();
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO($"Error: {ex.Message}", 500, false);
+            }
+
+            return new ResponseDTO($"Vehicle status updated to {dto.NewStatus}", 200, true);
+        }
+
     }
 }

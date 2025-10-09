@@ -10,8 +10,7 @@ namespace DAL.Entities
     public class Contract
     {
         public Guid ContractId { get; set; }
-        public Guid BookingId { get; set; }
-        public Booking Booking { get; set; } = null!;
+       
         public string Version { get; set; } = null!;
         public bool OwnerSigned { get; set; }
         public bool RenterSigned { get; set; }
@@ -19,7 +18,14 @@ namespace DAL.Entities
         // Tham chiếu đến Template gốc
         public Guid ContractTemplateId { get; set; }
         public ContractTemplate ContractTemplate { get; set; } = null!;
-        public ICollection<ContractTerm> Terms { get; set; } = new List<ContractTerm>();    
+       
         public ContractStatus Status { get; set; }
+
+        // Liên kết đến Booking (1-1)
+        public Guid? VehicleBookingId { get; set; }
+        public VehicleBooking? VehicleBooking { get; set; }
+
+        public Guid? ItemBookingId { get; set; }
+        public ItemBooking? ItemBooking { get; set; }
     }
 }

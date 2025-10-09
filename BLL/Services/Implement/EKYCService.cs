@@ -90,7 +90,7 @@ namespace BLL.Services.Implement
                     token = dto.Token,
                     challenge_code = dto.ChallengeCode ?? "1111"
                 };
-
+                    
                 request.Content = JsonContent.Create(body);
 
                 var response = await _httpClient.SendAsync(request);

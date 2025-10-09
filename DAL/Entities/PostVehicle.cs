@@ -20,6 +20,7 @@ namespace DAL.Entities
         public DateTime EndDate { get; set; }
         public Guid ClauseId { get; set; }   
         public Clause Clause { get; set; } = null!;
-        public ICollection<ContractTerm> ContractTerms { get; set; } = new List<ContractTerm>();
+        public ICollection<AddOption> AddOptions { get; set; } = new List<AddOption>();
+
     }
 }

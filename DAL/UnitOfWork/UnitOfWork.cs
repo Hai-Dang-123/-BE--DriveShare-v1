@@ -19,7 +19,7 @@ namespace DAL.UnitOfWork
         {
             _context = context;
 
-            BookingRepo = new BookingRepository(_context);
+            //BookingRepo = new BookingRepository(_context);
             ContractRepo = new ContractRepository(_context);
             ContractTermRepo = new ContractTermRepository(_context);
             NotificationRepo = new NotificationRepository(_context);
@@ -39,6 +39,9 @@ namespace DAL.UnitOfWork
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
             ClausesRepo = new ClausesRepository(_context);
+
+            VehicleBookingRepo = new VehicleBookingRepository(_context);
+            ItemBookingRepo = new ItemBookingRepository(_context);
 
         }
 
@@ -73,7 +76,9 @@ namespace DAL.UnitOfWork
         }
 
 
-        public IBookingRepository BookingRepo { get; private set; }
+        //public IBookingRepository BookingRepo { get; private set; } 
+        public IVehicleBookingRepository VehicleBookingRepo { get; private set; }
+        public IItemBookingRepository ItemBookingRepo { get; private set; }
         public IContractRepository ContractRepo { get; private set; }
         public IContractTermRepository ContractTermRepo { get; private set; }
         public INotificationRepository NotificationRepo { get; private set; }
