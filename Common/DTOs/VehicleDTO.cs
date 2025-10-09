@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -66,5 +67,14 @@ namespace Common.DTOs
 
         public List<string> ImageUrls { get; set; } = new();
     }
+    public class ChangeVehicleStatusDTO
+    {
+        [Required]
+        public Guid VehicleId { get; set; }
+
+        [Required]
+        public VehicleStatus NewStatus { get; set; }
+    }
+
 }
 
