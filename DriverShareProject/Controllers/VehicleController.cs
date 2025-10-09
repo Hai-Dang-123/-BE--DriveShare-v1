@@ -19,15 +19,53 @@ namespace DriverShareProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateVehicle([FromBody] CreateVehicleDTO dto)
+        public async Task<IActionResult> CreateVehicle([FromForm] CreateVehicleDTO dto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new ResponseDTO("Validation failed", 400, false, ModelState));
-            }
 
             var response = await _vehicleService.CreateVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllVehicles()
+        {
+            var response = await _vehicleService.GetAllVehiclesAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicleById(Guid id)
+        {
+            var response = await _vehicleService.GetVehicleByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateVehicle([FromForm] UpdateVehicleDTO dto)
+        {
+            var response = await _vehicleService.UpdateVehicleAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(Guid id)
+        {
+            var response = await _vehicleService.DeleteVehicleAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPut("status")]
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeVehicleStatusDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ResponseDTO("Invalid input", 400, false, ModelState));
+
+            var response = await _vehicleService.ChangeStatusAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
     }
 }
+

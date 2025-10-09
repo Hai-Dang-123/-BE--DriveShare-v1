@@ -21,6 +21,17 @@ namespace Common.Messages
         public const string LOGIN_SUCCESS = "Login successful.";
 
         public const string ERROR_OCCURRED = "An error occurred. Please try again later.";
+
+        // registration
+        public const string VERIFICATION_EMAIL_SENT = "A verification email has been sent to your email address.";
+        public const string EMAIL_VERIFIED = "Email successfully verified.";
+        public const string EMAIL_NOT_VERIFIED = "Email not verified. Please verify your email to proceed.";
+        public const string PASSWORD_RESET_EMAIL_SENT = "A password reset email has been sent to your email address.";
+        public const string PHONE_ALREADY_IN_USE = "This phone number is already registered.";
+
+        // token
+        public const string INVALID_REFRESH_TOKEN = "Invalid refresh token.";
+
     }
 
 }

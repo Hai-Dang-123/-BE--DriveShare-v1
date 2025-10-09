@@ -10,6 +10,7 @@ namespace Common.Enums
     {
         REFRESH,
         RESET_PASSWORD,
-        EMAIL_VERIFICATION
+        EMAIL_VERIFICATION,
+        ACCESS_TOKEN_EKYC,
     }
 }

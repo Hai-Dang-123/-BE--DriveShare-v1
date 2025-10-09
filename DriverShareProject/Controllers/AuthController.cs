@@ -21,6 +21,14 @@ namespace DriverShareProject.Controllers
             var response = await _authService.LoginAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+
+        // POST: api/Auth/register  
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterDTO dto)
+        {
+            var response = await _authService.RegisterAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
     }
 
 }

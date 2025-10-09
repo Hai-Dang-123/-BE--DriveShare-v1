@@ -1,4 +1,5 @@
-﻿using DAL.Context;
+﻿using Common.Enums;
+using DAL.Context;
 using DAL.Entities;
 using DAL.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,27 @@ namespace DAL.Repositories.Implement
                 .FirstOrDefaultAsync(v => v.PlateNumber == plateNumber);
         }
 
+        public async Task<IEnumerable<Vehicle>> GetAllByUserIdAsync(Guid userId)
+        {
+            return await _context.Vehicles
+                .Where(v => v.UserId == userId && v.Status != VehicleStatus.DELETED)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Vehicle>> GetAllWithImagesByUserIdAsync(Guid userId)
+        {
+            return await _context.Vehicles
+                .Include(v => v.VehicleImages)
+                .Include(v => v.VehicleType)
+                .Where(v => v.UserId == userId && v.Status != VehicleStatus.DELETED)
+                .ToListAsync();
+        }
+        public async Task<Vehicle?> GetByIdWithImagesAsync(Guid id)
+        {
+            return await _context.Vehicles
+                .Include(v => v.VehicleImages)
+                .Include(v => v.VehicleType)
+                .FirstOrDefaultAsync(v => v.VehicleId == id);
+        }
 
     }
 }

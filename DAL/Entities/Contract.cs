@@ -15,10 +15,11 @@ namespace DAL.Entities
         public string Version { get; set; } = null!;
         public bool OwnerSigned { get; set; }
         public bool RenterSigned { get; set; }
+
         // Tham chiếu đến Template gốc
         public Guid ContractTemplateId { get; set; }
         public ContractTemplate ContractTemplate { get; set; } = null!;
-        public ICollection<ContractTerm> Terms { get; set; } = new List<ContractTerm>();    
+       
         public ContractStatus Status { get; set; }
     }
 }

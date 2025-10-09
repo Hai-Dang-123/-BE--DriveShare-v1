@@ -589,3 +589,10 @@ obj/
 # Secrets
 DriverShareProject/DriverShareProject/appsetting.json
 DriverShareProject/DriverShareProject/firebase/
+DriverShareProject/appsettings.Development.json
+
+.github/
+/DriverShareProject/firebase
+DriverShareProject/appsettings.json
+
+/DAL/Migrations

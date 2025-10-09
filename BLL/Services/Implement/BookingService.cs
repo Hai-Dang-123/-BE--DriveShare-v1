@@ -16,6 +16,10 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
+        // create booking ( status pending )
+
+        // change status booking ( confirmed, completed, cancelled, deleted )
+
 
         public async Task<ResponseDTO> CreateBookingAsync(CreateBookingDTO dto)
         {
@@ -63,11 +67,9 @@ namespace BLL.Services.Implement
                 await _unitOfWork.BookingRepo.AddAsync(booking);
                 await _unitOfWork.SaveChangeAsync();
             }
-<<<<<<< Updated upstream
-            catch (Exception ex)
-=======
+
             catch (Exception)
->>>>>>> Stashed changes
+
             {
                 return new ResponseDTO("Có lỗi xảy ra khi tạo booking", 500, false);
             }

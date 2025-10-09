@@ -1,29 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Common.DTOs
 {
     public class CreateVehicleDTO
     {
         [Required(ErrorMessage = "Plate number is required")]
-        [StringLength(20, ErrorMessage = "Plate number cannot exceed 20 characters")]
+        [StringLength(20)]
         public string PlateNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Model is required")]
-        [StringLength(50, ErrorMessage = "Model cannot exceed 50 characters")]
+        [StringLength(50)]
         public string Model { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Brand is required")]
-        [StringLength(50, ErrorMessage = "Brand cannot exceed 50 characters")]
+        [StringLength(50)]
         public string Brand { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "VehicleTypeId is required")]
+        [Required]
         public Guid VehicleTypeId { get; set; }
+
+        // Upload ảnh kèm theo
+       
+        public List<IFormFile> Files { get; set; }
     }
 
+    public class UpdateVehicleDTO
+    {
+        [Required]
+        public Guid VehicleId { get; set; }
+
+        [Required, StringLength(20)]
+        public string PlateNumber { get; set; } = string.Empty;
+
+        [Required, StringLength(50)]
+        public string Model { get; set; } = string.Empty;
+
+        [Required, StringLength(50)]
+        public string Brand { get; set; } = string.Empty;
+
+        [Required]
+        public Guid VehicleTypeId { get; set; }
+
+        // Thêm ảnh mới
+        
+        public List<IFormFile>? NewFiles { get; set; }
+
+        // Danh sách ảnh cần xoá
+       
+        public List<Guid>? DeletedImageIds { get; set; }
+    }
+
+    public class VehicleReadDTO
+    {
+        public Guid VehicleId { get; set; }
+        public string PlateNumber { get; set; } = string.Empty;
+        public string Model { get; set; } = string.Empty;
+        public string Brand { get; set; } = string.Empty;
+        public Guid VehicleTypeId { get; set; }
+        public Guid UserId { get; set; }
+        public string Status { get; set; } = string.Empty;
+
+        // Danh sách URL ảnh
+
+        public List<string> ImageUrls { get; set; } = new();
+    }
+    public class ChangeVehicleStatusDTO
+    {
+        [Required]
+        public Guid VehicleId { get; set; }
+
+        [Required]
+        public VehicleStatus NewStatus { get; set; }
+    }
 
 }
+

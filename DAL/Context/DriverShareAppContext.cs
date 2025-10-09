@@ -27,6 +27,7 @@ namespace DAL.Context
         public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<VehicleImages> VehicleImages { get; set; }
         public DbSet<PostVehicle> PostVehicles { get; set; }
+        public DbSet<Clause> Clauses { get; set; }
 
         // ---------------------- Booking & Contracts ----------------------
         public DbSet<Booking> Bookings { get; set; }
@@ -122,6 +123,12 @@ namespace DAL.Context
                 .WithMany()
                 .HasForeignKey(pv => pv.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            // PostVehicle & Clause 
+            modelBuilder.Entity<PostVehicle>()
+                .HasOne(pv => pv.Clause)
+                .WithMany(c => c.Posts)
+                .HasForeignKey(pv => pv.ClauseId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Booking & PostVehicle
             modelBuilder.Entity<Booking>()
@@ -133,8 +140,16 @@ namespace DAL.Context
             // Booking & Contract
             modelBuilder.Entity<Contract>()
                 .HasOne(c => c.Booking)
-                .WithMany(b => b.Contracts)
-                .HasForeignKey(c => c.BookingId)
+                .WithOne(b => b.Contract)
+                .HasForeignKey<Contract>(c => c.BookingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // PostVehicle & ContractTerm
+            modelBuilder.Entity<ContractTerm>()
+                .HasOne(ct => ct.PostVehicle)
+                .WithMany(pv => pv.ContractTerms)
+                .HasForeignKey(ct => ct.PostVehicleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Contract & ContractTerm
