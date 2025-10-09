@@ -15,7 +15,7 @@ namespace DAL.Entities
         public string Description { get; set; } = null!;
         public DateTime ViolationDate { get; set; }
         public Guid BookingId { get; set; }
-        public Booking Booking { get; set; } = null!;
+        //public Booking Booking { get; set; } = null!;
         public ICollection<UserActivityLog> UserActivityLogs { get; set; } = new List<UserActivityLog>();
 
     }

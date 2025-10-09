@@ -6,7 +6,9 @@ namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBookingRepository BookingRepo { get; }
+        //IBookingRepository BookingRepo { get; }
+        IVehicleBookingRepository VehicleBookingRepo { get; }
+        IItemBookingRepository ItemBookingRepo { get; }
         IContractRepository ContractRepo { get; }
         IContractTermRepository ContractTermRepo { get; }
         INotificationRepository NotificationRepo { get; }

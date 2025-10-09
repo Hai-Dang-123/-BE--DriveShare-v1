@@ -12,8 +12,8 @@ namespace DAL.Entities
         public Guid VehicleInspectionId { get; set; }
 
         // 🔗 Gắn với booking cụ thể (chuyến thuê / giao hàng)
-        public Guid BookingId { get; set; }
-        public Booking Booking { get; set; } = null!;
+        public Guid ReportId { get; set; }
+        public Report Report { get; set; } = null!;
 
         // 🔹 Giao xe hay trả xe
         public InspectionType InspectionType { get; set; }

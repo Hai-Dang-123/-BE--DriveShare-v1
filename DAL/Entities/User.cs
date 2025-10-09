@@ -22,7 +22,12 @@ namespace DAL.Entities
         public ICollection<Verification> Verifications { get; set; } = new List<Verification>();
         public ICollection<UserToken> Tokens { get; set; } = new List<UserToken>();
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        //public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public ICollection<PostVehicle> PostVehicles { get; set; } = new List<PostVehicle>();
+        public ICollection<PostItem> PostItems { get; set; } = new List<PostItem>();
+        public ICollection<VehicleBooking> VehicleBookings { get; set; } = new List<VehicleBooking>();
+        public ICollection<ItemBooking> ItemBookings { get; set; } = new List<ItemBooking>();
+
         public ICollection<UserViolation> UserViolations { get; set; } = new List<UserViolation>();
 
     }

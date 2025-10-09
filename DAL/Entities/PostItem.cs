@@ -43,7 +43,7 @@ namespace DAL.Entities
         public bool RequiresInsurance { get; set; }       // yêu cầu bảo hiểm hàng hóa
         public bool RequiresSpecialHandling { get; set; } // cần xử lý đặc biệt (dỡ hàng, đóng kiện,…)
         public string? OtherRequirements { get; set; }    // yêu cầu khác (ghi chú tuỳ ý)
-        public ICollection<PostVehicle> PostVehicles { get; set; } = new List<PostVehicle>();
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+
     }
 }

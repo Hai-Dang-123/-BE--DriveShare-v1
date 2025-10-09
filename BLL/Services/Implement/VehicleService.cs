@@ -31,6 +31,13 @@ namespace BLL.Services.Implement
 
         // upload images và verification lên firebase
 
+        // thêm images giấy tờ
+        // ekyc upload giấy tờ trước - sau 
+        // orc - trả về json
+        // create verification 
+
+
+
         public async Task<ResponseDTO> CreateVehicleAsync(CreateVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
