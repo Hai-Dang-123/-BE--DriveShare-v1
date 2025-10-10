@@ -75,7 +75,7 @@ namespace DAL.Context
             // EF Core thường tự động nhận diện nếu các ID theo quy ước, nhưng liệt kê ra để rõ ràng
             modelBuilder.Entity<AddOption>().HasKey(ao => ao.AddOptionId);
             modelBuilder.Entity<ClauseTemplate>().HasKey(ct => ct.ClauseId);
-            modelBuilder.Entity<ClauseTerm>().HasKey(cc => cc.ClauseContentId);
+            modelBuilder.Entity<ClauseTerm>().HasKey(cc => cc.ClauseTermId);
             modelBuilder.Entity<ContractTemplate>().HasKey(ct => ct.ContractTemplateId);
             modelBuilder.Entity<ContractTerm>().HasKey(ct => ct.ContractTermId);
             modelBuilder.Entity<ContractTerm>().HasKey(cst => cst.ContractTermId);
