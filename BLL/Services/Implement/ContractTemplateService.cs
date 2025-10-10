@@ -43,7 +43,7 @@ namespace BLL.Services.Implement
                     var terms = contractTemplateDTO.Terms.Select(t => new ContractTerm
                     {
                         ContractTemplateId = template.ContractTemplateId,
-                        TermType = TermType.CONTRACT,
+                        
                         Content = t.Content,
                         IsMandatory = true
                     }).ToList();
