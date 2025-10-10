@@ -30,6 +30,7 @@ namespace DAL.UnitOfWork
         IContractTemplateRepository ContractTemplateRepo { get; }
         IClauseTemplateRepository ClauseTemplateRepo { get; }
 
+        IClauseTermRepository ClauseTermRepo { get; }
 
         // Save changes
 

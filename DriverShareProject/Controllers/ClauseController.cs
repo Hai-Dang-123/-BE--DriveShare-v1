@@ -14,36 +14,32 @@ namespace DriverShareProject.Controllers
         {
             _clausesService = clausesService;
         }
-        [HttpPost("Create Clause")]
+        [HttpPost("Create-Clause")]
         public async Task<IActionResult> CreateClause(CreateClauseTemplateDTO createClauseDTO)
         {
             var response = await _clausesService.CreateClauseAsync(createClauseDTO);
             return StatusCode(response.StatusCode, response);
         }
-        //[HttpPut("Update Clause")]
-        //public async Task<IActionResult> UpdateClause([FromBody] Common.DTOs.UpdateClauseDTO updateClauseDTO)
-        //{
-        //    var response = await _clausesService.UpdateClauseAsync(updateClauseDTO);
-        //    return StatusCode(response.StatusCode, response);
-        //}
-        //[HttpGet("Get All Clauses")]
-        //public async Task<IActionResult> GetAllClauses()
-        //{
-        //    var response = await _clausesService.GetAllClauseAsync();
-        //    return StatusCode(response.StatusCode, response);
-        //}
-        //[HttpGet("Get Clause by Id")]
-        //public async Task<IActionResult> GetClauseById(Guid id)
-        //{
-        //    var response = await _clausesService.GetClauseByIdAsync(id);
-        //    return StatusCode(response.StatusCode, response);
-        //}
-        //[HttpDelete("Delete Clause")]
-        //public async Task<IActionResult> DeleteClause(Guid id)
-        //{
-        //    var response = await _clausesService.DeleteClauseAsync(id);
-        //    return StatusCode(response.StatusCode, response);
-        //}
+        [HttpPut("Update-Clause")]
+        public async Task<IActionResult> UpdateClause(UpdateClauseTemplateDTO updateClauseDTO)
+        {
+            var response = await _clausesService.UpdateClauseAsync(updateClauseDTO);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get-Clause-By-id")]
+        public async Task<IActionResult> GetClauseByIdAsync(Guid clauseId)
+        {
+            var response = await _clausesService.GetClauseByIdAsync(clauseId);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("Get-All-Clause")]
+        public async Task<IActionResult> GetAllClauseAsync()
+        {
+            var response = await _clausesService.GetAllClausesAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+
+
 
     }
 }

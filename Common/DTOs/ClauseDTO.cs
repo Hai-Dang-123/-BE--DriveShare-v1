@@ -17,11 +17,27 @@ namespace Common.DTOs
         public string Title { get; set; } = null!;
         public List<ClauseContentDTO>? ClauseContents { get; set; }
     }
+    public class UpdateClauseTemplateDTO
+    {
+        public Guid ClauseId { get; set; }
+        public string Title { get; set; }
+        public string Version { get; set; }
+        public List<ClauseContentUpdateDTO> ClauseContents { get; set; }
+    }
+
     public class ClauseContentDTO
     {
-        public Guid clauseTemplateId { get; set; }  
+        
         public string Content { get; set; } = null!;
         public bool IsMandatory { get; set; }
         public int DisplayOrder { get; set; }
     }
+    public class ClauseContentUpdateDTO
+    {
+        public Guid? ClauseTermId { get; set; } 
+        public string Content { get; set; } = null!;
+        public bool IsMandatory { get; set; }
+        public int DisplayOrder { get; set; }
+    }
+
 }

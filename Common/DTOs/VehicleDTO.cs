@@ -23,7 +23,7 @@ namespace Common.DTOs
         public Guid VehicleTypeId { get; set; }
 
         // Upload ảnh kèm theo
-       
+
         public List<IFormFile> Files { get; set; }
     }
 
