@@ -11,7 +11,9 @@ namespace DAL.Entities
         public Guid ClauseId { get; set; }
         public string Version { get; set; } = null!;
         public string Title { get; set; } = null!;
-        public ICollection<ClauseContent> ClauseContents { get; set; } = new List<ClauseContent>();
+
+        public ICollection<ClauseTerm> Terms { get; set; } = new List<ClauseTerm>();
+
         public ICollection<PostVehicle> Posts { get; set; } = new List<PostVehicle>();
     }
 
