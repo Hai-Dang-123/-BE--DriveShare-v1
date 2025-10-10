@@ -106,12 +106,14 @@ namespace DAL.Context
             modelBuilder.Entity<Verification>().HasKey(v => v.VerificationId);
             modelBuilder.Entity<Wallet>().HasKey(w => w.WalletId);
 
+            modelBuilder.Entity<BaseContract>().HasKey(bc => bc.ContractId);
+            modelBuilder.Entity<BaseReport>().HasKey(br => br.ReportId);
 
             // ---------------------- TPH Inheritance for Contracts ----------------------
             // Contract base class mapping
             modelBuilder.Entity<BaseContract>()
                 .ToTable("Contracts") // All contracts in one table
-                .HasDiscriminator<string>("ContractType") // Column to distinguish types
+                .HasDiscriminator<string>("Type") // Column to distinguish types
                 .HasValue<VehicleContract>("VehicleContract")
                 .HasValue<ItemContract>("ItemContract");
 
@@ -119,7 +121,7 @@ namespace DAL.Context
             // Report base class mapping
             modelBuilder.Entity<BaseReport>()
                 .ToTable("Reports") // All reports in one table
-                .HasDiscriminator<string>("ReportType") // Column to distinguish types
+                .HasDiscriminator<string>("Type") // Column to distinguish types
                 .HasValue<VehicleBookingReport>("VehicleBookingReport")
                 .HasValue<ItemBookingReport>("ItemBookingReport");
 
