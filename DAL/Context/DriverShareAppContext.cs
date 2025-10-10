@@ -59,7 +59,7 @@ namespace DAL.Context
         //public DbSet<InspectionResolution> InspectionResolutions { get; set; } // DbSet cho entity mới
         public DbSet<Rule> Rules { get; set; }
         public DbSet<ClauseTemplate> ClauseTemplates { get; set; } // Đổi từ Clauses
-        public DbSet<ClauseContent> ClauseContents { get; set; } // DbSet cho entity mới
+        public DbSet<ClauseTerm> ClauseContents { get; set; } // DbSet cho entity mới
 
 
         // ---------------------- General ----------------------
@@ -75,7 +75,7 @@ namespace DAL.Context
             // EF Core thường tự động nhận diện nếu các ID theo quy ước, nhưng liệt kê ra để rõ ràng
             modelBuilder.Entity<AddOption>().HasKey(ao => ao.AddOptionId);
             modelBuilder.Entity<ClauseTemplate>().HasKey(ct => ct.ClauseId);
-            modelBuilder.Entity<ClauseContent>().HasKey(cc => cc.ClauseContentId);
+            modelBuilder.Entity<ClauseTerm>().HasKey(cc => cc.ClauseContentId);
             modelBuilder.Entity<ContractTemplate>().HasKey(ct => ct.ContractTemplateId);
             modelBuilder.Entity<ContractTerm>().HasKey(ct => ct.ContractTermId);
             modelBuilder.Entity<ContractTerm>().HasKey(cst => cst.ContractTermId);
@@ -106,12 +106,14 @@ namespace DAL.Context
             modelBuilder.Entity<Verification>().HasKey(v => v.VerificationId);
             modelBuilder.Entity<Wallet>().HasKey(w => w.WalletId);
 
+            modelBuilder.Entity<BaseContract>().HasKey(bc => bc.ContractId);
+            modelBuilder.Entity<BaseReport>().HasKey(br => br.ReportId);
 
             // ---------------------- TPH Inheritance for Contracts ----------------------
             // Contract base class mapping
             modelBuilder.Entity<BaseContract>()
                 .ToTable("Contracts") // All contracts in one table
-                .HasDiscriminator<string>("ContractType") // Column to distinguish types
+                .HasDiscriminator<string>("Type") // Column to distinguish types
                 .HasValue<VehicleContract>("VehicleContract")
                 .HasValue<ItemContract>("ItemContract");
 
@@ -119,7 +121,7 @@ namespace DAL.Context
             // Report base class mapping
             modelBuilder.Entity<BaseReport>()
                 .ToTable("Reports") // All reports in one table
-                .HasDiscriminator<string>("ReportType") // Column to distinguish types
+                .HasDiscriminator<string>("Type") // Column to distinguish types
                 .HasValue<VehicleBookingReport>("VehicleBookingReport")
                 .HasValue<ItemBookingReport>("ItemBookingReport");
 
@@ -346,7 +348,7 @@ namespace DAL.Context
 
 
             // ClauseTemplate ↔ ClauseContent
-            modelBuilder.Entity<ClauseContent>()
+            modelBuilder.Entity<ClauseTerm>()
                 .HasOne(cc => cc.ClauseTemplate)
                 .WithMany() // Không có collection ngược trong ClauseTemplate cho từng content
                 .HasForeignKey(cc => cc.ClauseTemplateId)

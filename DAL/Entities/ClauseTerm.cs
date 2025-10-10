@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class ClauseContent
+    public class ClauseTerm
     {
-        public Guid ClauseContentId { get; set; }
+        public Guid ClauseTermId { get; set; }
         public Guid ClauseTemplateId { get; set; }
         public ClauseTemplate ClauseTemplate { get; set; } = null!;
         public string Content { get; set; } = null!; // Nội dung của điều khoản
