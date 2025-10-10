@@ -10,7 +10,8 @@ namespace Common.Enums
     {
         DRAFT,
         ACTIVE,
-        TERMINATED,
-        EXPIRED
+        COMPLETED,
+        CANCELLED,
+        REJECTED
     }
 }

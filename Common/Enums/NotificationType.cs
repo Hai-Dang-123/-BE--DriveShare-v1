@@ -10,6 +10,10 @@ namespace Common.Enums
     {
         INFO,
         WARNING,
-        ALERT
+        ERROR,
+        BOOKING_UPDATED,
+        CONTRACT_SIGNED,
+        PAYMENT_CONFIRMED,
+        REPORT_SUBMITTED
     }
 }

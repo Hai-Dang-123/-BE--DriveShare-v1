@@ -84,42 +84,42 @@ namespace DAL.Context
                 new User
                 {
                     UserId = AdminID,
-                    UserName = "Admin_Name",
+                    Username = "Admin_Name",
                     Email = "admin@gmail.com",
                     RoleId = AdminRole,
                     PasswordHash = fixedHashedPassword,
                     PhoneNumber = "0123456789",
-                    UserStatus = UserStatus.ACTIVE
+                    Status = UserStatus.ACTIVE
                 },
                 new User
                 {
                     UserId = DriverID,
-                    UserName = "Driver_Name",
+                    Username = "Driver_Name",
                     Email = "driver@gmail.com",
                     RoleId = DriverRole,
                     PasswordHash = fixedHashedPassword,
                     PhoneNumber = "0123456789",
-                    UserStatus = UserStatus.ACTIVE
+                    Status = UserStatus.ACTIVE
                 },
                 new User
                 {
                     UserId = OwnerID,
-                    UserName = "Owner_Name",
+                    Username = "Owner_Name",
                     Email = "owner@gmail.com",
                     RoleId = OwnerRole,
                     PasswordHash = fixedHashedPassword,
                     PhoneNumber = "0123456789",
-                    UserStatus = UserStatus.ACTIVE
+                    Status = UserStatus.ACTIVE
                 },
                 new User
                 {
                     UserId = StaffID,
-                    UserName = "Staff_Name",
+                    Username = "Staff_Name",
                     Email = "staff@gmail.com",
                     RoleId = StaffRole,
                     PasswordHash = fixedHashedPassword,
                     PhoneNumber = "0123456789",
-                    UserStatus = UserStatus.ACTIVE
+                    Status = UserStatus.ACTIVE
                 }
 
             );
@@ -132,7 +132,7 @@ namespace DAL.Context
                 {
 
                     VehicleTypeId = Container_Type_Id,
-                    VehicleTypeName = "Container",
+                    Name = "Container",
                     
                 }
             );

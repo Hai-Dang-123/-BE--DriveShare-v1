@@ -1,4 +1,5 @@
 ﻿using Common.Enums;
+using Common.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,25 @@ namespace DAL.Entities
         public Guid TripStepInPlanId { get; set; }
         public Guid TripId { get; set; }
         public Trip Trip { get; set; } = null!;
-        public Guid TripDriverId { get; set; }
-        public TripDriver Driver { get; set; } = null!;
-        public int StepNumber { get; set; }
-        public string StartLocation { get; set; } = null!;
-        public double StartLatitude { get; set; }
-        public double StartLongitude { get; set; }
-        public string EndLocation { get; set; } = null!;
-        public double EndLatitude { get; set; }
-        public double EndLongitude { get; set; }
-        public double DistanceKm { get; set; }
-        public DateTime ETA { get; set; }
-        public RoadType RoadType { get; set; }
-        //public Guid? SuggestedRestStationId { get; set; }
-        //public RestStation? SuggestedRestStation { get; set; }
 
+        // Một bước trong chuyến đi có thể được giao cho một tài xế cụ thể trong chuyến đó
+        public Guid TripDriverId { get; set; }
+        public TripDriver TripDriver { get; set; } = null!; // Đổi Driver thành TripDriver để rõ ràng
+
+        public int StepNumber { get; set; } // Thứ tự bước
+
+        public Location StartLocation { get; set; } = null!;
+        public Location EndLocation { get; set; } = null!;
+
+        public double PlannedDistanceKm { get; set; } // Khoảng cách dự kiến cho bước này
+        public double? ActualDistanceKm { get; set; }
+
+        public DateTime PlannedArrivalTime { get; set; } // Thời gian đến dự kiến tại điểm kết thúc của bước này
+        public DateTime? ActualArrivalTime { get; set; }
+
+        public RoadType RoadType { get; set; }
         public TripStepStatus Status { get; set; }
 
-
+        public string? Notes { get; set; } // Ghi chú cho bước này (ví dụ: điểm dừng nghỉ)
     }
 }

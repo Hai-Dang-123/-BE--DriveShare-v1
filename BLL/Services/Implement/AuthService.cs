@@ -122,10 +122,10 @@ namespace BLL.Services.Implement
                 UserId = Guid.NewGuid(),
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
-                UserName = dto.FullName,
+                Username = dto.FullName,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 RoleId = role.RoleId,
-                UserStatus = UserStatus.ACTIVE,
+                Status = UserStatus.ACTIVE,
             };
 
             try

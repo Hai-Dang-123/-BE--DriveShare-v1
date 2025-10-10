@@ -28,7 +28,7 @@ namespace DAL.UnitOfWork
         IVehicleTypeRepository VehicleTypeRepo { get; }
         IWalletRepository WalletRepo { get; }
 
-        IClausesRepository ClausesRepo { get; }
+        IClauseTemplateRepository ClausesRepo { get; }
 
 
         // Save changes

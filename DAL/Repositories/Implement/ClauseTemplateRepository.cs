@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-    public class ClausesRepository : GenericRepository<Clause>, IClausesRepository
+    public class ClauseTemplateRepository : GenericRepository<ClauseTemplate>, IClauseTemplateRepository
     {
         private readonly DriverShareAppContext _context;
-        public ClausesRepository(DriverShareAppContext context) : base(context)
+        public ClauseTemplateRepository(DriverShareAppContext context) : base(context)
         {
             _context = context;
         }

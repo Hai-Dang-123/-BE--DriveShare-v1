@@ -9,10 +9,9 @@ namespace Common.Enums
     public enum ReportStatus
     {
         PENDING,
-        COMPLETED,
-        REVIEWED,
         APPROVED,
-        REJECTED,
+        DISPUTED,
+        COMPLETED,
         DELETED
     }
 }
