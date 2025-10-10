@@ -9,9 +9,10 @@ namespace Common.Enums
     public enum BookingStatus
     {
         PENDING,
-        PAID,
+        CONFIRMED,
         IN_PROGRESS,
         COMPLETED,
-        DELETED,
+        CANCELED,
+        REJECTED
     }
 }

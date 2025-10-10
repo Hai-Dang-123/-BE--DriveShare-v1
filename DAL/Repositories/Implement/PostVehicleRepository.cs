@@ -26,7 +26,7 @@ namespace DAL.Repositories.Implement
                .Include(v => v.Vehicle)
                    .ThenInclude(v => v.VehicleType)
                .Include(v => v.Owner)
-               .Include(v => v.Clause)
+               .Include(v => v.ClauseTemplate)
                .ToListAsync();
         }
 
@@ -34,7 +34,7 @@ namespace DAL.Repositories.Implement
         {
             return await _context.Set<PostVehicle>()
                 .Include(p => p.Owner)
-                .Include(p => p.Clause)
+                .Include(p => p.ClauseTemplate)
                 .Include(p => p.Vehicle)
                     .ThenInclude(v => v.VehicleType)
                 .Where(p => p.Status == status)
@@ -48,7 +48,7 @@ namespace DAL.Repositories.Implement
                 .Include(v => v.Vehicle)
                     .ThenInclude(v => v.VehicleType)
                 .Include(v => v.Owner)
-                .Include(v => v.Clause)
+                .Include(v => v.ClauseTemplate)
                 .ToListAsync();
         }
 
@@ -59,7 +59,7 @@ namespace DAL.Repositories.Implement
                 .Include(v => v.Vehicle)
                     .ThenInclude(v => v.VehicleType)
                 .Include(v => v.Owner)
-                .Include(v => v.Clause)  
+                .Include(v => v.ClauseTemplate)  
                 .FirstOrDefaultAsync();
         }
 

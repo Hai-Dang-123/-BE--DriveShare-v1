@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interface
 {
-    public interface IVehicleImagesRepository : IGenericRepository<VehicleImages>
+    public interface IVehicleImagesRepository : IGenericRepository<VehicleImage>
     {
     }
 }

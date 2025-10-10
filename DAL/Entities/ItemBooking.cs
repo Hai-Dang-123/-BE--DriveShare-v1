@@ -26,9 +26,10 @@ namespace DAL.Entities
         public DateTime? PickupDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
-        public Contract Contract { get; set; } = null!;
-        public Guid ContractId { get; set; }
-        public ICollection<Report> Reports { get; set; } = new List<Report>();
+        // Một ItemBooking sẽ có một ItemContract
+        public Guid ItemContractId { get; set; }
+        public ItemContract ItemContract { get; set; } = null!;
+        public ICollection<ItemBookingReport> Reports { get; set; } = new List<ItemBookingReport>();
     }
 
 }

@@ -49,10 +49,10 @@ namespace BLL.Services.Implement
                 UserId = Guid.NewGuid(),
                 Email = dto.Email,
                 PasswordHash = hashedPassword,
-                UserName = dto.FullName,
+                Username = dto.FullName,
                 PhoneNumber = dto.PhoneNumber,
                 RoleId = role.RoleId,
-                UserStatus = UserStatus.ACTIVE
+                Status = UserStatus.ACTIVE
             };
 
             // lưu vào db ( nhớ try - catch )
@@ -90,7 +90,7 @@ namespace BLL.Services.Implement
             }
 
             // xóa user ( soft )
-            user.UserStatus = UserStatus.DELETED;
+            user.Status = UserStatus.DELETED;
 
             // lưu lại vào data
             try

@@ -59,7 +59,7 @@ namespace BLL.Services.Implement
                 Model = dto.Model.Trim(),
                 Brand = dto.Brand.Trim(),
                 VehicleTypeId = dto.VehicleTypeId,
-                UserId = userId,
+                OwnerUserId = userId,
                 Status = VehicleStatus.ACTIVE,
             };
 
@@ -73,7 +73,7 @@ namespace BLL.Services.Implement
                     foreach (var file in dto.Files)
                     {
                         var url = await _firebaseUpload.UploadFileAsync(file, userId, FirebaseFileType.VEHICLE_IMAGES);
-                        var image = new VehicleImages
+                        var image = new VehicleImage
                         {
                             VehicleImageId = Guid.NewGuid(),
                             VehicleId = newVehicle.VehicleId,
@@ -111,9 +111,9 @@ namespace BLL.Services.Implement
                 Model = v.Model,
                 Brand = v.Brand,
                 VehicleTypeId = v.VehicleTypeId,
-                UserId = v.UserId,
+                UserId = v.OwnerUserId,
                 Status = v.Status.ToString(),
-                ImageUrls = v.VehicleImages.Select(img => img.ImageUrl).ToList()
+                ImageUrls = v.Images.Select(img => img.ImageUrl).ToList()
             });
 
             return new ResponseDTO("Vehicles retrieved successfully", 200, true, result);
@@ -136,9 +136,9 @@ namespace BLL.Services.Implement
                 Model = vehicle.Model,
                 Brand = vehicle.Brand,
                 VehicleTypeId = vehicle.VehicleTypeId,
-                UserId = vehicle.UserId,
+                UserId = vehicle.OwnerUserId,
                 Status = vehicle.Status.ToString(),
-                ImageUrls = vehicle.VehicleImages.Select(img => img.ImageUrl).ToList()
+                ImageUrls = vehicle.Images.Select(img => img.ImageUrl).ToList()
             };
 
             return new ResponseDTO("Vehicle retrieved successfully", 200, true, dto);
@@ -154,7 +154,7 @@ namespace BLL.Services.Implement
             if (vehicle == null)
                 return new ResponseDTO("Vehicle not found", 404, false);
 
-            if (vehicle.UserId != userId)
+            if (vehicle.OwnerUserId != userId)
                 return new ResponseDTO("You do not own this vehicle", 403, false);
 
             vehicle.PlateNumber = dto.PlateNumber.Trim();
@@ -183,7 +183,7 @@ namespace BLL.Services.Implement
                     foreach (var file in dto.NewFiles)
                     {
                         var url = await _firebaseUpload.UploadFileAsync(file, userId, FirebaseFileType.VEHICLE_IMAGES);
-                        var image = new VehicleImages
+                        var image = new VehicleImage
                         {
                             VehicleImageId = Guid.NewGuid(),
                             VehicleId = vehicle.VehicleId,
@@ -219,7 +219,7 @@ namespace BLL.Services.Implement
             if (vehicle == null)
                 return new ResponseDTO("Vehicle not found", 404, false);
 
-            if (vehicle.UserId != userId)
+            if (vehicle.OwnerUserId != userId)
                 return new ResponseDTO("You do not own this vehicle", 403, false);
 
             vehicle.Status = VehicleStatus.DELETED;
@@ -247,7 +247,7 @@ namespace BLL.Services.Implement
             if (vehicle == null)
                 return new ResponseDTO("Vehicle not found", 404, false);
 
-            if (vehicle.UserId != userId)
+            if (vehicle.OwnerUserId != userId)
                 return new ResponseDTO("You do not own this vehicle", 403, false);
 
             vehicle.Status = dto.NewStatus;

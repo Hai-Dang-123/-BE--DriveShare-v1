@@ -17,5 +17,9 @@ namespace DAL.Entities
         public string Message { get; set; } = null!;
         public bool IsRead { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        // Thêm RelatedEntityId để biết thông báo này liên quan đến đối tượng nào
+        public Guid? RelatedEntityId { get; set; }
+        public string? RelatedEntityType { get; set; } // VD: "VehicleBooking", "ItemBooking", "Report"
     }
 }

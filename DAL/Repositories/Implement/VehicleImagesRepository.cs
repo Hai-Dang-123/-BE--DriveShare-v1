@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-    public class VehicleImagesRepository : GenericRepository<VehicleImages>, IVehicleImagesRepository
+    public class VehicleImagesRepository : GenericRepository<VehicleImage>, IVehicleImagesRepository
     {
         private readonly DriverShareAppContext _context;
         public VehicleImagesRepository(DriverShareAppContext context) : base(context)

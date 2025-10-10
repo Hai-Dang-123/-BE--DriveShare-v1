@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interface
 {
-    public interface IClausesRepository : IGenericRepository<Clause>
+    public interface IClauseTemplateRepository : IGenericRepository<ClauseTemplate>
     {
     }
 }

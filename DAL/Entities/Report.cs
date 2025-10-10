@@ -23,7 +23,7 @@ namespace DAL.Entities
         public bool OwnerSigned { get; set; }
         public bool RenterSigned { get; set; }
         public Guid ReportTemplateId { get; set; }
-        public ReportTemplate ReportTemplate { get; set; }
+        public ReportTemplate ReportTemplate { get; set; } = null!;
         public ReportStatus ReportStatus { get; set; }
         public ICollection<VehicleInspection> VehicleInspections { get; set; } = new List<VehicleInspection>();
 
