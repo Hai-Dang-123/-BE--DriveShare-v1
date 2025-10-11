@@ -61,6 +61,8 @@ namespace BLL.Services.Implement
                 VehicleTypeId = dto.VehicleTypeId,
                 OwnerUserId = userId,
                 Status = VehicleStatus.ACTIVE,
+                YearOfManufacture = dto.year,
+                Color = dto.color
             };
 
             try

@@ -30,6 +30,7 @@ namespace BLL.Services.Implement
                 var template = new ContractTemplate
                 {
                     ContractTemplateId = Guid.NewGuid(),
+                    Name = contractTemplateDTO.Name,
                     Version = contractTemplateDTO.Version
                 };
 
@@ -42,10 +43,10 @@ namespace BLL.Services.Implement
                 {
                     var terms = contractTemplateDTO.Terms.Select(t => new ContractTerm
                     {
+                        ContractTermId = Guid.NewGuid(),
                         ContractTemplateId = template.ContractTemplateId,
-                        
                         Content = t.Content,
-                        IsMandatory = true
+                        IsMandatory = t.IsMandatory
                     }).ToList();
 
                     _unitOfWork.ContractTermRepo.AddRange(terms);
@@ -55,10 +56,18 @@ namespace BLL.Services.Implement
 
                 return new ResponseDTO
                 {
+                    StatusCode = 201,
                     IsSuccess = true,
                     Message = "Contract template created successfully",
-                    Result = template
+                    Result = new
+                    {
+                        template.ContractTemplateId,
+                        template.Name,
+                        template.Version,
+                        Terms = contractTemplateDTO.Terms
+                    }
                 };
+
             }
             catch (Exception ex)
             {
@@ -66,6 +75,92 @@ namespace BLL.Services.Implement
                 {
                     IsSuccess = false,
                     Message = $"Error creating contract template: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDTO> GetAllContractTemplateasync()
+        {
+            try
+            {
+                var templates = await _unitOfWork.ContractTemplateRepo.GetAllWithTermsAsync();
+
+                var result = templates.Select(t => new
+                {
+                    t.ContractTemplateId,
+                    t.Name,
+                    t.Version,
+                    Terms = t.ContractTerms.Select(term => new
+                    {
+                        term.ContractTermId,
+                        term.Content,
+                        term.IsMandatory
+                    })
+                });
+
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Get all contract templates successfully",
+                    Result = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error retrieving contract templates: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDTO> GetContractTemplateByIdAsync(Guid id)
+        {
+            try
+            {
+                var template = await _unitOfWork.ContractTemplateRepo.GetByIdWithTermsAsync(id);
+
+                if (template == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Không tìm thấy mẫu hợp đồng."
+                    };
+                }
+
+                // Map thủ công sang DTO
+                var dto = new ContractTemplateResponseDTO
+                {
+                    ContractTemplateId = template.ContractTemplateId,
+                    Name = template.Name,
+                    Version = template.Version,
+                    CreatedAt = template.CreatedAt,
+                    Terms = template.ContractTerms?.Select(term => new ContractTermResponseDTO
+                    {
+                        ContractTemplateId = term.ContractTemplateId,
+                        ContractTermId = term.ContractTermId,
+                        IsMandatory = term.IsMandatory,
+                        Content = term.Content
+                    }).ToList() ?? new List<ContractTermResponseDTO>()
+                };
+
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Lấy mẫu hợp đồng thành công.",
+                    Result = dto
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Đã xảy ra lỗi: {ex.Message}"
                 };
             }
         }

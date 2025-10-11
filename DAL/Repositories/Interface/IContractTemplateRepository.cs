@@ -9,6 +9,9 @@ namespace DAL.Repositories.Interface
 {
     public interface IContractTemplateRepository : IGenericRepository<ContractTemplate>
     {
+         Task<ContractTemplate?> GetByIdWithTermsAsync(Guid id);
+        Task<IEnumerable<ContractTemplate>> GetAllWithTermsAsync();
 
+        
     }
 }
