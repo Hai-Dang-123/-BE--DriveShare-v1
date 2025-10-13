@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Common.DTOs
 {
     public class CreateVehicleDTO
@@ -19,12 +18,16 @@ namespace Common.DTOs
         [StringLength(50)]
         public string Brand { get; set; } = string.Empty;
 
+        // ✅ Thêm Color
+        [Required(ErrorMessage = "Color is required")]
+        [StringLength(30)]
+        public string Color { get; set; } = string.Empty;
+
         [Required]
         public Guid VehicleTypeId { get; set; }
 
         // Upload ảnh kèm theo
-       
-        public List<IFormFile> Files { get; set; }
+        public List<IFormFile> Files { get; set; } = new();
     }
 
     public class UpdateVehicleDTO
@@ -41,15 +44,17 @@ namespace Common.DTOs
         [Required, StringLength(50)]
         public string Brand { get; set; } = string.Empty;
 
+        // ✅ Thêm Color
+        [Required, StringLength(30)]
+        public string Color { get; set; } = string.Empty;
+
         [Required]
         public Guid VehicleTypeId { get; set; }
 
         // Thêm ảnh mới
-        
         public List<IFormFile>? NewFiles { get; set; }
 
         // Danh sách ảnh cần xoá
-       
         public List<Guid>? DeletedImageIds { get; set; }
     }
 
@@ -59,14 +64,18 @@ namespace Common.DTOs
         public string PlateNumber { get; set; } = string.Empty;
         public string Model { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
+
+        // ✅ Thêm Color
+        public string Color { get; set; } = string.Empty;
+
         public Guid VehicleTypeId { get; set; }
         public Guid UserId { get; set; }
         public string Status { get; set; } = string.Empty;
 
         // Danh sách URL ảnh
-
         public List<string> ImageUrls { get; set; } = new();
     }
+
     public class ChangeVehicleStatusDTO
     {
         [Required]
@@ -75,6 +84,4 @@ namespace Common.DTOs
         [Required]
         public VehicleStatus NewStatus { get; set; }
     }
-
 }
-

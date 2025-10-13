@@ -16,17 +16,20 @@ namespace BLL.Services.Implement
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserUtility _userUtility;
         private readonly IFirebaseUploadService _firebaseUpload;
+        private readonly IEKYCService _ekycService;
 
         // ekyc
         // change status
         // get all 
         
 
-        public VehicleService(IUnitOfWork unitOfWork, UserUtility userUtility, IFirebaseUploadService firebaseUpload)
+        public VehicleService(IUnitOfWork unitOfWork, UserUtility userUtility, IFirebaseUploadService firebaseUpload,IEKYCService eKYCService)
         {
             _unitOfWork = unitOfWork;
             _userUtility = userUtility;
             _firebaseUpload = firebaseUpload;
+            _ekycService = eKYCService;
+
         }
 
         // upload images và verification lên firebase
@@ -52,22 +55,26 @@ namespace BLL.Services.Implement
             if (vehicleType == null)
                 return new ResponseDTO("Vehicle type not found", 404, false);
 
+            // ✅ Thêm đầy đủ dữ liệu cần thiết
             var newVehicle = new Vehicle
             {
                 VehicleId = Guid.NewGuid(),
                 PlateNumber = dto.PlateNumber.Trim(),
                 Model = dto.Model.Trim(),
                 Brand = dto.Brand.Trim(),
+                Color = dto.Color.Trim(), // ✅ thêm Color
                 VehicleTypeId = dto.VehicleTypeId,
                 OwnerUserId = userId,
-                Status = VehicleStatus.ACTIVE,
+                YearOfManufacture = DateTime.Now.Year, // ✅ tạm thời gán mặc định năm hiện tại
+                CreatedAt = DateTime.UtcNow, // ✅ thêm ngày tạo
+                Status = VehicleStatus.ACTIVE
             };
 
             try
             {
                 await _unitOfWork.VehicleRepo.AddAsync(newVehicle);
 
-                // Upload ảnh nếu có
+                // ✅ Upload ảnh nếu có
                 if (dto.Files != null && dto.Files.Any())
                 {
                     foreach (var file in dto.Files)
@@ -80,6 +87,8 @@ namespace BLL.Services.Implement
                             ImageUrl = url
                         };
                         await _unitOfWork.VehicleImagesRepo.AddAsync(image);
+
+                   
                     }
                 }
 
@@ -92,6 +101,7 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle created successfully", 201, true, newVehicle.VehicleId);
         }
+
 
         // GET ALL (có ảnh)
         public async Task<ResponseDTO> GetAllVehiclesAsync()
@@ -110,6 +120,7 @@ namespace BLL.Services.Implement
                 PlateNumber = v.PlateNumber,
                 Model = v.Model,
                 Brand = v.Brand,
+                Color = v.Color,
                 VehicleTypeId = v.VehicleTypeId,
                 UserId = v.OwnerUserId,
                 Status = v.Status.ToString(),
@@ -135,6 +146,7 @@ namespace BLL.Services.Implement
                 PlateNumber = vehicle.PlateNumber,
                 Model = vehicle.Model,
                 Brand = vehicle.Brand,
+                Color = vehicle.Color,
                 VehicleTypeId = vehicle.VehicleTypeId,
                 UserId = vehicle.OwnerUserId,
                 Status = vehicle.Status.ToString(),
@@ -160,6 +172,7 @@ namespace BLL.Services.Implement
             vehicle.PlateNumber = dto.PlateNumber.Trim();
             vehicle.Model = dto.Model.Trim();
             vehicle.Brand = dto.Brand.Trim();
+            vehicle.Color = dto.Color.Trim();
             vehicle.VehicleTypeId = dto.VehicleTypeId;
 
             try
