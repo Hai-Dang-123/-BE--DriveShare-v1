@@ -31,6 +31,8 @@ namespace DAL.UnitOfWork
         IClauseTemplateRepository ClauseTemplateRepo { get; }
 
         IClauseTermRepository ClauseTermRepo { get; }
+        IVehicleContractRepository vehicleContractRepo { get; }
+        IItemContractRepository ItemContractRepo { get; }
 
         // Save changes
 
