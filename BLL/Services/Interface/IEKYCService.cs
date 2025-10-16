@@ -11,7 +11,10 @@ namespace BLL.Services.Interface
 {
     public interface IEKYCService
     {
-        Task<ResponseDTO> UploadFileAsync(EKYCUploadRequestDTO requestDto);
+        Task<string?> UploadFileAsync(EKYCUploadRequestDTO requestDto);
         Task<ResponseDTO> OcrAsync(EKYCOcrRequestDTO dto);
+
+        //HoangTest
+        Task<string> ReadVehicleDocumentAsync(string frontUrl, string? backUrl);
     }
 }
