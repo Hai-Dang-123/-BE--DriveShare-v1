@@ -51,5 +51,14 @@ namespace DriverShareProject.Controllers
             var result = await _verificationService.GetVerificationByVehicleIdAsync(vehicleId);
             return StatusCode(result.StatusCode, result);
         }
+        // ✅ Lấy danh sách trạng thái xác minh của user hiện tại (CCCD, Bằng lái, Giấy xe,...)
+        [HttpGet("my-status")]
+        
+        public async Task<IActionResult> GetMyStatus()
+        {
+            var result = await _verificationService.GetMyVerificationStatusAsync();
+            return StatusCode(result.StatusCode, result);
+        }
+
     }
 }

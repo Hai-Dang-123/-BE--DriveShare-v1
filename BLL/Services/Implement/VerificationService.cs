@@ -187,6 +187,39 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO(isApproved ? "Vehicle verified successfully" : "Verification rejected", 200, true);
         }
+        // ✅ Step 5: Lấy trạng thái xác thực của người dùng hiện tại
+        public async Task<ResponseDTO> GetMyVerificationStatusAsync()
+        {
+            var userId = _userUtility.GetUserIdFromToken();
+            if (userId == Guid.Empty)
+                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+
+            // 🔹 Lấy danh sách xe mà user này sở hữu
+            var vehicles = await _unitOfWork.VehicleRepo.GetAllByListAsync(v => v.OwnerUserId == userId);
+            var vehicleIds = vehicles.Select(v => v.VehicleId).ToList();
+
+            // 🔹 Lấy danh sách xác minh: bao gồm xác minh user & xác minh xe
+            var verifications = await _unitOfWork.VerificationRepo.GetAllByListAsync(v =>
+                v.UserId == userId || (v.VehicleId != null && vehicleIds.Contains(v.VehicleId.Value)));
+
+            if (verifications == null || !verifications.Any())
+                return new ResponseDTO("No verifications found for this user", 404, false);
+
+            // 🔹 Map dữ liệu ra DTO
+            var result = verifications.Select(v => new VerificationStatusReadDTO
+            {
+                VerificationId = v.VerificationId,
+                DocType = v.DocumentType.ToString(),
+                FrontDocumentUrl = v.FrontDocumentUrl,
+                BackDocumentUrl = v.BackDocumentUrl,
+                Status = v.Status.ToString(),
+                Note = v.AdminNotes,
+                CreatedAt = v.CreatedAt
+            }).OrderByDescending(v => v.CreatedAt).ToList();
+
+            return new ResponseDTO("Fetched verification status successfully", 200, true, result);
+        }
+
 
     }
 

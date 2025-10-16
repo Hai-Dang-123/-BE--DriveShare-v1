@@ -50,4 +50,17 @@ namespace Common.DTOs
         public string? RawResultJson { get; set; }
         public DateTime CreatedAt { get; set; }
     }
+
+
+    // ✅ Kết quả trả về khi lấy trạng thái xác thực của người dùng
+    public class VerificationStatusReadDTO
+    {
+        public Guid VerificationId { get; set; }
+        public string DocType { get; set; } = string.Empty;
+        public string? FrontDocumentUrl { get; set; }
+        public string? BackDocumentUrl { get; set; }
+        public string? Status { get; set; }
+        public string? Note { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
 }

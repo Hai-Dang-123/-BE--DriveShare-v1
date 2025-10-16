@@ -47,5 +47,16 @@ namespace DAL.Repositories.Implement
                 .FirstOrDefaultAsync(v => v.VehicleId == id);
         }
 
+        public async Task<Vehicle?> GetByIdWithFullDetailAsync(Guid id)
+        {
+            return await _context.Vehicles
+                .Include(v => v.Images)
+                .Include(v => v.VehicleType)
+                .Include(v => v.OwnerUser)
+                .Include(v => v.PostsForRent.Where(p => p.Status == PostStatus.ACTIVE))
+                .FirstOrDefaultAsync(v => v.VehicleId == id && v.Status != VehicleStatus.DELETED);
+        }
+
+
     }
 }

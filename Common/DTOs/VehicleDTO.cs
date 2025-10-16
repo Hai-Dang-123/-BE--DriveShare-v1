@@ -76,6 +76,46 @@ namespace Common.DTOs
         public List<string> ImageUrls { get; set; } = new();
     }
 
+    // 🔹 DETAIL DTOs
+    // =============================
+
+    public class VehicleImageDTO
+    {
+        public Guid ImageId { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+    }
+
+    public class OwnerDTO
+    {
+        public Guid UserId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+    }
+
+    public class VehicleBasicDTO
+    {
+        public Guid VehicleId { get; set; }
+        public string Brand { get; set; } = string.Empty;
+        public string Model { get; set; } = string.Empty;
+        public string VehicleTypeName { get; set; } = string.Empty;
+        public string LicensePlate { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
+        public string? Transmission { get; set; }
+        public string? FuelType { get; set; }
+        public int? Seats { get; set; }
+        public List<VehicleImageDTO> Images { get; set; } = new();
+    }
+
+    public class VehicleDetailDTO
+    {
+        public Guid PostVehicleId { get; set; }
+        public decimal DailyPrice { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public VehicleBasicDTO Vehicle { get; set; } = new();
+        public OwnerDTO Owner { get; set; } = new();
+    }
+
     public class ChangeVehicleStatusDTO
     {
         [Required]
@@ -85,3 +125,4 @@ namespace Common.DTOs
         public VehicleStatus NewStatus { get; set; }
     }
 }
+

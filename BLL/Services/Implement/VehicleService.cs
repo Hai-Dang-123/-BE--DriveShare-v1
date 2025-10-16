@@ -278,5 +278,49 @@ namespace BLL.Services.Implement
             return new ResponseDTO($"Vehicle status updated to {dto.NewStatus}", 200, true);
         }
 
+        public async Task<ResponseDTO> GetVehicleDetailAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+                return new ResponseDTO("Invalid vehicle id", 400, false);
+
+            var vehicle = await _unitOfWork.VehicleRepo.GetByIdWithFullDetailAsync(id);
+            if (vehicle == null)
+                return new ResponseDTO("Vehicle not found", 404, false);
+
+            var post = vehicle.PostsForRent.FirstOrDefault(p => p.Status == PostStatus.ACTIVE);
+            if (post == null)
+                return new ResponseDTO("No active post found for this vehicle", 404, false);
+
+            var dto = new VehicleDetailDTO
+            {
+                PostVehicleId = post.PostVehicleId,
+                DailyPrice = post.DailyPrice,
+                Description = post.Description ?? "Không có mô tả",
+                Status = post.Status.ToString(),
+                Vehicle = new VehicleBasicDTO
+                {
+                    VehicleId = vehicle.VehicleId,
+                    Brand = vehicle.Brand,
+                    Model = vehicle.Model,
+                    VehicleTypeName = vehicle.VehicleType?.Name ?? "",
+                    LicensePlate = vehicle.PlateNumber,
+                    Color = vehicle.Color,
+                    Images = vehicle.Images.Select(i => new VehicleImageDTO
+                    {
+                        ImageId = i.VehicleImageId,
+                        ImageUrl = i.ImageUrl
+                    }).ToList()
+                },
+                Owner = new OwnerDTO
+                {
+                    UserId = vehicle.OwnerUser.UserId,
+                    Name = vehicle.OwnerUser.DisplayName ?? $"{vehicle.OwnerUser.LastName} {vehicle.OwnerUser.FirstName}",
+                    Phone = vehicle.OwnerUser.PhoneNumber
+                }
+            };
+
+            return new ResponseDTO("Lấy chi tiết xe thành công", 200, true, dto);
+        }
+
     }
 }

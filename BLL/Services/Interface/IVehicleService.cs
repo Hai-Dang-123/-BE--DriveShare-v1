@@ -15,6 +15,8 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> UpdateVehicleAsync(UpdateVehicleDTO dto);
         Task<ResponseDTO> DeleteVehicleAsync(Guid id);
         Task<ResponseDTO> ChangeStatusAsync(ChangeVehicleStatusDTO dto);
+        Task<ResponseDTO> GetVehicleDetailAsync(Guid id);
+
 
     }
 }
