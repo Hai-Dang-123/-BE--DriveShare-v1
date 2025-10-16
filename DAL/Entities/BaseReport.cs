@@ -18,7 +18,6 @@ namespace DAL.Entities
         public ReportStatus Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? SignedAt { get; set; }
-
         public Guid ReportTemplateId { get; set; }
         public ReportTemplate ReportTemplate { get; set; } = null!;
 

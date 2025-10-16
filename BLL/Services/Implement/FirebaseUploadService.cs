@@ -27,6 +27,10 @@ namespace BLL.Services.Implement
                 _firebaseSetting.TokenPath);
 
             var credential = GoogleCredential.FromFile(credentialPath);
+
+
+
+
             _storageClient = StorageClient.Create(credential);
         }
 

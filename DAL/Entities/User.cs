@@ -11,7 +11,7 @@ namespace DAL.Entities
     {
         public Guid UserId { get; set; }
         public string Username { get; set; } = null!; // Đổi UserName thành Username (thường là để đăng nhập)
-        public string? DisplayName { get; set; } // Tên hiển thị (có thể là FullName)
+
         public string Email { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
@@ -27,9 +27,7 @@ namespace DAL.Entities
         public DateTime? LastLoginAt { get; set; }
         public UserStatus Status { get; set; } = UserStatus.ACTIVE; // Đổi UserStatus thành Status
 
-        // Profile information
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
         public string? Address { get; set; }
         public string? AvatarUrl { get; set; }

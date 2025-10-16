@@ -29,6 +29,7 @@ namespace DAL.UnitOfWork
         IWalletRepository WalletRepo { get; }
 
         IClauseTemplateRepository ClausesRepo { get; }
+        IPostItemRepository PostItemRepo { get; }
 
 
         // Save changes

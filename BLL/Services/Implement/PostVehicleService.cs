@@ -26,13 +26,7 @@ namespace BLL.Services.Implement
 
         
 
-        // update bài post ( status pending ) -DONE
-        // delete bài post ( status deleted ) owner vs staff - DONE
-        // get all bài post của owner -DONE
-        // get all bài post của driver -DONE
-        // get all bài post with status Pendding( staff ) -DONE
-        // get bài post theo id  -DONE
-        // change status bài post ( request status ) - DONE
+        // update
 
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {

@@ -42,6 +42,7 @@ namespace DAL.UnitOfWork
 
             VehicleBookingRepo = new VehicleBookingRepository(_context);
             ItemBookingRepo = new ItemBookingRepository(_context);
+            PostItemRepo = new PostItemRepository(_context);
 
         }
 
@@ -98,6 +99,7 @@ namespace DAL.UnitOfWork
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
         public IClauseTemplateRepository ClausesRepo { get; private set; }
+        public IPostItemRepository PostItemRepo { get; private set; }
 
         public async Task RollbackTransactionAsync()
         {

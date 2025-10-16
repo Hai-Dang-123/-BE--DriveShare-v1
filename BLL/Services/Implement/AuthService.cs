@@ -55,6 +55,7 @@ namespace BLL.Services.Implement
             var claims = new List<Claim>
             {
                 new Claim(JwtConstant.KeyClaim.userId, user.UserId.ToString()),
+                new Claim(JwtConstant.KeyClaim.fullName, user.Username),
                 new Claim(JwtConstant.KeyClaim.Role, user.Role.RoleName)
             };
 

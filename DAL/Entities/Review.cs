@@ -19,11 +19,9 @@ namespace DAL.Entities
         public ReviewCategory Category { get; set; } // VD: Vehicle, Renter, Owner, Driver
         public string? ResponseComment { get; set; } // Phản hồi từ người được đánh giá
         public DateTime CreatedAt { get; set; }
-
         // Thêm các ID liên quan để biết review này về cái gì
         public Guid? RelatedVehicleBookingId { get; set; }
         public VehicleBooking? RelatedVehicleBooking { get; set; }
-
         public Guid? RelatedItemBookingId { get; set; }
         public ItemBooking? RelatedItemBooking { get; set; }
 
