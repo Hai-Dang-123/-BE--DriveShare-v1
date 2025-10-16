@@ -9,5 +9,9 @@ namespace DAL.Repositories.Interface
 {
     public interface IClauseTemplateRepository : IGenericRepository<ClauseTemplate>
     {
+        Task<ClauseTemplate> GetClauseWithTermsAsync(Guid clauseId);
+
+        Task<IEnumerable<ClauseTemplate>> GetAllWithTermsAsync();
+
     }
 }

@@ -13,7 +13,7 @@ namespace DAL.UnitOfWork
         private bool _disposed = false;
         private IDbContextTransaction? _transaction;
 
-        
+
 
         public UnitOfWork(DriverShareAppContext context)
         {
@@ -38,15 +38,22 @@ namespace DAL.UnitOfWork
             VehicleTypeRepo = new VehicleTypeRepository(_context);
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
-            ClausesRepo = new ClauseTemplateRepository(_context);
+            ClauseTemplateRepo = new ClauseTemplateRepository(_context);
+            ContractTemplateRepo = new ContractTemplateRepository(_context);
 
             VehicleBookingRepo = new VehicleBookingRepository(_context);
             ItemBookingRepo = new ItemBookingRepository(_context);
+
             PostItemRepo = new PostItemRepository(_context);
+
+            ClauseTermRepo = new ClauseTermRepository(_context);
+            vehicleContractRepo = new VehicleContractRepository(_context);
+            ItemContractRepo = new ItemContractRepository(_context);
+
 
         }
 
-        
+
 
         // Transaction methods
         public async Task BeginTransactionAsync()
@@ -98,8 +105,17 @@ namespace DAL.UnitOfWork
         public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
+
         public IClauseTemplateRepository ClausesRepo { get; private set; }
         public IPostItemRepository PostItemRepo { get; private set; }
+
+        public IClauseTemplateRepository ClauseTemplateRepo { get; private set; }
+        public IContractTemplateRepository ContractTemplateRepo { get; private set; }
+        public IClauseTermRepository ClauseTermRepo { get; private set; }
+        public IVehicleContractRepository vehicleContractRepo { get; private set; }
+        public IItemContractRepository ItemContractRepo { get; private set; }
+
+
 
         public async Task RollbackTransactionAsync()
         {

@@ -31,10 +31,10 @@ namespace BLL.Services.Implement
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            if (userId == Guid.Empty)
-            {
-                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
-            }
+            //if (userId == Guid.Empty)
+            //{
+            //    return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+            //}
 
             var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
             if (vehicle == null)
@@ -60,8 +60,22 @@ namespace BLL.Services.Implement
                 DailyPrice = dto.DailyPrice,
                 Status = PostStatus.DRAFT,
                 AvailableStartDate = dto.StartDate,
-                AvailableEndDate = dto.EndDate
+                AvailableEndDate = dto.EndDate,
+                AddOptions = new List<AddOption>()
             };
+            if (dto.AddOptions != null && dto.AddOptions.Any())
+            {
+                foreach (var option in dto.AddOptions)
+                {
+                    newPostVehicle.AddOptions.Add(new AddOption
+                    {
+                        AddOptionId = Guid.NewGuid(),
+                        Description = option.Description,
+                        PostVehicleId = newPostVehicle.PostVehicleId
+                    });
+                }
+            }
+            
             try
             {
                 await _unitOfWork.PostVehicleRepo.AddAsync(newPostVehicle);
@@ -133,6 +147,7 @@ namespace BLL.Services.Implement
                     VehicleModel = p.Vehicle?.Model ?? "N/A",
                     VehicleType = p.Vehicle?.VehicleType?.Name ?? "N/A",
                     PlateNumber = p.Vehicle?.PlateNumber ?? "N/A" ,
+                    ImageUrls = p.Vehicle?.Images?.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -162,6 +177,7 @@ namespace BLL.Services.Implement
                     VehicleModel = p.Vehicle?.Model ?? "N/A",
                     VehicleType = p.Vehicle?.VehicleType?.Name ?? "N/A",
                     PlateNumber = p.Vehicle?.PlateNumber ?? "N/A",
+                    ImageUrls = p.Vehicle?.Images?.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -196,6 +212,7 @@ namespace BLL.Services.Implement
                     VehicleModel = p.Vehicle.Model,
                     VehicleType = p.Vehicle.VehicleType.Name,
                     PlateNumber = p.Vehicle.PlateNumber,
+                    ImageUrls = p.Vehicle.Images.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -231,6 +248,7 @@ namespace BLL.Services.Implement
                     VehicleModel = postVehicle.Vehicle.Model,
                     VehicleType = postVehicle.Vehicle.VehicleType.Name,
                     PlateNumber = postVehicle.Vehicle.PlateNumber,
+                    ImageUrls = postVehicle.Vehicle.Images.Select(img => img.ImageUrl).ToList()
                 };
                 return new ResponseDTO(PostMessages.GET_POST_SUCCESS, 200, true, result);
             }

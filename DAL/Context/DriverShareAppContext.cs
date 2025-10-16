@@ -348,12 +348,16 @@ namespace DAL.Context
 
 
             // ClauseTemplate ↔ ClauseContent
+            //modelBuilder.Entity<ClauseTerm>()
+            //    .HasOne(cc => cc.ClauseTemplate)
+            //    .WithMany() // Không có collection ngược trong ClauseTemplate cho từng content
+            //    .HasForeignKey(cc => cc.ClauseTemplateId)
+            //    .OnDelete(DeleteBehavior.Cascade); // Xóa template thì content cũng xóa
             modelBuilder.Entity<ClauseTerm>()
                 .HasOne(cc => cc.ClauseTemplate)
-                .WithMany() // Không có collection ngược trong ClauseTemplate cho từng content
+                .WithMany(t => t.Terms) // 🔹 Chỉ rõ collection ở ClauseTemplate
                 .HasForeignKey(cc => cc.ClauseTemplateId)
-                .OnDelete(DeleteBehavior.Cascade); // Xóa template thì content cũng xóa
-
+                .OnDelete(DeleteBehavior.Cascade);
 
             // VehicleBookingReport ↔ VehicleBooking (1-1)
             modelBuilder.Entity<VehicleBookingReport>()

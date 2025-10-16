@@ -16,6 +16,7 @@ namespace DAL.Entities
         public User Owner { get; set; } = null!; // User sở hữu xe này và đăng bài
         public decimal DailyPrice { get; set; }
         public PostStatus Status { get; set; }
+        public string? Description { get; set; }
         public DateTime AvailableStartDate { get; set; } // Đổi tên để rõ nghĩa là ngày xe có sẵn
         public DateTime AvailableEndDate { get; set; } // Đổi tên để rõ nghĩa là ngày xe có sẵn
 
