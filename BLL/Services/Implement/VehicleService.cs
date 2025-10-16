@@ -65,9 +65,11 @@ namespace BLL.Services.Implement
                 Color = dto.Color.Trim(), // ✅ thêm Color
                 VehicleTypeId = dto.VehicleTypeId,
                 OwnerUserId = userId,
-                YearOfManufacture = DateTime.Now.Year, // ✅ tạm thời gán mặc định năm hiện tại
-                CreatedAt = DateTime.UtcNow, // ✅ thêm ngày tạo
-                Status = VehicleStatus.ACTIVE
+
+                Status = VehicleStatus.ACTIVE,
+                YearOfManufacture = dto.year,
+                Color = dto.color
+
             };
 
             try

@@ -20,14 +20,16 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
-
+            services.AddScoped<IContractService,ContractService>();
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IVerificationService, VerificationService>();
 
             //services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IContractTemplateService, ContractTemplateService>();
+            //services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IFirebaseUploadService , FirebaseUploadService>();
 
-            //services.AddScoped<IClausesService, ClausesService>();
+            services.AddScoped<IClausesTemplateService, ClausesService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

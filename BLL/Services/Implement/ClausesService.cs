@@ -1,162 +1,200 @@
 ﻿//using BLL.Services.Interface;
 //using BLL.Utilities;
-//using Common.DTOs;
-//using Common.Messages;
-//using DAL.Entities;
-//using DAL.UnitOfWork;
-//using Microsoft.EntityFrameworkCore;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using BLL.Services.Interface;
+using BLL.Utilities;
+using Common.DTOs;
+using Common.Messages;
+using DAL.Entities;
+using DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace BLL.Services.Implement
-//{
-//    public class ClausesService : IClausesService
-//    {
-//        private readonly IUnitOfWork _unitOfWork;
-//        private readonly UserUtility _userUtility;
+namespace BLL.Services.Implement
+{
+    public class ClausesService : IClausesTemplateService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly UserUtility _userUtility;
 
-//        public ClausesService(IUnitOfWork unitOfWork, UserUtility userUtility)
-//        {
-//            _unitOfWork = unitOfWork;
-//            _userUtility = userUtility;
-//        }
+        public ClausesService(IUnitOfWork unitOfWork, UserUtility userUtility)
+        {
+            _unitOfWork = unitOfWork;
+            _userUtility = userUtility;
+        }
 
-//        public async Task<ResponseDTO> CreateClauseAsync(CreateClauseDTO createClauseDTO)
-//        {
-//            var userId = _userUtility.GetUserIdFromToken();
-//            if (userId == Guid.Empty)
-//            {
-//                return new ResponseDTO("Unauthorized", 401, false);
-//            }
-//            if (createClauseDTO == null)
-//            {
-//                return new ResponseDTO("Invalid input", 400, false);
-//            }
-//            try
-//            {
-//                var newClause = new ClauseTemplate
-//                {
-//                    ClauseId = Guid.NewGuid(),
-//                    Version = createClauseDTO.Version,
-//                    Title = createClauseDTO.Description,
+        public async Task<ResponseDTO> CreateClauseAsync(CreateClauseTemplateDTO dto)
+        {
+            var clauseTemplate = new ClauseTemplate
+            {
+                ClauseId = Guid.NewGuid(),
+                Version = dto.Version,
+                Title = dto.Title,
+                Terms = new List<ClauseTerm>()
+            };
 
-//                };
-                
-//                await _unitOfWork.ClausesRepo.AddAsync(newClause);
-//                await _unitOfWork.SaveAsync();
-                
-//            }
-//            catch (Exception ex)
-//            {
-//                return new ResponseDTO($"Error: {ex.Message}", 500, false);
-//            }
+            if (dto.ClauseContents != null && dto.ClauseContents.Any())
+            {
+                foreach (var c in dto.ClauseContents)
+                {
+                    clauseTemplate.Terms.Add(new ClauseTerm
+                    {
+                        ClauseTermId = Guid.NewGuid(),
+                        ClauseTemplateId = clauseTemplate.ClauseId,
+                        Content = c.Content,
+                        IsMandatory = c.IsMandatory,
+                        DisplayOrder = c.DisplayOrder
+                    });
+                }
+            }
 
-//            return new ResponseDTO(ClauseMessages.ClauseCreated, 201, true);
+            await _unitOfWork.ClauseTemplateRepo.AddAsync(clauseTemplate);
+            await _unitOfWork.SaveAsync();
 
-//        }
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = 201,
+                Message = "Tạo mẫu điều khoản thành công",
+                Result = new
+                {
+                    clauseTemplate.ClauseId,
+                    clauseTemplate.Title,
+                    clauseTemplate.Version,
+                    Terms = clauseTemplate.Terms.Select(t => new
+                    {
+                        t.ClauseTermId,
+                        t.Content,
+                        t.IsMandatory,
+                        t.DisplayOrder
+                    })
+                }
+            };
+        }
 
-//        public  async Task<ResponseDTO> DeleteClauseAsync(Guid id)
-//        {
-//           var userId = _userUtility.GetUserIdFromToken();
-//            if (userId == Guid.Empty)
-//            {
-//                return new ResponseDTO("Unauthorized", 401, false);
-//            }
-//            var clause = await _unitOfWork.ClausesRepo.GetByIdAsync(id);
-//            if (clause == null)
-//            {
-//                return new ResponseDTO("Clause not found", 404, false);
-//            }
-//            try
-//            {
-//                _unitOfWork.ClausesRepo.Delete(clause);
-//                await _unitOfWork.SaveAsync();
-//            }
-//            catch (Exception ex)
-//            {
-//                return new ResponseDTO($"Error: {ex.Message}", 500, false);
-//            }
+        public async Task<ResponseDTO> GetAllClausesAsync()
+        {
+            
+            var clauseTemplates = await _unitOfWork.ClauseTemplateRepo.GetAllWithTermsAsync();
 
-//            return new ResponseDTO(ClauseMessages.ClauseDeleted, 200, true);
-//        }
+            var result = clauseTemplates.Select(ct => new
+            {
+                ct.ClauseId,
+                ct.Title,
+                ct.Version,
+                Terms = ct.Terms.Select(t => new
+                {
+                    t.ClauseTermId,
+                    t.Content,
+                    t.IsMandatory,
+                    t.DisplayOrder
+                })
+            }).ToList();
 
-//        public async Task<ResponseDTO> GetAllClauseAsync()
-//        {
-//           var userId = _userUtility.GetUserIdFromToken();
-//            if (userId == Guid.Empty)
-//            {
-//                return new ResponseDTO("Unauthorized", 401, false);
-//            }
-//            try
-//            {
-//                var clauses = await _unitOfWork.ClausesRepo.GetAll().ToListAsync();
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Lấy danh sách mẫu điều khoản thành công",
+                Result = result
+            };
+        }
 
-//                var clauseDtos = clauses.Select(c => new GetClauseDTO
-//                {
-//                    ClauseId = c.ClauseId,
-//                    Description = c.Title,
-//                    Version = c.Version
-//                }).ToList();
+        public async Task<ResponseDTO> GetClauseByIdAsync(Guid clauseId)
+        {
+            var clauseTemplate = await _unitOfWork.ClauseTemplateRepo.GetClauseWithTermsAsync(clauseId);
 
-//                return new ResponseDTO(ClauseMessages.GetClause, 200, true, clauseDtos);
+            if (clauseTemplate == null)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Không tìm thấy mẫu điều khoản"
+                };
+            }
 
-//            }
-//            catch (Exception ex)
-//            {
-//                return new ResponseDTO($"Error: {ex.Message}", 500, false);
-//            }
-//        }
+            var result = new
+            {
+                clauseTemplate.ClauseId,
+                clauseTemplate.Title,
+                clauseTemplate.Version,
+                Terms = clauseTemplate.Terms.Select(t => new
+                {
+                    t.ClauseTermId,
+                    t.Content,
+                    t.IsMandatory,
+                    t.DisplayOrder
+                })
+            };
 
-//        public async Task<ResponseDTO> GetClauseByIdAsync(Guid id)
-//        {
-//            var userId = _userUtility.GetUserIdFromToken();
-//            if (userId == Guid.Empty)
-//            {
-//                return new ResponseDTO("Unauthorized", 401, false);
-//            }
-//            var clause = await _unitOfWork.ClausesRepo.GetByIdAsync(id);
-//            if (clause == null)
-//            {
-//                return new ResponseDTO("Clause not found", 404, false);
-//            }
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Lấy chi tiết mẫu điều khoản thành công",
+                Result = result
+            };
+        }
 
-//            var clauseDto = new GetClauseDTO
-//            {
-//                ClauseId = clause.ClauseId,
-//                Version = clause.ClauseVersion,
-//                Description = clause.ClauseContent
-//            };
+        public async Task<ResponseDTO> UpdateClauseAsync(UpdateClauseTemplateDTO dto)
+        {
+            var clauseTemplate = await _unitOfWork.ClauseTemplateRepo
+         .GetClauseWithTermsAsync(dto.ClauseId);
 
-//            return new ResponseDTO(ClauseMessages.GetClause, 200, true, clauseDto);
-//        }
+            if (clauseTemplate == null)
+                return new ResponseDTO { IsSuccess = false, StatusCode = 404, Message = "Không tìm thấy mẫu điều khoản" };
 
-//        public async Task<ResponseDTO> UpdateClauseAsync(UpdateClauseDTO updateClauseDTO)
-//        {
-//            var userId = _userUtility.GetUserIdFromToken();
-//            if (userId == Guid.Empty)
-//            {
-//                return new ResponseDTO("Unauthorized", 401, false);
-//            }
-//            var clause = await _unitOfWork.ClausesRepo.GetByIdAsync(updateClauseDTO.ClauseId);
-//            if (clause == null)
-//            {
-//                return new ResponseDTO("Clause not found", 404, false);
-//            }
-//            try
-//            {
-//                clause.ClauseVersion = updateClauseDTO.Version;
-//                clause.ClauseContent = updateClauseDTO.Description;
-//                await _unitOfWork.ClausesRepo.UpdateAsync(clause);
-//                await _unitOfWork.SaveAsync();
-//            }
-//            catch (Exception ex)
-//            {
-//                return new ResponseDTO($"Error: {ex.Message}", 500, false);
-//            }
-//            return new ResponseDTO(ClauseMessages.ClauseUpdated, 200, true);
-//        }
-//    }
-//}
+            // Update logic
+            clauseTemplate.Title = dto.Title;
+            clauseTemplate.Version = dto.Version;
+
+            // Update, add, delete terms
+            var oldTerms = clauseTemplate.Terms.ToList();
+            foreach (var term in oldTerms)
+            {
+                if (!dto.ClauseContents.Any(c => c.ClauseTermId == term.ClauseTermId))
+                    _unitOfWork.ClauseTermRepo.Delete(term);
+            }
+
+            foreach (var c in dto.ClauseContents)
+            {
+                var existingTerm = clauseTemplate.Terms.FirstOrDefault(t => t.ClauseTermId == c.ClauseTermId);
+                if (existingTerm != null)
+                {
+                    existingTerm.Content = c.Content;
+                    existingTerm.IsMandatory = c.IsMandatory;
+                    existingTerm.DisplayOrder = c.DisplayOrder;
+                }
+                else
+                {
+                    clauseTemplate.Terms.Add(new ClauseTerm
+                    {
+                        ClauseTermId = Guid.NewGuid(),
+                        Content = c.Content,
+                        IsMandatory = c.IsMandatory,
+                        DisplayOrder = c.DisplayOrder,
+                        ClauseTemplateId = clauseTemplate.ClauseId
+                    });
+                }
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Cập nhật mẫu điều khoản thành công",
+                Result = clauseTemplate
+            };
+        }
+
+
+
+    }
+}
+
