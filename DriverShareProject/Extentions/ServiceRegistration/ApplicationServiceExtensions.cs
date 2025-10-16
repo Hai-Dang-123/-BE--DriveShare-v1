@@ -22,6 +22,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IContractService,ContractService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVerificationService, VerificationService>();
 
             //services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IContractTemplateService, ContractTemplateService>();
@@ -37,7 +38,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddHttpClient<IVNPTTokenService, VNPTTokenService>();
             services.AddHttpClient<IEKYCService, EKYCService>(client =>
             {
-                client.BaseAddress = new Uri(configuration["VNPT:BaseUrl"]);
+                client.BaseAddress = new Uri(configuration["VNPTAuth:BaseUrl"]);
                 client.Timeout = TimeSpan.FromMinutes(5);
             });
 

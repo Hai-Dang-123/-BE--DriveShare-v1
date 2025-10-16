@@ -65,6 +65,12 @@ namespace DriverShareProject.Controllers
             var response = await _vehicleService.ChangeStatusAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+        [HttpGet("/api/PostVehicle/{vehicleId}/detail")]
+        public async Task<IActionResult> GetVehicleDetail(Guid id)
+        {
+            var response = await _vehicleService.GetVehicleDetailAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
 
     }
 }

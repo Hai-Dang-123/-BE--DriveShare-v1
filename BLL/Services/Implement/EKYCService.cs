@@ -20,7 +20,54 @@ namespace BLL.Services.Implement
             _vnptTokenService = vnptTokenService;
         }
 
-        public async Task<ResponseDTO> UploadFileAsync(EKYCUploadRequestDTO requestDto)
+        //public async Task<ResponseDTO> UploadFileAsync(EKYCUploadRequestDTO requestDto)
+        //{
+        //    try
+        //    {
+        //        var accessToken = await _vnptTokenService.GetAccessTokenAsync();
+        //        var (tokenKey, tokenId) = await _vnptTokenService.GetServiceTokensAsync("eKYC");
+
+        //        using var request = new HttpRequestMessage(HttpMethod.Post, EKYCConstant.FileUploadEndpoint);
+        //        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        //        request.Headers.Add("Token-id", tokenId);
+        //        request.Headers.Add("Token-key", tokenKey);
+        //        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //        using var form = new MultipartFormDataContent();
+        //        using var fileStream = requestDto.File.OpenReadStream();
+        //        var fileContent = new StreamContent(fileStream);
+        //        fileContent.Headers.ContentType = new MediaTypeHeaderValue(requestDto.File.ContentType);
+        //        form.Add(fileContent, "file", requestDto.File.FileName);
+        //        form.Add(new StringContent(requestDto.Title), "title");
+
+        //        if (!string.IsNullOrEmpty(requestDto.Description))
+        //            form.Add(new StringContent(requestDto.Description), "description");
+
+        //        request.Content = form;
+
+        //        var response = await _httpClient.SendAsync(request);
+        //        var content = await response.Content.ReadAsStringAsync();
+
+        //        using var doc = JsonDocument.Parse(content);
+        //        var message = doc.RootElement.GetProperty("message").GetString();
+
+        //        if (message == "IDG-00000000")
+        //        {
+        //            var hash = doc.RootElement.GetProperty("object").GetProperty("hash").GetString();
+        //            return new ResponseDTO("Upload success", 200, true, hash);
+        //        }
+
+        //        return new ResponseDTO($"Upload file failed: {message}", (int)response.StatusCode, false, content);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ResponseDTO($"Upload file exception: {ex.Message}", 500, false);
+        //    }
+        //}
+        // ================================
+        // EKYCService.cs
+        // ================================
+        public async Task<string?> UploadFileAsync(EKYCUploadRequestDTO requestDto)
         {
             try
             {
@@ -54,14 +101,16 @@ namespace BLL.Services.Implement
                 if (message == "IDG-00000000")
                 {
                     var hash = doc.RootElement.GetProperty("object").GetProperty("hash").GetString();
-                    return new ResponseDTO("Upload success", 200, true, hash);
+                    return hash; // ✅ Trả về hash (fileId)
                 }
 
-                return new ResponseDTO($"Upload file failed: {message}", (int)response.StatusCode, false, content);
+                Console.WriteLine($"⚠️ Upload failed: {message}");
+                return null;
             }
             catch (Exception ex)
             {
-                return new ResponseDTO($"Upload file exception: {ex.Message}", 500, false);
+                Console.WriteLine($"❌ UploadFileAsync error: {ex.Message}");
+                return null;
             }
         }
 
@@ -109,5 +158,28 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"OCR exception: {ex.Message}", 500, false);
             }
         }
+
+        //TestHoang
+        // ✅ Hàm mới xử lý OCR cho Vehicle
+        public async Task<string> ReadVehicleDocumentAsync(string frontUrl, string? backUrl)
+        {
+            var dto = new EKYCOcrRequestDTO
+            {
+                ImgFront = frontUrl,
+                ImgBack = backUrl,
+                Type = 14, // ✅ mã OCR cho “vehicle registration” (VNPT EKYC)
+                ClientSession = Guid.NewGuid().ToString()
+            };
+
+            var response = await OcrAsync(dto);
+
+            if (!response.IsSuccess)
+                throw new Exception($"OCR failed: {response.Message}");
+
+            // Trả về JSON OCR result (string)
+            return response.Result?.ToString() ?? "{}";
+        }
     }
+
+
 }
