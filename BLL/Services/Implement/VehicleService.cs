@@ -68,7 +68,7 @@ namespace BLL.Services.Implement
 
                 Status = VehicleStatus.ACTIVE,
                 YearOfManufacture = dto.year,
-                Color = dto.color
+                CreatedAt = DateTime.UtcNow
 
             };
 
@@ -316,7 +316,7 @@ namespace BLL.Services.Implement
                 Owner = new OwnerDTO
                 {
                     UserId = vehicle.OwnerUser.UserId,
-                    Name = vehicle.OwnerUser.DisplayName ?? $"{vehicle.OwnerUser.LastName} {vehicle.OwnerUser.FirstName}",
+                    Name = vehicle.OwnerUser.Username ,
                     Phone = vehicle.OwnerUser.PhoneNumber
                 }
             };
