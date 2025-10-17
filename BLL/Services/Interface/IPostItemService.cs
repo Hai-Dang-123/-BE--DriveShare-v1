@@ -9,6 +9,6 @@ namespace BLL.Services.Interface
 {
     public interface IPostItemService
     {
-        Task<ResponseDTO> CreatePostItemAsync(CreatePostItemDTO dto);
+        
     }
 }
