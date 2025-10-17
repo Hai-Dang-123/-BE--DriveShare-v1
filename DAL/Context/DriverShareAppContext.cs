@@ -48,6 +48,10 @@ namespace DAL.Context
 
         // ---------------------- Items, Reports, Rules ----------------------
         public DbSet<PostItem> PostItems { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemCharacteristics> ItemCharacteristics { get; set; }
+        public DbSet<PostItemShippingRoute> PostItemShippingRoutes { get; set; }
+
         // DbSet cho BaseReport
         public DbSet<BaseReport> Reports { get; set; }
         public DbSet<VehicleBookingReport> VehicleBookingReports { get; set; } // Để dễ dàng truy vấn riêng
@@ -501,9 +505,37 @@ namespace DAL.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
 
+            // ========== ITEM ↔ ITEM CHARACTERISTICS (1-1) ==========
+            modelBuilder.Entity<Item>()
+                .HasOne(i => i.Characteristics)
+                .WithOne(c => c.Item)
+                .HasForeignKey<ItemCharacteristics>(c => c.ItemId)
+                .IsRequired();
+
+            modelBuilder.Entity<ItemCharacteristics>()
+                .HasKey(c => c.ItemId);
+
+            // ========== POST ITEM ↔ ITEM (1-1) ==========
+            modelBuilder.Entity<PostItem>()
+                .HasOne(p => p.Item)
+                .WithOne()
+                .HasForeignKey<PostItem>(p => p.ItemId)
+                .IsRequired();
+
+            // ========== POST ITEM ↔ SHIPPING ROUTE (1-1) ==========
+            modelBuilder.Entity<PostItem>()
+                .HasOne(p => p.Route)
+                .WithOne(r => r.PostItem)
+                .HasForeignKey<PostItemShippingRoute>(r => r.PostItemId)
+                .IsRequired();
+
+            modelBuilder.Entity<PostItemShippingRoute>()
+                .HasKey(r => r.PostItemId);
+
+
             // ---------------------- Value Objects Mapping ----------------------
 
-            modelBuilder.Entity<PostItem>(entity =>
+            modelBuilder.Entity<PostItemShippingRoute>(entity =>
             {
                 // Mapping cho Location Value Object
                 entity.OwnsOne(pi => pi.StartLocation, location =>
@@ -531,10 +563,20 @@ namespace DAL.Context
                     timeWindow.Property(p => p.EndTime).HasColumnName("DeliveryTimeWindowEnd");
                 });
 
-                // Precision cho các thuộc tính Decimal
-                entity.Property(e => e.PricePerUnit).HasPrecision(18, 2);
+                
+            });
+
+            modelBuilder.Entity<Item>(entity =>
+            {
+
                 entity.Property(e => e.VolumeM3).HasPrecision(10, 3); // Đổi tên từ Volume
                 entity.Property(e => e.WeightKg).HasPrecision(10, 3); // Đổi tên từ Weight
+            });
+
+            modelBuilder.Entity<PostItem>(entity =>
+            {
+                // Precision cho các thuộc tính Decimal
+                entity.Property(e => e.PricePerUnit).HasPrecision(18, 2);
             });
 
             // Mapping cho Location và Time trong Trip
@@ -581,12 +623,7 @@ namespace DAL.Context
             modelBuilder.Entity<Wallet>().Property(w => w.CurrentBalance).HasPrecision(18, 2);
             
 
-            modelBuilder.Entity<PostItem>(entity =>
-            {
-                entity.Property(e => e.PricePerUnit).HasPrecision(18, 2);
-                entity.Property(e => e.Quantity).HasPrecision(10, 3);
-                entity.Property(e => e.WeightKg).HasPrecision(10, 3);
-            });
+           
 
 
             // ---------------------- Seed Data ----------------------
