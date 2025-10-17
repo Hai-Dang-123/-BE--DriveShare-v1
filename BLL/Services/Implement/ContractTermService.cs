@@ -1,9 +1,12 @@
-﻿using BLL.Services.Interface;
+using BLL.Services.Interface;
 using Common.DTOs;
+using DAL.Entities;
 using DAL.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services.Implement
@@ -11,47 +14,102 @@ namespace BLL.Services.Implement
     public class ContractTermService : IContractTermService
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ContractTermService(IUnitOfWork unitOfWork)
+        private readonly IContractTermService _contractTermService;
+        public ContractTermService(IUnitOfWork unitOfWork, IContractTermService contractTermService)
         {
             _unitOfWork = unitOfWork;
+            _contractTermService = contractTermService;
         }
+        public async Task<ResponseDTO> CreateContractTermsAsync(ContracttermDTO contractTermsDTO)
+        {
+            try
+            {
+                var contractTerm = new ContractTerm
+                {
+                    ContractTermId = Guid.NewGuid(),
+                    ContractTemplateId = contractTermsDTO.ContractTemplateId,
+                    Content = contractTermsDTO.Content,
+                    IsMandatory = contractTermsDTO.IsMandatory
+                };
+                await _unitOfWork.ContractTermRepo.AddAsync(contractTerm);
+                await _unitOfWork.SaveChangeAsync();
+                var contractTermResponse = new ContracttermResponseDTO
+                {
+                    ContractTemplateId = contractTerm.ContractTemplateId,
+                    IsMandatory = contractTerm.IsMandatory,
+                    Content = contractTerm.Content
+                };
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status201Created,
+                    Message = "Contract term created successfully",
+                    Result = contractTermResponse
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error creating contract term: {ex.Message}",
+                    Result = null
+                };
 
-        // ✅ Lấy tất cả điều khoản
+            }
+        }
+        public  async Task<ResponseDTO> DeleteContractTermsAsync(Guid ContractTermid)
+        {
+            try
+            {
+                var contractTerm = await  _unitOfWork.ContractTermRepo.GetByIdAsync(ContractTermid);
+                if (contractTerm == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Contract term not found",
+                        Result = null
+                    };
+                }
+                _unitOfWork.ContractTermRepo.Delete(contractTerm);
+                await _unitOfWork.SaveChangeAsync();
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Contract term deleted successfully",
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = $"Error deleting contract term: {ex.Message}",
+                    Result = null
+                };
+
+            }
+        }
         public async Task<ResponseDTO> GetAllContractTermsAsync()
         {
             try
             {
-                var terms = await _unitOfWork.ContractTermRepo
-                    .GetAll() // ✅ dùng GetAll() thay vì AsQueryable()
-                    .Include(t => t.ContractTemplate)
-                    .ToListAsync();
-
-                if (terms == null || !terms.Any())
+                var contractTerms = await _unitOfWork.ContractTermRepo.GetContractTerms();
+                var contractTermDTOs = contractTerms.Select(ct => new ContracttermResponseDTO
                 {
-                    return new ResponseDTO
-                    {
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Message = "Không có điều khoản hợp đồng nào."
-                    };
-                }
-
-                var result = terms.Select(t => new
-                {
-                    t.ContractTermId,
-                    t.Content,
-                    t.IsMandatory,
-                    t.ContractTemplateId,
-                    ContractTemplateName = t.ContractTemplate?.Name
-                });
-
+                    ContractTemplateId = ct.ContractTemplateId,
+                    IsMandatory = ct.IsMandatory,
+                    Content = ct.Content
+                }).ToList();
                 return new ResponseDTO
                 {
                     IsSuccess = true,
-                    StatusCode = 200,
-                    Message = "Lấy danh sách điều khoản hợp đồng thành công.",
-                    Result = result
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Contract terms retrieved successfully",
+                    Result = contractTermDTOs
                 };
             }
             catch (Exception ex)
@@ -59,49 +117,38 @@ namespace BLL.Services.Implement
                 return new ResponseDTO
                 {
                     IsSuccess = false,
-                    StatusCode = 500,
-                    Message = $"Lỗi khi lấy điều khoản hợp đồng: {ex.Message}"
+                    Message = $"Error retrieving contract terms: {ex.Message}",
+                    Result = null
                 };
             }
-        }
-
-
-        // ✅ Lấy điều khoản theo ID (bạn đã có)
-        public async Task<ResponseDTO> GetContractTermByIdAsync(Guid id)
+            }
+        public async Task<ResponseDTO> GetContractTermsAsync(Guid ContractTermid)
         {
             try
             {
-                var term = await _unitOfWork.ContractTermRepo
-                     .GetAll()
-                     .Include(t => t.ContractTemplate)
-                     .FirstOrDefaultAsync(t => t.ContractTermId == id);
-
-
-                if (term == null)
+                var contractTerm = await _unitOfWork.ContractTermRepo.GetByIdAsync(ContractTermid);
+                if (contractTerm == null)
                 {
                     return new ResponseDTO
                     {
                         IsSuccess = false,
-                        StatusCode = 404,
-                        Message = "Không tìm thấy điều khoản hợp đồng."
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Contract term not found",
+                        Result = null
                     };
                 }
-
-                var result = new
+                var responseDTO = new ContracttermResponseDTO
                 {
-                    term.ContractTermId,
-                    term.Content,
-                    term.IsMandatory,
-                    term.ContractTemplateId,
-                    ContractTemplateName = term.ContractTemplate?.Name
+                    ContractTemplateId = contractTerm.ContractTemplateId,
+                    IsMandatory = contractTerm.IsMandatory,
+                    Content = contractTerm.Content
                 };
-
                 return new ResponseDTO
                 {
                     IsSuccess = true,
-                    StatusCode = 200,
-                    Message = "Lấy điều khoản hợp đồng thành công.",
-                    Result = result
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Contract term retrieved successfully",
+                    Result = responseDTO
                 };
             }
             catch (Exception ex)
@@ -109,8 +156,45 @@ namespace BLL.Services.Implement
                 return new ResponseDTO
                 {
                     IsSuccess = false,
-                    StatusCode = 500,
-                    Message = $"Lỗi khi lấy điều khoản hợp đồng: {ex.Message}"
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = $"Error retrieving contract term: {ex.Message}",                  
+                };
+            }
+
+        }
+        public async Task<ResponseDTO> UpdateContractTermsAsync(UpdateContracttermDTO contractTermsDTO)
+        {
+            try
+            {
+                var contractTerm = await _unitOfWork.ContractTermRepo.GetByIdAsync(contractTermsDTO.ContractTermId);
+                if (contractTerm == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Contract term not found",
+                    };
+                }
+                contractTerm.Content = contractTermsDTO.Content;
+                contractTerm.IsMandatory = contractTermsDTO.IsMandatory;
+                contractTerm.ContractTemplateId = contractTermsDTO.ContractTemplateId;
+                _unitOfWork.ContractTermRepo.UpdateAsync(contractTerm);
+                await _unitOfWork.SaveChangeAsync();
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Contract term updated successfully",
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = $"Error updating contract term: {ex.Message}",
                 };
             }
         }

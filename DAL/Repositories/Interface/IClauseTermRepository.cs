@@ -9,5 +9,7 @@ namespace DAL.Repositories.Interface
 {
     public interface IClauseTermRepository : IGenericRepository<ClauseTerm>
     {
+        Task<IEnumerable<ClauseTerm>> GetAllClauseTerm();
+
     }
 }

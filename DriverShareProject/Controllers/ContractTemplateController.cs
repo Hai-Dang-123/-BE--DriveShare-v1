@@ -1,7 +1,9 @@
 ﻿using BLL.Services.Interface;
+
+using Common.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
+
 
 namespace DriverShareProject.Controllers
 {
@@ -16,14 +18,21 @@ namespace DriverShareProject.Controllers
             _contractTemplateService = contractTemplateService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllContractTemplates()
+        [HttpPost("Create Contract Template")]
+        public async Task<IActionResult> CreateContractTemplate(ContractTemplateDTO dto)
+        {
+            var response = await _contractTemplateService.CreateContractTemplateAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("Get All Contract Template")]
+        public async Task<IActionResult> GetAllContractTemplate()
         {
             var response = await _contractTemplateService.GetAllContractTemplateasync();
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Get Contract Template By Id")]
         public async Task<IActionResult> GetContractTemplateById(Guid id)
         {
             var response = await _contractTemplateService.GetContractTemplateByIdAsync(id);
