@@ -11,5 +11,8 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> CreatVehicleContractAsync(CreateVehicleContractDto createVehicleContractDto);
         Task<ResponseDTO> CreateItemContractAsync(CreateItemContractDto createItemContractDto);
+        Task<ResponseDTO> GetAllContractsAsync();
+        Task<ResponseDTO> GetContractByIdAsync(Guid id);
+
     }
 }

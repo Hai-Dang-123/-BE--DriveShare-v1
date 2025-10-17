@@ -27,5 +27,9 @@ namespace DAL.Entities
 
         public Guid? ItemBookingId { get; set; }
         public ItemBooking? ItemBooking { get; set; }
+
+        // 🕒 Thời gian tạo và ký hợp đồng
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? SignedAt { get; set; }  // Cho phép null nếu chưa ký
     }
 }

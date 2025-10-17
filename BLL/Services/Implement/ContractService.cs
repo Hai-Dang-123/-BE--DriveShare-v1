@@ -3,6 +3,7 @@ using Common.DTOs;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,175 @@ namespace BLL.Services.Implement
         public ContractService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public async Task<ResponseDTO> GetAllContractsAsync()
+        {
+            try
+            {
+                var contracts = _unitOfWork.ContractRepo.GetAll().ToList();
+
+
+
+                if (!contracts.Any())
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 404,
+                        IsSuccess = false,
+                        Message = "Không có hợp đồng nào."
+                    };
+                }
+
+                var result = contracts.Select(c =>
+                {
+                    if (c is VehicleContract vc)
+                    {
+                        return new ContractResponseDTO
+                        {
+                            ContractId = vc.ContractId,
+                            Version = vc.Version,
+                            OwnerSigned = vc.OwnerSigned,
+                            RenterSigned = vc.RenterSigned,
+                            Status = vc.Status.ToString(),
+                            ContractTemplateId = vc.ContractTemplateId,
+                            VehicleBookingId = vc.VehicleBookingId,
+                            CreatedAt = vc.CreatedAt,
+                            SignedAt = vc.SignedAt
+                        };
+                    }
+                    else if (c is ItemContract ic)
+                    {
+                        return new ContractResponseDTO
+                        {
+                            ContractId = ic.ContractId,
+                            Version = ic.Version,
+                            OwnerSigned = ic.OwnerSigned,
+                            RenterSigned = ic.RenterSigned,
+                            Status = ic.Status.ToString(),
+                            ContractTemplateId = ic.ContractTemplateId,
+                            ItemBookingId = ic.ItemBookingId,
+                            CreatedAt = ic.CreatedAt,
+                            SignedAt = ic.SignedAt
+                        };
+                    }
+                    else
+                    {
+                        return new ContractResponseDTO
+                        {
+                            ContractId = c.ContractId,
+                            Version = c.Version,
+                            OwnerSigned = c.OwnerSigned,
+                            RenterSigned = c.RenterSigned,
+                            Status = c.Status.ToString(),
+                            ContractTemplateId = c.ContractTemplateId,
+                            CreatedAt = c.CreatedAt,
+                            SignedAt = c.SignedAt
+                        };
+                    }
+                }).ToList();
+
+
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsSuccess = true,
+                    Message = "Lấy danh sách hợp đồng thành công.",
+                    Result = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = "Lỗi khi lấy danh sách hợp đồng: " + ex.Message
+                };
+            }
+        }
+
+
+        public async Task<ResponseDTO> GetContractByIdAsync(Guid id)
+        {
+            try
+            {
+                var c = await _unitOfWork.ContractRepo.GetByIdAsync(id);
+
+                if (c == null)
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 404,
+                        IsSuccess = false,
+                        Message = "Không tìm thấy hợp đồng."
+                    };
+                }
+                ContractResponseDTO result;
+
+                if (c is VehicleContract vc)
+                {
+                    result = new ContractResponseDTO
+                    {
+                        ContractId = vc.ContractId,
+                        Version = vc.Version,
+                        OwnerSigned = vc.OwnerSigned,
+                        RenterSigned = vc.RenterSigned,
+                        Status = vc.Status.ToString(),
+                        ContractTemplateId = vc.ContractTemplateId,
+                        VehicleBookingId = vc.VehicleBookingId,
+                        CreatedAt = vc.CreatedAt,
+                        SignedAt = vc.SignedAt
+                    };
+                }
+                else if (c is ItemContract ic)
+                {
+                    result = new ContractResponseDTO
+                    {
+                        ContractId = ic.ContractId,
+                        Version = ic.Version,
+                        OwnerSigned = ic.OwnerSigned,
+                        RenterSigned = ic.RenterSigned,
+                        Status = ic.Status.ToString(),
+                        ContractTemplateId = ic.ContractTemplateId,
+                        ItemBookingId = ic.ItemBookingId,
+                        CreatedAt = ic.CreatedAt,
+                        SignedAt = ic.SignedAt
+                    };
+                }
+                else
+                {
+                    result = new ContractResponseDTO
+                    {
+                        ContractId = c.ContractId,
+                        Version = c.Version,
+                        OwnerSigned = c.OwnerSigned,
+                        RenterSigned = c.RenterSigned,
+                        Status = c.Status.ToString(),
+                        ContractTemplateId = c.ContractTemplateId,
+                        CreatedAt = c.CreatedAt,
+                        SignedAt = c.SignedAt
+                    };
+                }
+
+
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsSuccess = true,
+                    Message = "Lấy chi tiết hợp đồng thành công.",
+                    Result = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = "Lỗi khi lấy hợp đồng: " + ex.Message
+                };
+            }
         }
 
         public async Task<ResponseDTO> CreateItemContractAsync(CreateItemContractDto createItemContractDto)
@@ -111,6 +281,9 @@ namespace BLL.Services.Implement
                     Message = $"An error occurred while creating the vehicle contract: {ex.Message}"
                 };
             }
+
         }
+
     }
+
 }

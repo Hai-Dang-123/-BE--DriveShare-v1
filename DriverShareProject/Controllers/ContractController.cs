@@ -46,5 +46,19 @@ namespace DriverShareProject.Controllers
             var response = await _contractService.CreateItemContractAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
+        [HttpGet("contracts")]
+        public async Task<IActionResult> GetAllContracts()
+        {
+            var response = await _contractService.GetAllContractsAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("contracts/{id}")]
+        public async Task<IActionResult> GetContractById(Guid id)
+        {
+            var response = await _contractService.GetContractByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
+
     }
 }

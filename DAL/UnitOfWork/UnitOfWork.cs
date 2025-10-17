@@ -50,6 +50,10 @@ namespace DAL.UnitOfWork
             vehicleContractRepo = new VehicleContractRepository(_context);
             ItemContractRepo = new ItemContractRepository(_context);
 
+            ReportRepo = new ReportRepository(_context);
+            ReportTermRepo = new ReportTermRepository(_context);
+            ReportTemplateRepo = new ReportTemplateRepository(_context);
+
 
         }
 
@@ -115,7 +119,9 @@ namespace DAL.UnitOfWork
         public IVehicleContractRepository vehicleContractRepo { get; private set; }
         public IItemContractRepository ItemContractRepo { get; private set; }
 
-
+        public IReportRepository ReportRepo { get; }
+        public IReportTermRepository ReportTermRepo { get; }
+        public IReportTemplateRepository ReportTemplateRepo { get; }
 
         public async Task RollbackTransactionAsync()
         {
