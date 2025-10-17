@@ -103,8 +103,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle created successfully", 201, true, newVehicle.VehicleId);
         }
-
-
         // GET ALL (có ảnh)
         public async Task<ResponseDTO> GetAllVehiclesAsync()
         {
@@ -131,7 +129,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicles retrieved successfully", 200, true, result);
         }
-
         // GET BY ID (có ảnh)
         public async Task<ResponseDTO> GetVehicleByIdAsync(Guid id)
         {
@@ -157,7 +154,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle retrieved successfully", 200, true, dto);
         }
-
         public async Task<ResponseDTO> UpdateVehicleAsync(UpdateVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -218,8 +214,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle updated successfully", 200, true);
         }
-
-
         // DELETE (soft)
         public async Task<ResponseDTO> DeleteVehicleAsync(Guid id)
         {
@@ -251,7 +245,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Vehicle deleted successfully", 200, true);
         }
-
         public async Task<ResponseDTO> ChangeStatusAsync(ChangeVehicleStatusDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -279,7 +272,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO($"Vehicle status updated to {dto.NewStatus}", 200, true);
         }
-
         public async Task<ResponseDTO> GetVehicleDetailAsync(Guid id)
         {
             if (id == Guid.Empty)

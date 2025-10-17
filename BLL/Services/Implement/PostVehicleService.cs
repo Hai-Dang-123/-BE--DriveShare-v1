@@ -24,10 +24,6 @@ namespace BLL.Services.Implement
             _userUtility = userUtility;
         }
 
-        
-
-        // update
-
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -88,7 +84,6 @@ namespace BLL.Services.Implement
             }
             return new ResponseDTO(PostMessages.POST_CREATED_SUCCESS, 201, true);
         }
-
         public async Task<ResponseDTO> DeletePostVehicleAsync(Guid postId)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -127,7 +122,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO(PostMessages.POST_DELETED_SUCCESS, 200, true);
         }
-
         public async Task<ResponseDTO> GetAllPostVehicleAsync()
         {
             try
@@ -157,7 +151,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetAllPostVehiclesByStatusAsync(PostStatus postStatus)
         {
             try
@@ -187,7 +180,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetAllPostVehiclesOwner()
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -222,7 +214,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetPostVehicleByIdAsync(Guid postId)
         {
             if (postId == Guid.Empty)
