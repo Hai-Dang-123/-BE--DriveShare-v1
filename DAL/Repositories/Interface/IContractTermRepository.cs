@@ -9,5 +9,7 @@ namespace DAL.Repositories.Interface
 {
     public interface IContractTermRepository : IGenericRepository<ContractTerm>
     {
+        Task<IEnumerable<ContractTerm>> GetContractTerms();
+        
     }
 }
