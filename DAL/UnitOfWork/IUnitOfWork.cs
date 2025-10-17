@@ -39,6 +39,10 @@ namespace DAL.UnitOfWork
         IVehicleContractRepository vehicleContractRepo { get; }
         IItemContractRepository ItemContractRepo { get; }
 
+        IReportRepository ReportRepo { get; }
+        IReportTermRepository ReportTermRepo { get; }
+        IReportTemplateRepository ReportTemplateRepo { get; }
+
 
         // Save changes
 

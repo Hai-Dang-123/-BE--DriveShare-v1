@@ -1,4 +1,4 @@
-﻿using BLL.Services.Interface;
+using BLL.Services.Interface;
 using Common.DTOs;
 using DAL.Entities;
 using DAL.UnitOfWork;
@@ -58,7 +58,6 @@ namespace BLL.Services.Implement
 
             }
         }
-
         public  async Task<ResponseDTO> DeleteContractTermsAsync(Guid ContractTermid)
         {
             try
@@ -123,7 +122,6 @@ namespace BLL.Services.Implement
                 };
             }
             }
-
         public async Task<ResponseDTO> GetContractTermsAsync(Guid ContractTermid)
         {
             try
@@ -164,7 +162,6 @@ namespace BLL.Services.Implement
             }
 
         }
-
         public async Task<ResponseDTO> UpdateContractTermsAsync(UpdateContracttermDTO contractTermsDTO)
         {
             try

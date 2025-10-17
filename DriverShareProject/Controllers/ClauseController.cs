@@ -39,7 +39,12 @@ namespace DriverShareProject.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-
+        [HttpDelete("\"Delete-ClauseTerm\"{id}")]
+        public async Task<IActionResult> DeleteClause(Guid id, [FromServices] IClauseTermService clauseTermService)
+        {
+            var response = await clauseTermService.DeleteClauseTermAsync(id);
+            return StatusCode(response.StatusCode, response);
+        }
 
     }
 }

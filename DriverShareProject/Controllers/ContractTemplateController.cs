@@ -1,7 +1,9 @@
 ﻿using BLL.Services.Interface;
+
 using Common.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace DriverShareProject.Controllers
 {
@@ -10,10 +12,12 @@ namespace DriverShareProject.Controllers
     public class ContractTemplateController : ControllerBase
     {
         private readonly IContractTemplateService _contractTemplateService;
+
         public ContractTemplateController(IContractTemplateService contractTemplateService)
         {
             _contractTemplateService = contractTemplateService;
         }
+
         [HttpPost("Create Contract Template")]
         public async Task<IActionResult> CreateContractTemplate(ContractTemplateDTO dto)
         {
@@ -27,6 +31,7 @@ namespace DriverShareProject.Controllers
             var response = await _contractTemplateService.GetAllContractTemplateasync();
             return StatusCode(response.StatusCode, response);
         }
+
         [HttpGet("Get Contract Template By Id")]
         public async Task<IActionResult> GetContractTemplateById(Guid id)
         {

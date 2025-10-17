@@ -1,7 +1,11 @@
 ﻿using BLL.Services.Interface;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+
 using Common.DTOs;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace DriverShareProject.Controllers
 {
@@ -10,10 +14,19 @@ namespace DriverShareProject.Controllers
     public class ContractTermController : ControllerBase
     {
         private readonly IContractTermService _contractTermService;
+
         public ContractTermController(IContractTermService contractTermService)
         {
             _contractTermService = contractTermService;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllContractTerms()
+        {
+            var response = await _contractTermService.GetAllContractTermsAsync();
+            return StatusCode(response.StatusCode, response);
+        }
+
         [HttpPost("Create Contract Terms")]
         public async Task<IActionResult> CreateContractTerms(ContracttermDTO contractTermsDTO)
         {
