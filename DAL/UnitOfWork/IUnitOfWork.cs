@@ -6,7 +6,14 @@ namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
+<<<<<<< Updated upstream
         IBookingRepository BookingRepo { get; }
+=======
+        //IBookingRepository BookingRepo { get; }
+        IAddOptionRepository addOptionRepo { get; }
+        IVehicleBookingRepository VehicleBookingRepo { get; }
+        IItemBookingRepository ItemBookingRepo { get; }
+>>>>>>> Stashed changes
         IContractRepository ContractRepo { get; }
         IContractTermRepository ContractTermRepo { get; }
         INotificationRepository NotificationRepo { get; }
@@ -26,7 +33,24 @@ namespace DAL.UnitOfWork
         IVehicleTypeRepository VehicleTypeRepo { get; }
         IWalletRepository WalletRepo { get; }
 
+<<<<<<< Updated upstream
         IClausesRepository ClausesRepo { get; }
+=======
+
+        IClauseTemplateRepository ClausesRepo { get; }
+        IPostItemRepository PostItemRepo { get; }
+
+
+        IClauseTermRepository ClauseTermRepo { get; }
+        IVehicleContractRepository vehicleContractRepo { get; }
+        IItemContractRepository ItemContractRepo { get; }
+
+        IReportRepository ReportRepo { get; }
+        IReportTermRepository ReportTermRepo { get; }
+        IReportTemplateRepository ReportTemplateRepo { get; }
+        IVehicleBookingReportRepository VehicleBookingReportRepo { get; }
+        IItemBookingReportRepository ItemBookingReportRepo { get; }
+>>>>>>> Stashed changes
 
 
         // Save changes
