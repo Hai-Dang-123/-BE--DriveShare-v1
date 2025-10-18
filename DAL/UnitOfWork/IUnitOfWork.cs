@@ -30,8 +30,8 @@ namespace DAL.UnitOfWork
         IContractTemplateRepository ContractTemplateRepo { get; }
         IClauseTemplateRepository ClauseTemplateRepo { get; }
 
+        IVehicleBookingReportRepository VehicleBookingReportRepo { get; }
 
-        IClauseTemplateRepository ClausesRepo { get; }
         IPostItemRepository PostItemRepo { get; }
 
 
