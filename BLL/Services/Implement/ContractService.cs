@@ -20,6 +20,12 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
+        // GetAllItemContractsAsync
+        // GetAllVehicleContractsAsync
+        // UpdateItemContractAsync
+        // UpdateVehicleContractAsync
+        // DeleteContractAsync
+
         public async Task<ResponseDTO> GetAllContractsAsync()
         {
             try
@@ -105,8 +111,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-
         public async Task<ResponseDTO> GetContractByIdAsync(Guid id)
         {
             try
@@ -188,7 +192,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
         public async Task<ResponseDTO> CreateItemContractAsync(CreateItemContractDto createItemContractDto)
         {
             try
@@ -236,7 +239,6 @@ namespace BLL.Services.Implement
 
             }
         }
-
         public async Task<ResponseDTO> CreatVehicleContractAsync(CreateVehicleContractDto createVehicleContractDto)
         {
             try

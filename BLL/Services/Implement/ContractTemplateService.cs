@@ -22,6 +22,10 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
             _userUtility = userUtility;
         }
+
+        // UpdateContractTemplateAsync
+        // DeleteContractTemplateAsync
+
         public async Task<ResponseDTO> CreateContractTemplateAsync(ContractTemplateDTO contractTemplateDTO)
         {
             try
