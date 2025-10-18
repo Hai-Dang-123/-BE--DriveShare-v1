@@ -29,7 +29,11 @@ namespace Common.DTOs
 
         [Required(ErrorMessage = "EndDate is required")]
         public DateTime EndDate { get; set; }
+
+
         public List<AddOptionDTO>? AddOptions { get; set; }
+
+
 
     }
     public class UpdateRequestPostVehicleDTO {
@@ -69,10 +73,7 @@ namespace Common.DTOs
         [Required(ErrorMessage = "Status is required")]
         public PostStatus Status { get; set; }
     }
-    public class AddOptionDTO
-    {
-        [Required(ErrorMessage = "Description is required")]
-        public string Description { get; set; }
-    }
+
+
 
 }

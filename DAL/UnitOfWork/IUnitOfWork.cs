@@ -6,9 +6,12 @@ namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IBookingRepository BookingRepo { get; }
+
+
+        IAddOptionRepository addOptionRepo { get; }
         IVehicleBookingRepository VehicleBookingRepo { get; }
         IItemBookingRepository ItemBookingRepo { get; }
+
         IContractRepository ContractRepo { get; }
         IContractTermRepository ContractTermRepo { get; }
         INotificationRepository NotificationRepo { get; }
@@ -30,8 +33,7 @@ namespace DAL.UnitOfWork
         IContractTemplateRepository ContractTemplateRepo { get; }
         IClauseTemplateRepository ClauseTemplateRepo { get; }
 
-
-        IClauseTemplateRepository ClausesRepo { get; }
+        //IClausesRepository ClausesRepo { get; }
         IPostItemRepository PostItemRepo { get; }
 
 
@@ -42,6 +44,9 @@ namespace DAL.UnitOfWork
         IReportRepository ReportRepo { get; }
         IReportTermRepository ReportTermRepo { get; }
         IReportTemplateRepository ReportTemplateRepo { get; }
+        IVehicleBookingReportRepository VehicleBookingReportRepo { get; }
+        IItemBookingReportRepository ItemBookingReportRepo { get; }
+
 
 
         // Save changes
