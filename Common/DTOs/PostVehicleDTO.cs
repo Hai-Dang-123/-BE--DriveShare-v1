@@ -29,10 +29,9 @@ namespace Common.DTOs
 
         [Required(ErrorMessage = "EndDate is required")]
         public DateTime EndDate { get; set; }
-<<<<<<< Updated upstream
-=======
-        public List<AddOptionsDTO>? AddOptions { get; set; }
->>>>>>> Stashed changes
+
+        // public List<AddOptionsDTO>? AddOptions { get; set; }
+
 
     }
     public class UpdateRequestPostVehicleDTO {
@@ -70,13 +69,7 @@ namespace Common.DTOs
         [Required(ErrorMessage = "Status is required")]
         public PostStatus Status { get; set; }
     }
-<<<<<<< Updated upstream
-=======
-    public class AddOptionsDTO
-    {
-        [Required(ErrorMessage = "Description is required")]
-        public string Description { get; set; }
-    }
->>>>>>> Stashed changes
+
+
 
 }
