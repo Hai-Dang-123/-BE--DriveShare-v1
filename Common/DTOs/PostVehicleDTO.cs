@@ -30,6 +30,7 @@ namespace Common.DTOs
         [Required(ErrorMessage = "EndDate is required")]
         public DateTime EndDate { get; set; }
 
+
         public List<AddOptionDTO>? AddOptions { get; set; }
 
 
@@ -72,6 +73,7 @@ namespace Common.DTOs
         [Required(ErrorMessage = "Status is required")]
         public PostStatus Status { get; set; }
     }
+
 
 
 }
