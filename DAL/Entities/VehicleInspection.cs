@@ -11,29 +11,23 @@ namespace DAL.Entities
     {
         public Guid VehicleInspectionId { get; set; }
 
-        // 🔗 Gắn với booking cụ thể (chuyến thuê / giao hàng)
-        public Guid BookingId { get; set; }
-        public Booking Booking { get; set; } = null!;
+        // 🔗 Gắn với báo cáo cụ thể (biên bản bàn giao)
+        public Guid ReportId { get; set; }
+        public BaseReport Report { get; set; } = null!; // Có thể là VehicleBookingReport hoặc ItemBookingReport
 
-        // 🔹 Giao xe hay trả xe
-        public InspectionType InspectionType { get; set; }
-        // Ví dụ: Handover (nhận xe), Return (trả xe)
+        public Guid VehicleId { get; set; } // Trực tiếp link đến Vehicle
+        public Vehicle Vehicle { get; set; } = null!;
 
-        // 🔹 Ghi chú tình trạng xe
+        public InspectionType Type { get; set; } // Đổi InspectionType thành Type
         public string? ConditionNotes { get; set; }
+        public string? EvidenceJson { get; set; } // JSON list URL ảnh/video hoặc checklist chi tiết
+        public double OdometerReadingKm { get; set; } // Đổi OdometerReading thành OdometerReadingKm
 
-        // 🔹 Dữ liệu chứng cứ (ảnh, video, checklist, ...)
-        // JSON hợp lý nếu bạn lưu base64 hoặc list URL
-        public string? EvidenceJson { get; set; }
-
-        // 🔹 Số km tại thời điểm kiểm tra
-        public double OdometerReading { get; set; }
-
-        // 🔹 Trạng thái kiểm tra: Pending / Approved / Disputed / Completed
         public InspectionStatus Status { get; set; }
+        public DateTime InspectionDate { get; set; } = DateTime.UtcNow;
 
-        // 🔹 Nếu phát hiện vấn đề (ví dụ hư hỏng, thiếu nhiên liệu, …)
-        //public ICollection<InspectionResolution> Resolutions { get; set; }
+        // Nếu phát hiện vấn đề
+        //public ICollection<InspectionResolution> Resolutions { get; set; } = new List<InspectionResolution>();
     }
 
 }

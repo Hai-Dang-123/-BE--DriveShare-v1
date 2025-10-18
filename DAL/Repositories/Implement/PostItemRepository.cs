@@ -10,18 +10,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-<<<<<<< Updated upstream:DAL/Repositories/Implement/ClausesRepository.cs
-    public class ClausesRepository : GenericRepository<Clause>, IClausesRepository
-    {
-        private readonly DriverShareAppContext _context;
-        public ClausesRepository(DriverShareAppContext context) : base(context)
-=======
-    public class VehicleBookingReportRepository : GenericRepository<VehicleBookingReport>, IVehicleBookingReportRepository
-    {
-        private readonly DriverShareAppContext _context;
 
-        public VehicleBookingReportRepository(DriverShareAppContext context) : base(context)
->>>>>>> Stashed changes:DAL/Repositories/Implement/VehicleBookingRepository.cs
+    public class PostItemRepository : GenericRepository<PostItem>, IPostItemRepository
+    {
+        private readonly DriverShareAppContext _context;
+        public PostItemRepository(DriverShareAppContext context) : base(context)
+
         {
             _context = context;
         }

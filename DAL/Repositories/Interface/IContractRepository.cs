@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interface
 {
-    public interface IContractRepository : IGenericRepository<Contract>
+    public interface IContractRepository : IGenericRepository<BaseContract>
     {
     }
 }

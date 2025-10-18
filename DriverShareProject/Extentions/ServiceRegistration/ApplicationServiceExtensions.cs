@@ -20,14 +20,26 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
-
+            services.AddScoped<IContractService,ContractService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IVerificationService, VerificationService>();
 
-            services.AddScoped<IBookingService, BookingService>();
+            //services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IContractTemplateService, ContractTemplateService>();
+            //services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IFirebaseUploadService , FirebaseUploadService>();
 
-            services.AddScoped<IClausesService, ClausesService>();
+            services.AddScoped<IClausesTemplateService, ClauseTemplateService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
+            services.AddScoped<IItemContractService, ItemContractService>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IReportTermService, ReportTermService>();
+            services.AddScoped<IReportTemplateService, ReportTemplateService>();
+            services.AddScoped<IContractTermService, ContractTermService>();
+            services.AddScoped<IRuleService, RuleService>();
+
+
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();
@@ -35,7 +47,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddHttpClient<IVNPTTokenService, VNPTTokenService>();
             services.AddHttpClient<IEKYCService, EKYCService>(client =>
             {
-                client.BaseAddress = new Uri(configuration["VNPT:BaseUrl"]);
+                client.BaseAddress = new Uri(configuration["VNPTAuth:BaseUrl"]);
                 client.Timeout = TimeSpan.FromMinutes(5);
             });
 

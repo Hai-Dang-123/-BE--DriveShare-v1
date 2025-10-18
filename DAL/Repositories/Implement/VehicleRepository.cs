@@ -28,24 +28,35 @@ namespace DAL.Repositories.Implement
         public async Task<IEnumerable<Vehicle>> GetAllByUserIdAsync(Guid userId)
         {
             return await _context.Vehicles
-                .Where(v => v.UserId == userId && v.Status != VehicleStatus.DELETED)
+                .Where(v => v.OwnerUserId == userId && v.Status != VehicleStatus.DELETED)
                 .ToListAsync();
         }
         public async Task<IEnumerable<Vehicle>> GetAllWithImagesByUserIdAsync(Guid userId)
         {
             return await _context.Vehicles
-                .Include(v => v.VehicleImages)
+                .Include(v => v.Images)
                 .Include(v => v.VehicleType)
-                .Where(v => v.UserId == userId && v.Status != VehicleStatus.DELETED)
+                .Where(v => v.OwnerUserId == userId && v.Status != VehicleStatus.DELETED)
                 .ToListAsync();
         }
         public async Task<Vehicle?> GetByIdWithImagesAsync(Guid id)
         {
             return await _context.Vehicles
-                .Include(v => v.VehicleImages)
+                .Include(v => v.Images)
                 .Include(v => v.VehicleType)
                 .FirstOrDefaultAsync(v => v.VehicleId == id);
         }
+
+        public async Task<Vehicle?> GetByIdWithFullDetailAsync(Guid id)
+        {
+            return await _context.Vehicles
+                .Include(v => v.Images)
+                .Include(v => v.VehicleType)
+                .Include(v => v.OwnerUser)
+                .Include(v => v.PostsForRent.Where(p => p.Status == PostStatus.ACTIVE))
+                .FirstOrDefaultAsync(v => v.VehicleId == id && v.Status != VehicleStatus.DELETED);
+        }
+
 
     }
 }

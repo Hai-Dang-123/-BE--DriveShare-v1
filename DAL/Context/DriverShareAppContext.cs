@@ -1,10 +1,7 @@
 ﻿using DAL.Entities;
+
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection; // Để quét các lớp con nếu cần
 
 namespace DAL.Context
 {
@@ -17,6 +14,9 @@ namespace DAL.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Verification> Verifications { get; set; }
         public DbSet<UserToken> UserTokens { get; set; }
+        public DbSet<UserActivityLog> UserActivityLogs { get; set; } // Đã đưa lên đây để gần User
+        public DbSet<UserViolation> UserViolations { get; set; } // Đã đưa lên đây để gần User
+
 
         // ---------------------- Wallet & Transactions ----------------------
         public DbSet<Wallet> Wallets { get; set; }
@@ -25,248 +25,608 @@ namespace DAL.Context
         // ---------------------- Vehicle Management ----------------------
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
-        public DbSet<VehicleImages> VehicleImages { get; set; }
+        public DbSet<VehicleImage> VehicleImages { get; set; } // Đổi từ VehicleImages
+        public DbSet<AddOption> AddOptions { get; set; } // Entity AddOption cần DbSet
         public DbSet<PostVehicle> PostVehicles { get; set; }
-        public DbSet<Clause> Clauses { get; set; }
 
         // ---------------------- Booking & Contracts ----------------------
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<VehicleBooking> VehicleBookings { get; set; }
+        public DbSet<ItemBooking> ItemBookings { get; set; }
+        // DbSet cho BaseContract (sẽ được ánh xạ thành một bảng với các loại khác nhau)
+        public DbSet<BaseContract> Contracts { get; set; }
+        public DbSet<VehicleContract> VehicleContracts { get; set; } // Để dễ dàng truy vấn riêng
+        public DbSet<ItemContract> ItemContracts { get; set; }     // Để dễ dàng truy vấn riêng
+        public DbSet<ContractTemplate> ContractTemplates { get; set; }
         public DbSet<ContractTerm> ContractTerms { get; set; }
+
+
 
         // ---------------------- Trip & Driver Management ----------------------
         public DbSet<Trip> Trips { get; set; }
         public DbSet<TripDriver> TripDrivers { get; set; }
         public DbSet<TripStepInPlan> TripStepInPlans { get; set; }
 
-        // ---------------------- Rules & Regulations ----------------------
-        public DbSet<Rule> Rules { get; set; }
+        // ---------------------- Items, Reports, Rules ----------------------
+        public DbSet<PostItem> PostItems { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemCharacteristics> ItemCharacteristics { get; set; }
+        public DbSet<PostItemShippingRoute> PostItemShippingRoutes { get; set; }
 
-        // ---------------------- Notifications & Reviews ----------------------
+        // DbSet cho BaseReport
+        public DbSet<BaseReport> Reports { get; set; }
+        public DbSet<VehicleBookingReport> VehicleBookingReports { get; set; } // Để dễ dàng truy vấn riêng
+        public DbSet<ItemBookingReport> ItemBookingReports { get; set; }     // Để dễ dàng truy vấn riêng
+        public DbSet<ReportTemplate> ReportTemplates { get; set; }
+        public DbSet<ReportTerm> ReportTerms { get; set; }
+
+        public DbSet<VehicleInspection> VehicleInspections { get; set; }
+        //public DbSet<InspectionResolution> InspectionResolutions { get; set; } // DbSet cho entity mới
+        public DbSet<Rule> Rules { get; set; }
+        public DbSet<ClauseTemplate> ClauseTemplates { get; set; } // Đổi từ Clauses
+        public DbSet<ClauseTerm> ClauseContents { get; set; } // DbSet cho entity mới
+
+
+        // ---------------------- General ----------------------
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Hash key
-            modelBuilder.Entity<User>().HasKey(u => u.UserId);
-            modelBuilder.Entity<Role>().HasKey(r => r.RoleId);
-            modelBuilder.Entity<Wallet>().HasKey(w => w.WalletId);
-            modelBuilder.Entity<Transaction>().HasKey(t => t.TransactionId);
-            modelBuilder.Entity<Vehicle>().HasKey(v => v.VehicleId);
-            modelBuilder.Entity<VehicleType>().HasKey(vt => vt.VehicleTypeId);
-            modelBuilder.Entity<VehicleImages>().HasKey(vi => vi.VehicleImageId);
-            modelBuilder.Entity<PostVehicle>().HasKey(pv => pv.PostVehicleId);
-            modelBuilder.Entity<Booking>().HasKey(b => b.BookingId);
-            modelBuilder.Entity<Contract>().HasKey(c => c.ContractId);
+            // ---------------------- Key Configurations ----------------------
+            // EF Core thường tự động nhận diện nếu các ID theo quy ước, nhưng liệt kê ra để rõ ràng
+            modelBuilder.Entity<AddOption>().HasKey(ao => ao.AddOptionId);
+            modelBuilder.Entity<ClauseTemplate>().HasKey(ct => ct.ClauseId);
+            modelBuilder.Entity<ClauseTerm>().HasKey(cc => cc.ClauseTermId);
+            modelBuilder.Entity<ContractTemplate>().HasKey(ct => ct.ContractTemplateId);
             modelBuilder.Entity<ContractTerm>().HasKey(ct => ct.ContractTermId);
+            modelBuilder.Entity<ContractTerm>().HasKey(cst => cst.ContractTermId);
+            modelBuilder.Entity<ItemBooking>().HasKey(ib => ib.ItemBookingId);
+            modelBuilder.Entity<Notification>().HasKey(n => n.NotificationId);
+            modelBuilder.Entity<PostItem>().HasKey(pi => pi.PostItemId);
+            modelBuilder.Entity<PostVehicle>().HasKey(pv => pv.PostVehicleId);
+            modelBuilder.Entity<ReportTemplate>().HasKey(rt => rt.ReportTemplateId);
+            modelBuilder.Entity<ReportTerm>().HasKey(rt => rt.ReportTermId);
+            modelBuilder.Entity<ContractTerm>().HasKey(rst => rst.ContractTermId);
+            modelBuilder.Entity<Review>().HasKey(r => r.ReviewId);
+            modelBuilder.Entity<Role>().HasKey(r => r.RoleId);
+            modelBuilder.Entity<Rule>().HasKey(r => r.RuleId);
+            modelBuilder.Entity<Transaction>().HasKey(t => t.TransactionId);
             modelBuilder.Entity<Trip>().HasKey(t => t.TripId);
             modelBuilder.Entity<TripDriver>().HasKey(td => td.TripDriverId);
-            modelBuilder.Entity<TripStepInPlan>().HasKey(tp => tp.TripStepInPlanId);
-            modelBuilder.Entity<Verification>().HasKey(uv => uv.VerificationId);
+            modelBuilder.Entity<TripStepInPlan>().HasKey(tsp => tsp.TripStepInPlanId);
+            modelBuilder.Entity<User>().HasKey(u => u.UserId);
+            modelBuilder.Entity<UserActivityLog>().HasKey(ual => ual.UserActivityLogId);
             modelBuilder.Entity<UserToken>().HasKey(ut => ut.UserTokenId);
-            modelBuilder.Entity<Notification>().HasKey(n => n.NotificationId);
-            modelBuilder.Entity<Review>().HasKey(r => r.ReviewId);
-            modelBuilder.Entity<Rule>().HasKey(r => r.RuleId);
-            
-            
-            // Relationships
+            modelBuilder.Entity<UserViolation>().HasKey(uv => uv.UserViolationId);
+            modelBuilder.Entity<Vehicle>().HasKey(v => v.VehicleId);
+            modelBuilder.Entity<VehicleBooking>().HasKey(vb => vb.VehicleBookingId);
+            modelBuilder.Entity<VehicleImage>().HasKey(vi => vi.VehicleImageId);
+            modelBuilder.Entity<VehicleInspection>().HasKey(vi => vi.VehicleInspectionId);
+            //modelBuilder.Entity<InspectionResolution>().HasKey(ir => ir.InspectionResolutionId);
+            modelBuilder.Entity<VehicleType>().HasKey(vt => vt.VehicleTypeId);
+            modelBuilder.Entity<Verification>().HasKey(v => v.VerificationId);
+            modelBuilder.Entity<Wallet>().HasKey(w => w.WalletId);
+
+            modelBuilder.Entity<BaseContract>().HasKey(bc => bc.ContractId);
+            modelBuilder.Entity<BaseReport>().HasKey(br => br.ReportId);
+
+            // ---------------------- TPH Inheritance for Contracts ----------------------
+            // Contract base class mapping
+            modelBuilder.Entity<BaseContract>()
+                .ToTable("Contracts") // All contracts in one table
+                .HasDiscriminator<string>("Type") // Column to distinguish types
+                .HasValue<VehicleContract>("VehicleContract")
+                .HasValue<ItemContract>("ItemContract");
+
+            // ---------------------- TPH Inheritance for Reports ----------------------
+            // Report base class mapping
+            modelBuilder.Entity<BaseReport>()
+                .ToTable("Reports") // All reports in one table
+                .HasDiscriminator<string>("Type") // Column to distinguish types
+                .HasValue<VehicleBookingReport>("VehicleBookingReport")
+                .HasValue<ItemBookingReport>("ItemBookingReport");
 
 
-            // Role & User 
+            // ---------------------- Relationships ----------------------
+
+            // User ↔ Role
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // User & Wallet
-            modelBuilder.Entity<Wallet>()
-                .HasOne(w => w.User)
-                .WithMany()
-                .HasForeignKey(w => w.UserId)
+            // User ↔ Wallet (1-1)
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Wallet)
+                .WithOne(w => w.User)
+                .HasForeignKey<Wallet>(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Nếu user bị xóa, ví cũng bị xóa
+
+            // User ↔ Verification (User can have multiple verifications, verification processed by user)
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Verifications)
+                .WithOne(v => v.User)
+                .HasForeignKey(v => v.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Wallet & Transaction
+            modelBuilder.Entity<Verification>()
+                .HasOne(v => v.ProcessedByUser)
+                .WithMany() // ProcessedByUser is not a dedicated collection in User
+                .HasForeignKey(v => v.ProcessedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ UserToken
+            modelBuilder.Entity<UserToken>()
+                .HasOne(ut => ut.User)
+                .WithMany(u => u.Tokens)
+                .HasForeignKey(ut => ut.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa user thì token cũng xóa
+
+            // User ↔ UserActivityLog
+            modelBuilder.Entity<UserActivityLog>()
+                .HasOne(ual => ual.User)
+                .WithMany() // UserActivityLog không có collection ngược trong User
+                .HasForeignKey(ual => ual.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa user thì log cũng xóa
+
+            // User ↔ UserViolation
+            modelBuilder.Entity<UserViolation>()
+                .HasOne(uv => uv.User)
+                .WithMany(u => u.UserViolations)
+                .HasForeignKey(uv => uv.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa user thì vi phạm cũng xóa
+
+            // User ↔ Notification
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa user thì thông báo cũng xóa
+
+            // User ↔ Review (FromUser and ToUser)
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.FromUser)
+                .WithMany(u => u.ReviewsGiven)
+                .HasForeignKey(r => r.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict); // Không xóa review nếu người viết bị xóa
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.ToUser)
+                .WithMany(u => u.ReviewsReceived)
+                .HasForeignKey(r => r.ToUserId)
+                .OnDelete(DeleteBehavior.Restrict); // Không xóa review nếu người được đánh giá bị xóa
+
+
+            // User ↔ PostVehicle (Owner)
+            modelBuilder.Entity<PostVehicle>()
+                .HasOne(pv => pv.Owner)
+                .WithMany(u => u.CreatedPostVehicles)
+                .HasForeignKey(pv => pv.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ PostItem (Creator)
+            modelBuilder.Entity<PostItem>()
+                .HasOne(pi => pi.User)
+                .WithMany(u => u.CreatedPostItems)
+                .HasForeignKey(pi => pi.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ VehicleBooking (Renter)
+            modelBuilder.Entity<VehicleBooking>()
+                .HasOne(vb => vb.RenterUser)
+                .WithMany(u => u.AsRenterBookings)
+                .HasForeignKey(vb => vb.RenterUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ ItemBooking (DriverUser)
+            modelBuilder.Entity<ItemBooking>()
+                .HasOne(ib => ib.Driver)
+                .WithMany(u => u.AsItemDriverBookings)
+                .HasForeignKey(ib => ib.DriverId)
+                .IsRequired(false) // DriverUser có thể null nếu là external driver
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ Trip (CreatorUser)
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.CreatorUser)
+                .WithMany(u => u.CreatedTrips)
+                .HasForeignKey(t => t.CreatorUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // User ↔ TripDriver (DriverUser)
+            modelBuilder.Entity<TripDriver>()
+                .HasOne(td => td.DriverUser)
+                .WithMany(u => u.AssignedTrips)
+                .HasForeignKey(td => td.DriverUserId)
+                .IsRequired(false) // DriverUser có thể null nếu là external driver
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // Wallet ↔ Transaction
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Wallet)
                 .WithMany(w => w.Transactions)
                 .HasForeignKey(t => t.WalletId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Vehicle & VehicleType
+            // Vehicle ↔ VehicleType
             modelBuilder.Entity<Vehicle>()
                 .HasOne(v => v.VehicleType)
                 .WithMany(vt => vt.Vehicles)
                 .HasForeignKey(v => v.VehicleTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Vehicle & VehicleImages
-            modelBuilder.Entity<VehicleImages>()
-                .HasOne(vi => vi.Vehicle)
-                .WithMany(v => v.VehicleImages)
-                .HasForeignKey(vi => vi.VehicleId)
+            // Vehicle ↔ User (OwnerUser)
+            modelBuilder.Entity<Vehicle>()
+                .HasOne(v => v.OwnerUser)
+                .WithMany(u => u.OwnedVehicles)
+                .HasForeignKey(v => v.OwnerUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PostVehicle & Vehicle
+            // Vehicle ↔ Verification (CurrentVerification)
+            modelBuilder.Entity<Vehicle>()
+                .HasOne(v => v.CurrentVerification)
+                .WithMany() // CurrentVerification không có collection ngược trong Verification
+                .HasForeignKey(v => v.CurrentVerificationId)
+                .IsRequired(false) // CurrentVerification có thể null
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Vehicle ↔ VehicleImage
+            modelBuilder.Entity<VehicleImage>()
+                .HasOne(vi => vi.Vehicle)
+                .WithMany(v => v.Images)
+                .HasForeignKey(vi => vi.VehicleId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa xe thì ảnh cũng xóa
+
+            // PostVehicle ↔ Vehicle
             modelBuilder.Entity<PostVehicle>()
                 .HasOne(pv => pv.Vehicle)
-                .WithMany(v => v.Posts)
+                .WithMany(v => v.PostsForRent)
                 .HasForeignKey(pv => pv.VehicleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // PostVehicle & User (Owner)
+            // PostVehicle ↔ ClauseTemplate
             modelBuilder.Entity<PostVehicle>()
-                .HasOne(pv => pv.Owner)
-                .WithMany()
-                .HasForeignKey(pv => pv.OwnerId)
-                .OnDelete(DeleteBehavior.Restrict);
-            // PostVehicle & Clause 
-            modelBuilder.Entity<PostVehicle>()
-                .HasOne(pv => pv.Clause)
-                .WithMany(c => c.Posts)
-                .HasForeignKey(pv => pv.ClauseId)
+                .HasOne(pv => pv.ClauseTemplate)
+                .WithMany(ct => ct.Posts)
+                .HasForeignKey(pv => pv.ClauseTemplateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Booking & PostVehicle
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.PostVehicle)
-                .WithMany()
-                .HasForeignKey(b => b.PostVehicleId)
+            // AddOption ↔ PostVehicle
+            modelBuilder.Entity<AddOption>()
+                .HasOne(ao => ao.PostVehicle)
+                .WithMany(pv => pv.AddOptions)
+                .HasForeignKey(ao => ao.PostVehicleId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa bài đăng thì tùy chọn cũng xóa
+
+            // VehicleBooking ↔ PostVehicle
+            modelBuilder.Entity<VehicleBooking>()
+                .HasOne(vb => vb.PostVehicle)
+                .WithMany(pv => pv.VehicleBookings)
+                .HasForeignKey(vb => vb.PostVehicleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Booking & Contract
-            modelBuilder.Entity<Contract>()
-                .HasOne(c => c.Booking)
-                .WithOne(b => b.Contract)
-                .HasForeignKey<Contract>(c => c.BookingId)
+            // ItemBooking ↔ PostItem
+            modelBuilder.Entity<ItemBooking>()
+                .HasOne(ib => ib.PostItem)
+                .WithMany(pi => pi.ItemBookings)
+                .HasForeignKey(ib => ib.PostItemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ItemBooking ↔ Vehicle (used for transport)
+            modelBuilder.Entity<ItemBooking>()
+                .HasOne(ib => ib.Vehicle)
+                .WithMany() // Không có collection ngược trong Vehicle cho vai trò này
+                .HasForeignKey(ib => ib.VehicleId)
+                .IsRequired(false) // Vehicle có thể null nếu là external
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            // PostVehicle & ContractTerm
+            // VehicleContract ↔ VehicleBooking (1-1)
+            modelBuilder.Entity<VehicleContract>()
+                .HasOne(vc => vc.VehicleBooking)
+                .WithOne(vb => vb.VehicleContract)
+                .HasForeignKey<VehicleContract>(vc => vc.VehicleBookingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ItemContract ↔ ItemBooking (1-1)
+            modelBuilder.Entity<ItemContract>()
+                .HasOne(ic => ic.ItemBooking)
+                .WithOne(ib => ib.ItemContract)
+                .HasForeignKey<ItemContract>(ic => ic.ItemBookingId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ContractTemplate ↔ ContractTerm
             modelBuilder.Entity<ContractTerm>()
-                .HasOne(ct => ct.PostVehicle)
-                .WithMany(pv => pv.ContractTerms)
-                .HasForeignKey(ct => ct.PostVehicleId)
+                .HasOne(ct => ct.ContractTemplate)
+                .WithMany(t => t.ContractTerms)
+                .HasForeignKey(ct => ct.ContractTemplateId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa template thì term cũng xóa
+
+          
+
+
+            // ClauseTemplate ↔ ClauseContent
+            //modelBuilder.Entity<ClauseTerm>()
+            //    .HasOne(cc => cc.ClauseTemplate)
+            //    .WithMany() // Không có collection ngược trong ClauseTemplate cho từng content
+            //    .HasForeignKey(cc => cc.ClauseTemplateId)
+            //    .OnDelete(DeleteBehavior.Cascade); // Xóa template thì content cũng xóa
+            modelBuilder.Entity<ClauseTerm>()
+                .HasOne(cc => cc.ClauseTemplate)
+                .WithMany(t => t.Terms) // 🔹 Chỉ rõ collection ở ClauseTemplate
+                .HasForeignKey(cc => cc.ClauseTemplateId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // VehicleBookingReport ↔ VehicleBooking (1-1)
+            modelBuilder.Entity<VehicleBookingReport>()
+                .HasOne(vbr => vbr.VehicleBooking)
+                .WithMany(vb => vb.Reports) // Changed to WithMany as one booking can have multiple reports
+                .HasForeignKey(vbr => vbr.VehicleBookingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Contract & ContractTerm
-            modelBuilder.Entity<ContractTerm>()
-                .HasOne(ct => ct.Contract)
-                .WithMany(c => c.Terms)
-                .HasForeignKey(ct => ct.ContractId)
+            // ItemBookingReport ↔ ItemBooking (1-1)
+            modelBuilder.Entity<ItemBookingReport>()
+                .HasOne(ibr => ibr.ItemBooking)
+                .WithMany(ib => ib.Reports) // Changed to WithMany as one booking can have multiple reports
+                .HasForeignKey(ibr => ibr.ItemBookingId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Trip & TripDriver
-            modelBuilder.Entity<TripDriver>()
-                .HasOne(td => td.Trip)
-                .WithMany(t => t.Drivers)
-                .HasForeignKey(td => td.TripId)
+
+            // BaseReport ↔ ReportTemplate
+            modelBuilder.Entity<BaseReport>()
+                .HasOne(br => br.ReportTemplate)
+                .WithMany() // No inverse collection in ReportTemplate
+                .HasForeignKey(br => br.ReportTemplateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // TripDriver & User (optional)
-            modelBuilder.Entity<TripDriver>()
-                .HasOne(td => td.Driver)
-                .WithMany()
-                .HasForeignKey(td => td.DriverId)
+            // ReportTerm ↔ ReportTemplate
+            modelBuilder.Entity<ReportTerm>()
+                .HasOne(rt => rt.ReportTemplate)
+                .WithMany(t => t.ReportTerms)
+                .HasForeignKey(rt => rt.ReportTemplateId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa template thì term cũng xóa
+
+            
+
+
+            // Review ↔ Vehicle (optional)
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.RelatedVehicle)
+                .WithMany(v => v.Reviews)
+                .HasForeignKey(r => r.RelatedVehicleId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Trip & TripStepInPlan
-            modelBuilder.Entity<TripStepInPlan>()
-                .HasOne(tp => tp.Trip)
-                .WithMany(t => t.TripPlans)
-                .HasForeignKey(tp => tp.TripId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-            // TripStepInPlan & TripDriver
-            modelBuilder.Entity<TripStepInPlan>()
-                .HasOne(tp => tp.Driver)
-                .WithMany()
-                .HasForeignKey(tp => tp.TripDriverId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            // User & Verification (1 - N)
-            modelBuilder.Entity<Verification>()
-                .HasOne(uv => uv.User)
-                .WithMany(u => u.Verifications)
-                .HasForeignKey(uv => uv.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            //Vehicle & Verification (1 - 1)
-            modelBuilder.Entity<Verification>()
-                .HasOne(uv => uv.Vehicle)
-                .WithOne(v => v.Verification)
-                .HasForeignKey<Verification>(uv => uv.VehicleId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            //  UserToken
-            modelBuilder.Entity<UserToken>()
-                .HasOne(ut => ut.User)
-                .WithMany(u => u.Tokens)
-                .HasForeignKey(ut => ut.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Notification
-            modelBuilder.Entity<Notification>()
-                .HasOne(n => n.User)
-                .WithMany()
-                .HasForeignKey(n => n.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Review (FromUser/ToUser)
+            // Review ↔ VehicleBooking (optional)
             modelBuilder.Entity<Review>()
-                .HasOne(r => r.FromUser)
+                .HasOne(r => r.RelatedVehicleBooking)
                 .WithMany()
-                .HasForeignKey(r => r.FromUserId)
+                .HasForeignKey(r => r.RelatedVehicleBookingId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Review ↔ ItemBooking (optional)
             modelBuilder.Entity<Review>()
-                .HasOne(r => r.ToUser)
+                .HasOne(r => r.RelatedItemBooking)
                 .WithMany()
-                .HasForeignKey(r => r.ToUserId)
+                .HasForeignKey(r => r.RelatedItemBookingId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            // ContractTemplate ↔ ContractTerm (1-n)
-            modelBuilder.Entity<ContractTemplate>()
-                .HasMany(ct => ct.ContractTerm)
-                .WithOne(t => t.ContractTemplate)
-                .HasForeignKey(t => t.ContractTemplateId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Trip ↔ ItemBooking (optional)
+            modelBuilder.Entity<Trip>()
+                .HasOne(t => t.RelatedItemBooking)
+                .WithMany()
+                .HasForeignKey(t => t.RelatedItemBookingId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Optional: unique constraint để tránh 1 Term thuộc cả Template lẫn Contract cùng lúc
-            modelBuilder.Entity<ContractTerm>()
-                .HasCheckConstraint("CK_ContractTerm_Parent",
-                    @"(ContractTemplateId IS NOT NULL AND ContractId IS NULL) 
-              OR (ContractTemplateId IS NULL AND ContractId IS NOT NULL)");
+            // Trip ↔ TripDriver
+            modelBuilder.Entity<TripDriver>()
+                .HasOne(td => td.Trip)
+                .WithMany(t => t.TripDrivers)
+                .HasForeignKey(td => td.TripId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa chuyến đi thì tài xế trong chuyến đi cũng xóa
 
-            // Rule: chỉ cần mặc định
+            // TripStepInPlan ↔ Trip
+            modelBuilder.Entity<TripStepInPlan>()
+                .HasOne(tsp => tsp.Trip)
+                .WithMany(t => t.TripSteps)
+                .HasForeignKey(tsp => tsp.TripId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa chuyến đi thì các bước cũng xóa
 
-            modelBuilder.Entity<Booking>()
-                .Property(b => b.TotalPrice)
-                .HasPrecision(18, 2);
+            // TripStepInPlan ↔ TripDriver
+            modelBuilder.Entity<TripStepInPlan>()
+                .HasOne(tsp => tsp.TripDriver)
+                .WithMany() // Không có collection ngược cụ thể trong TripDriver
+                .HasForeignKey(tsp => tsp.TripDriverId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<PostVehicle>()
-                .Property(p => p.DailyPrice)
-                .HasPrecision(18, 2);
 
-            modelBuilder.Entity<Rule>()
-                .Property(r => r.RuleValue)
-                .HasPrecision(18, 2);
+            // VehicleInspection ↔ BaseReport
+            modelBuilder.Entity<VehicleInspection>()
+                .HasOne(vi => vi.Report)
+                .WithMany(br => br.VehicleInspections)
+                .HasForeignKey(vi => vi.ReportId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Transaction>()
-                .Property(t => t.Amount)
-                .HasPrecision(18, 2);
+            // VehicleInspection ↔ Vehicle
+            modelBuilder.Entity<VehicleInspection>()
+                .HasOne(vi => vi.Vehicle)
+                .WithMany(v => v.Inspections)
+                .HasForeignKey(vi => vi.VehicleId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Wallet>()
-                .Property(w => w.Balance)
-                .HasPrecision(18, 2);
+            //// InspectionResolution ↔ VehicleInspection
+            //modelBuilder.Entity<InspectionResolution>()
+            //    .HasOne(ir => ir.VehicleInspection)
+            //    .WithMany(vi => vi.Resolutions)
+            //    .HasForeignKey(ir => ir.VehicleInspectionId)
+            //    .OnDelete(DeleteBehavior.Cascade); // Xóa kiểm tra thì giải quyết cũng xóa
 
-            // Seed data if needed
+            //// InspectionResolution ↔ User (ResolvedBy)
+            //modelBuilder.Entity<InspectionResolution>()
+            //    .HasOne(ir => ir.ResolvedByUser)
+            //    .WithMany()
+            //    .HasForeignKey(ir => ir.ResolvedByUserId)
+            //    .IsRequired(false)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+
+            // UserViolation ↔ UserActivityLog
+            modelBuilder.Entity<UserActivityLog>()
+                .HasOne(ual => ual.UserViolation)
+                .WithMany(uv => uv.RelatedActivityLogs)
+                .HasForeignKey(ual => ual.UserViolationId)
+                .IsRequired(false) // Log không nhất thiết phải liên quan đến violation
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // UserViolation ↔ VehicleBooking (optional)
+            modelBuilder.Entity<UserViolation>()
+                .HasOne(uv => uv.VehicleBooking)
+                .WithMany()
+                .HasForeignKey(uv => uv.VehicleBookingId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // UserViolation ↔ ItemBooking (optional)
+            modelBuilder.Entity<UserViolation>()
+                .HasOne(uv => uv.ItemBooking)
+                .WithMany()
+                .HasForeignKey(uv => uv.ItemBookingId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // ========== ITEM ↔ ITEM CHARACTERISTICS (1-1) ==========
+            modelBuilder.Entity<Item>()
+                .HasOne(i => i.Characteristics)
+                .WithOne(c => c.Item)
+                .HasForeignKey<ItemCharacteristics>(c => c.ItemId)
+                .IsRequired();
+
+            modelBuilder.Entity<ItemCharacteristics>()
+                .HasKey(c => c.ItemId);
+
+            // ========== POST ITEM ↔ ITEM (1-1) ==========
+            modelBuilder.Entity<PostItem>()
+                .HasOne(p => p.Item)
+                .WithOne()
+                .HasForeignKey<PostItem>(p => p.ItemId)
+                .IsRequired();
+
+            // ========== POST ITEM ↔ SHIPPING ROUTE (1-1) ==========
+            modelBuilder.Entity<PostItem>()
+                .HasOne(p => p.Route)
+                .WithOne(r => r.PostItem)
+                .HasForeignKey<PostItemShippingRoute>(r => r.PostItemId)
+                .IsRequired();
+
+            modelBuilder.Entity<PostItemShippingRoute>()
+                .HasKey(r => r.PostItemId);
+
+
+            // ---------------------- Value Objects Mapping ----------------------
+
+            modelBuilder.Entity<PostItemShippingRoute>(entity =>
+            {
+                // Mapping cho Location Value Object
+                entity.OwnsOne(pi => pi.StartLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("StartLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("StartLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("StartLocationLongitude").IsRequired();
+                });
+                entity.OwnsOne(pi => pi.EndLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("EndLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("EndLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("EndLocationLongitude").IsRequired();
+                });
+
+                // Mapping cho TimeWindow Value Object
+                entity.OwnsOne(pi => pi.PickupTimeWindow, timeWindow =>
+                {
+                    timeWindow.Property(p => p.StartTime).HasColumnName("PickupTimeWindowStart");
+                    timeWindow.Property(p => p.EndTime).HasColumnName("PickupTimeWindowEnd");
+                });
+                entity.OwnsOne(pi => pi.DeliveryTimeWindow, timeWindow =>
+                {
+                    timeWindow.Property(p => p.StartTime).HasColumnName("DeliveryTimeWindowStart");
+                    timeWindow.Property(p => p.EndTime).HasColumnName("DeliveryTimeWindowEnd");
+                });
+
+                
+            });
+
+            modelBuilder.Entity<Item>(entity =>
+            {
+
+                entity.Property(e => e.VolumeM3).HasPrecision(10, 3); // Đổi tên từ Volume
+                entity.Property(e => e.WeightKg).HasPrecision(10, 3); // Đổi tên từ Weight
+            });
+
+            modelBuilder.Entity<PostItem>(entity =>
+            {
+                // Precision cho các thuộc tính Decimal
+                entity.Property(e => e.PricePerUnit).HasPrecision(18, 2);
+            });
+
+            // Mapping cho Location và Time trong Trip
+            modelBuilder.Entity<Trip>(entity =>
+            {
+                entity.OwnsOne(t => t.StartLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("StartLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("StartLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("StartLocationLongitude").IsRequired();
+                });
+                entity.OwnsOne(t => t.EndLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("EndLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("EndLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("EndLocationLongitude").IsRequired();
+                });
+            });
+
+            // Mapping cho Location trong TripStepInPlan
+            modelBuilder.Entity<TripStepInPlan>(entity =>
+            {
+                entity.OwnsOne(tsp => tsp.StartLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("StartLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("StartLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("StartLocationLongitude").IsRequired();
+                });
+                entity.OwnsOne(tsp => tsp.EndLocation, location =>
+                {
+                    location.Property(p => p.Address).HasColumnName("EndLocationAddress").IsRequired();
+                    location.Property(p => p.Latitude).HasColumnName("EndLocationLatitude").IsRequired();
+                    location.Property(p => p.Longitude).HasColumnName("EndLocationLongitude").IsRequired();
+                });
+            });
+
+
+            // Precision setup
+            modelBuilder.Entity<VehicleBooking>().Property(v => v.TotalPrice).HasPrecision(18, 2);
+            modelBuilder.Entity<ItemBooking>().Property(i => i.TotalPrice).HasPrecision(18, 2);
+            modelBuilder.Entity<PostVehicle>().Property(p => p.DailyPrice).HasPrecision(18, 2);
+            modelBuilder.Entity<Rule>().Property(r => r.Value).HasPrecision(18, 2);
+            modelBuilder.Entity<Transaction>().Property(t => t.Amount).HasPrecision(18, 2);
+            modelBuilder.Entity<Wallet>().Property(w => w.CurrentBalance).HasPrecision(18, 2);
+            
+
+           
+
+
+            // ---------------------- Seed Data ----------------------
             DbSeeder.Seed(modelBuilder);
         }
     }

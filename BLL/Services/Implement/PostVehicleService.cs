@@ -24,23 +24,13 @@ namespace BLL.Services.Implement
             _userUtility = userUtility;
         }
 
-        
-
-        // update bài post ( status pending ) -DONE
-        // delete bài post ( status deleted ) owner vs staff - DONE
-        // get all bài post của owner -DONE
-        // get all bài post của driver -DONE
-        // get all bài post with status Pendding( staff ) -DONE
-        // get bài post theo id  -DONE
-        // change status bài post ( request status ) - DONE
-
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            if (userId == Guid.Empty)
-            {
-                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
-            }
+            //if (userId == Guid.Empty)
+            //{
+            //    return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+            //}
 
             var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
             if (vehicle == null)
@@ -59,15 +49,29 @@ namespace BLL.Services.Implement
             }
             var newPostVehicle = new PostVehicle
             {
-                ClauseId = dto.ClauseId,
+                ClauseTemplateId = dto.ClauseId,
                 PostVehicleId = Guid.NewGuid(),
                 VehicleId = dto.VehicleId,
                 OwnerId = userId,
                 DailyPrice = dto.DailyPrice,
-                Status = PostStatus.PENDING,
-                StartDate = dto.StartDate,
-                EndDate = dto.EndDate,
+                Status = PostStatus.DRAFT,
+                AvailableStartDate = dto.StartDate,
+                AvailableEndDate = dto.EndDate,
+                AddOptions = new List<AddOption>()
             };
+            if (dto.AddOptions != null && dto.AddOptions.Any())
+            {
+                foreach (var option in dto.AddOptions)
+                {
+                    newPostVehicle.AddOptions.Add(new AddOption
+                    {
+                        AddOptionId = Guid.NewGuid(),
+                        Description = option.Description,
+                        PostVehicleId = newPostVehicle.PostVehicleId
+                    });
+                }
+            }
+            
             try
             {
                 await _unitOfWork.PostVehicleRepo.AddAsync(newPostVehicle);
@@ -80,7 +84,6 @@ namespace BLL.Services.Implement
             }
             return new ResponseDTO(PostMessages.POST_CREATED_SUCCESS, 201, true);
         }
-
         public async Task<ResponseDTO> DeletePostVehicleAsync(Guid postId)
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -98,7 +101,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(PostMessages.FORBIDDEN, 403, false);
             }
-            if (existingPost.Status == PostStatus.RENTED)
+            if (existingPost.Status == PostStatus.BOOKED)
             {
                 return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
             }
@@ -119,7 +122,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO(PostMessages.POST_DELETED_SUCCESS, 200, true);
         }
-
         public async Task<ResponseDTO> GetAllPostVehicleAsync()
         {
             try
@@ -128,17 +130,18 @@ namespace BLL.Services.Implement
 
                 var result = posts.Select(p => new GetPostVehicleDTO
                 {
-                    ClauseId = p.ClauseId,
+                    ClauseId = p.ClauseTemplateId,
                     DailyPrice = p.DailyPrice,
-                    EndDate = p.EndDate,
-                    OwnerName = p.Owner?.UserName ?? "N/A",
+                    EndDate = p.AvailableEndDate,
+                    OwnerName = p.Owner?.Username ?? "N/A",
                     OwnerPhone = p.Owner?.PhoneNumber ?? "N/A",
-                    StartDate = p.StartDate,
+                    StartDate = p.AvailableStartDate,
                     Status = p.Status,
                     VehicleBrand = p.Vehicle?.Brand ?? "N/A",
                     VehicleModel = p.Vehicle?.Model ?? "N/A",
-                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName ?? "N/A",
+                    VehicleType = p.Vehicle?.VehicleType?.Name ?? "N/A",
                     PlateNumber = p.Vehicle?.PlateNumber ?? "N/A" ,
+                    ImageUrls = p.Vehicle?.Images?.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -148,7 +151,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetAllPostVehiclesByStatusAsync(PostStatus postStatus)
         {
             try
@@ -156,17 +158,19 @@ namespace BLL.Services.Implement
                 var posts = await _unitOfWork.PostVehicleRepo.GetAllByStatusAsync(postStatus);
 
                 var result = posts.Select(p => new GetPostVehicleDTO
-                {ClauseId = p.ClauseId,
+                {
+                    ClauseId = p.ClauseTemplateId,
                     DailyPrice = p.DailyPrice,
-                    EndDate = p.EndDate,
-                    OwnerName = p.Owner?.UserName ?? "N/A",
+                    EndDate = p.AvailableEndDate,
+                    OwnerName = p.Owner?.Username ?? "N/A",
                     OwnerPhone = p.Owner?.PhoneNumber ?? "N/A",
-                    StartDate = p.StartDate,
+                    StartDate = p.AvailableStartDate,
                     Status = p.Status,
                     VehicleBrand = p.Vehicle?.Brand ?? "N/A",
                     VehicleModel = p.Vehicle?.Model ?? "N/A",
-                    VehicleType = p.Vehicle?.VehicleType?.VehicleTypeName ?? "N/A",
+                    VehicleType = p.Vehicle?.VehicleType?.Name ?? "N/A",
                     PlateNumber = p.Vehicle?.PlateNumber ?? "N/A",
+                    ImageUrls = p.Vehicle?.Images?.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -176,7 +180,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetAllPostVehiclesOwner()
         {
             var userId = _userUtility.GetUserIdFromToken();
@@ -190,17 +193,18 @@ namespace BLL.Services.Implement
 
                 var result = posts.Select(p => new GetPostVehicleDTO
                 {
-                    ClauseId = p.ClauseId,
+                    ClauseId = p.ClauseTemplateId,
                     DailyPrice = p.DailyPrice,
-                    EndDate = p.EndDate,
-                    OwnerName = p.Owner.UserName,
+                    EndDate = p.AvailableEndDate,
+                    OwnerName = p.Owner.Username,
                     OwnerPhone = p.Owner.PhoneNumber,
-                    StartDate = p.StartDate,
+                    StartDate = p.AvailableStartDate,
                     Status = p.Status,
                     VehicleBrand = p.Vehicle.Brand,
                     VehicleModel = p.Vehicle.Model,
-                    VehicleType = p.Vehicle.VehicleType.VehicleTypeName,
+                    VehicleType = p.Vehicle.VehicleType.Name,
                     PlateNumber = p.Vehicle.PlateNumber,
+                    ImageUrls = p.Vehicle.Images.Select(img => img.ImageUrl).ToList()
                 }).ToList();
 
                 return new ResponseDTO(PostMessages.GET_ALL_POST_SUCCESS, 200, true, result);
@@ -210,7 +214,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO(PostMessages.ERROR_OCCURRED, 500, false);
             }
         }
-
         public async Task<ResponseDTO> GetPostVehicleByIdAsync(Guid postId)
         {
             if (postId == Guid.Empty)
@@ -225,17 +228,18 @@ namespace BLL.Services.Implement
                     return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
                 }
                 var result = new GetPostVehicleDTO
-                {   ClauseId = postVehicle.ClauseId,
-                    OwnerName = postVehicle.Owner.UserName,
+                {   ClauseId = postVehicle.ClauseTemplateId,
+                    OwnerName = postVehicle.Owner.Username,
                     OwnerPhone = postVehicle.Owner.PhoneNumber,
                     DailyPrice = postVehicle.DailyPrice,
                     Status = postVehicle.Status,
-                    StartDate = postVehicle.StartDate,
-                    EndDate = postVehicle.EndDate,
+                    StartDate = postVehicle.AvailableStartDate,
+                    EndDate = postVehicle.AvailableEndDate,
                     VehicleBrand = postVehicle.Vehicle.Brand,
                     VehicleModel = postVehicle.Vehicle.Model,
-                    VehicleType = postVehicle.Vehicle.VehicleType.VehicleTypeName,
+                    VehicleType = postVehicle.Vehicle.VehicleType.Name,
                     PlateNumber = postVehicle.Vehicle.PlateNumber,
+                    ImageUrls = postVehicle.Vehicle.Images.Select(img => img.ImageUrl).ToList()
                 };
                 return new ResponseDTO(PostMessages.GET_POST_SUCCESS, 200, true, result);
             }
@@ -260,7 +264,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO(PostMessages.FORBIDDEN, 403, false);
             }
-            if (existingPost.Status == PostStatus.RENTED || existingPost.Status == PostStatus.DELETED)
+            if (existingPost.Status == PostStatus.BOOKED || existingPost.Status == PostStatus.DELETED)
             {
                 return new ResponseDTO("Cannot update because post is already RENTED or DELETED.", 400, false);
             }
@@ -273,15 +277,15 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO("EndDate must be greater than StartDate.", 400, false);
             }
-            existingPost.ClauseId = dto.ClauseId;
+            existingPost.ClauseTemplateId = dto.ClauseId;
             existingPost.PostVehicleId = dto.PostVehicleId;
             existingPost.DailyPrice = dto.DailyPrice;
-            existingPost.StartDate = dto.StartDate;
-            existingPost.EndDate = dto.EndDate;
+            existingPost.AvailableStartDate = dto.StartDate;
+            existingPost.AvailableEndDate = dto.EndDate;
 
-            if (existingPost.Status == PostStatus.APPROVED)
+            if (existingPost.Status == PostStatus.ACTIVE)
             {
-                existingPost.Status = PostStatus.PENDING;
+                existingPost.Status = PostStatus.DRAFT;
             }
 
             try
@@ -311,7 +315,7 @@ namespace BLL.Services.Implement
                 }
 
                 // Nếu đã bị xóa hoặc đang thuê thì không cho đổi trạng thái
-                if (postVehicle.Status == PostStatus.DELETED || postVehicle.Status == PostStatus.RENTED)
+                if (postVehicle.Status == PostStatus.DELETED || postVehicle.Status == PostStatus.BOOKED)
                 {
                     return new ResponseDTO(PostMessages.POST_RENTED, 400, false);
                 }

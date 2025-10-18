@@ -12,7 +12,7 @@ namespace DAL.Entities
         public string Content { get; set; } = null!;
         public bool IsMandatory { get; set; }
         public Guid ReportTemplateId { get; set; }  
-        public ReportTemplate ReportTemplate { get; set; }
+        public ReportTemplate ReportTemplate { get; set; } 
 
 
     }

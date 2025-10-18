@@ -8,11 +8,10 @@ namespace Common.Enums
 {
     public enum PostItemStatus
     {
-        PENDING,
-        APPROVED,
-        REJECTED,
+        DRAFT,
+        ACTIVE,
+        BOOKED,
         COMPLETED,
         CANCELLED,
-        FLAGGED
     }
 }

@@ -10,8 +10,7 @@ namespace DAL.Entities
     public class Contract
     {
         public Guid ContractId { get; set; }
-        public Guid BookingId { get; set; }
-        public Booking Booking { get; set; } = null!;
+       
         public string Version { get; set; } = null!;
         public bool OwnerSigned { get; set; }
         public bool RenterSigned { get; set; }
@@ -21,5 +20,16 @@ namespace DAL.Entities
         public ContractTemplate ContractTemplate { get; set; } = null!;
        
         public ContractStatus Status { get; set; }
+
+        // Liên kết đến Booking (1-1)
+        public Guid? VehicleBookingId { get; set; }
+        public VehicleBooking? VehicleBooking { get; set; }
+
+        public Guid? ItemBookingId { get; set; }
+        public ItemBooking? ItemBooking { get; set; }
+
+        // 🕒 Thời gian tạo và ký hợp đồng
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? SignedAt { get; set; }  // Cho phép null nếu chưa ký
     }
 }

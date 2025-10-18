@@ -9,8 +9,8 @@ namespace DAL.Entities
     public class AddOption
     {
         public Guid AddOptionId { get; set; }
-        public string Content { get; set; } = null!;
-        public Guid PostVehicle { get; set; }
-        public PostVehicle PostVehicles { get; set; }
+        public string Description { get; set; } = null!;
+        public Guid PostVehicleId { get; set; }
+        public PostVehicle PostVehicle { get; set; } = null!; 
     }
 }

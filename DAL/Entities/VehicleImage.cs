@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class VehicleImages
+    public class VehicleImage
     {
         public Guid VehicleImageId { get; set; }
         public string ImageUrl { get; set; } = null!;

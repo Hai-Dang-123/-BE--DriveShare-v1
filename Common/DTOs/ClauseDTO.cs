@@ -11,26 +11,33 @@ namespace Common.DTOs
     {
        
     }
-    public class CreateClauseDTO
+    public class CreateClauseTemplateDTO
     {
-        [Required(ErrorMessage ="Version not null")]
-        public string Version { get; set; }
-        [Required(ErrorMessage = "Description not null")]
-        public string Description { get; set; }
+        public string Version { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public List<ClauseContentDTO>? ClauseContents { get; set; }
     }
-    public class UpdateClauseDTO
-    {
-        [Required(ErrorMessage = "ClauseId not null")]
-        public Guid ClauseId { get; set; }
-        [Required(ErrorMessage = "Version not null")]
-        public string Version { get; set; }
-        [Required(ErrorMessage = "Description not null")]
-        public string Description { get; set; }
-    }
-    public class GetClauseDTO
+    public class UpdateClauseTemplateDTO
     {
         public Guid ClauseId { get; set; }
+        public string Title { get; set; }
         public string Version { get; set; }
-        public string Description { get; set; }
+        public List<ClauseContentUpdateDTO> ClauseContents { get; set; }
     }
+
+    public class ClauseContentDTO
+    {
+        
+        public string Content { get; set; } = null!;
+        public bool IsMandatory { get; set; }
+        public int DisplayOrder { get; set; }
+    }
+    public class ClauseContentUpdateDTO
+    {
+        public Guid? ClauseTermId { get; set; } 
+        public string Content { get; set; } = null!;
+        public bool IsMandatory { get; set; }
+        public int DisplayOrder { get; set; }
+    }
+
 }

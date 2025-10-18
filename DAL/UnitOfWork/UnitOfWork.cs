@@ -13,13 +13,13 @@ namespace DAL.UnitOfWork
         private bool _disposed = false;
         private IDbContextTransaction? _transaction;
 
-        
+
 
         public UnitOfWork(DriverShareAppContext context)
         {
             _context = context;
 
-            BookingRepo = new BookingRepository(_context);
+            //BookingRepo = new BookingRepository(_context);
             ContractRepo = new ContractRepository(_context);
             ContractTermRepo = new ContractTermRepository(_context);
             NotificationRepo = new NotificationRepository(_context);
@@ -38,6 +38,7 @@ namespace DAL.UnitOfWork
             VehicleTypeRepo = new VehicleTypeRepository(_context);
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             ClausesRepo = new ClausesRepository(_context);
 =======
@@ -45,6 +46,12 @@ namespace DAL.UnitOfWork
             ContractTemplateRepo = new ContractTemplateRepository(_context);
 
           
+=======
+            ClauseTemplateRepo = new ClauseTemplateRepository(_context);
+            ContractTemplateRepo = new ContractTemplateRepository(_context);
+
+            VehicleBookingRepo = new VehicleBookingRepository(_context);
+>>>>>>> origin
             ItemBookingRepo = new ItemBookingRepository(_context);
 
             PostItemRepo = new PostItemRepository(_context);
@@ -56,14 +63,18 @@ namespace DAL.UnitOfWork
             ReportRepo = new ReportRepository(_context);
             ReportTermRepo = new ReportTermRepository(_context);
             ReportTemplateRepo = new ReportTemplateRepository(_context);
+<<<<<<< HEAD
             addOptionRepo = new AddOptionRepository(_context);
             VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
             ItemBookingReportRepo = new ItemBookingReportRepository(_context);
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> origin
 
         }
 
-        
+
 
         // Transaction methods
         public async Task BeginTransactionAsync()
@@ -94,7 +105,9 @@ namespace DAL.UnitOfWork
         }
 
 
-        public IBookingRepository BookingRepo { get; private set; } 
+        //public IBookingRepository BookingRepo { get; private set; } 
+        public IVehicleBookingRepository VehicleBookingRepo { get; private set; }
+        public IItemBookingRepository ItemBookingRepo { get; private set; }
         public IContractRepository ContractRepo { get; private set; }
         public IContractTermRepository ContractTermRepo { get; private set; }
         public INotificationRepository NotificationRepo { get; private set; }
@@ -113,9 +126,12 @@ namespace DAL.UnitOfWork
         public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         public IClausesRepository ClausesRepo { get; private set; }
 =======
+=======
+>>>>>>> origin
 
         public IClauseTemplateRepository ClausesRepo { get; private set; }
         public IPostItemRepository PostItemRepo { get; private set; }
@@ -129,10 +145,13 @@ namespace DAL.UnitOfWork
         public IReportRepository ReportRepo { get; }
         public IReportTermRepository ReportTermRepo { get; }
         public IReportTemplateRepository ReportTemplateRepo { get; }
+<<<<<<< HEAD
         public IAddOptionRepository addOptionRepo { get; private set; }
         public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
         public IItemBookingReportRepository ItemBookingReportRepo { get; private set; }
 >>>>>>> Stashed changes
+=======
+>>>>>>> origin
 
         public async Task RollbackTransactionAsync()
         {

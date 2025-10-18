@@ -12,13 +12,15 @@ namespace DAL.Entities
         public Guid TripId { get; set; }
         public Trip Trip { get; set; } = null!;
 
-        // Nếu driver có tài khoản trong hệ thống
-        public Guid? DriverId { get; set; }
-        public User? Driver { get; set; }
+        // Driver có thể là User trong hệ thống hoặc external
+        public Guid? DriverUserId { get; set; } // Đổi DriverId thành DriverUserId
+        public User? DriverUser { get; set; }
 
-        // Nếu driver là external (nhập tay)
         public string? ExternalDriverName { get; set; }
         public string? ExternalDriverLicense { get; set; }
         public string? ExternalDriverPhone { get; set; }
+
+        public bool IsPrimaryDriver { get; set; } // Nếu có nhiều tài xế, ai là chính
+        public DateTime AssignedAt { get; set; } = DateTime.UtcNow;
     }
 }
