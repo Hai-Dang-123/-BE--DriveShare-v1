@@ -11,5 +11,7 @@ namespace DAL.Repositories.Interface
     {
         Task<ReportTemplate?> GetByIdWithTermsAsync(Guid id);
         Task<List<ReportTemplate>> GetAllWithTermsAsync();
+        Task<ReportTemplate> CreateReportTemplateAsync(ReportTemplate template);
+        Task<ReportTemplate?> UpdateReportTemplateAsync(Guid id, ReportTemplate template);
     }
 }

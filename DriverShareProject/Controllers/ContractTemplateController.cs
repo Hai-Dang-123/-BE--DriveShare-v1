@@ -53,5 +53,7 @@ namespace DriverShareProject.Controllers
             var result = await _contractTemplateService.DeleteContractTemplateAsync(id);
             return StatusCode(result.StatusCode, result);
         }
+
+
     }
 }

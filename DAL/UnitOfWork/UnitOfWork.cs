@@ -57,6 +57,8 @@ namespace DAL.UnitOfWork
             ReportTermRepo = new ReportTermRepository(_context);
             ReportTemplateRepo = new ReportTemplateRepository(_context);
 
+            ItemBookingReportRepo = new ItemBookingReportRepository(_context);
+
 
         }
 
@@ -128,6 +130,7 @@ namespace DAL.UnitOfWork
         public IReportTermRepository ReportTermRepo { get; }
         public IReportTemplateRepository ReportTemplateRepo { get; }
 
+        public IItemBookingReportRepository ItemBookingReportRepo { get; }
         public async Task RollbackTransactionAsync()
         {
             if (_transaction != null)

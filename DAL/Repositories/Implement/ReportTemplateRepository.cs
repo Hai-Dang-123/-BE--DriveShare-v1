@@ -21,5 +21,46 @@ namespace DAL.Repositories.Implement
                 .Include(rt => rt.ReportTerms)
                 .ToListAsync();
         }
+        // 🟢 Tạo mới ReportTemplate
+        public async Task<ReportTemplate> CreateReportTemplateAsync(ReportTemplate template)
+        {
+            _context.ReportTemplates.Add(template);
+            await _context.SaveChangesAsync();
+            return template;
+        }
+
+        // 🟢 Cập nhật ReportTemplate
+        public async Task<ReportTemplate?> UpdateReportTemplateAsync(Guid id, ReportTemplate updatedTemplate)
+        {
+            var existing = await _context.ReportTemplates
+                .Include(rt => rt.ReportTerms)
+                .FirstOrDefaultAsync(rt => rt.ReportTemplateId == id);
+
+            if (existing == null)
+                return null;
+
+            existing.Version = updatedTemplate.Version;
+
+            // Xóa term cũ
+            _context.ReportTerms.RemoveRange(existing.ReportTerms);
+
+            // Thêm lại term mới
+            if (updatedTemplate.ReportTerms != null)
+            {
+                foreach (var term in updatedTemplate.ReportTerms)
+                {
+                    existing.ReportTerms.Add(new ReportTerm
+                    {
+                        ReportTermId = Guid.NewGuid(),
+                        Content = term.Content,
+                        IsMandatory = term.IsMandatory,
+                        ReportTemplateId = existing.ReportTemplateId
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return existing;
+        }
     }
 }

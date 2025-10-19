@@ -20,6 +20,116 @@ namespace BLL.Services.Implement
             _logger = logger;
         }
 
+        public async Task<ResponseDTO> CreateReportTemplateAsync(CreateReportTemplateDTO dto)
+        {
+            try
+            {
+                var newTemplate = new DAL.Entities.ReportTemplate
+                {
+                    ReportTemplateId = Guid.NewGuid(),
+                    Version = dto.Version,
+                    CreatedAt = DateTime.UtcNow,
+                };
+
+                // Nếu có term thì thêm vào
+                if (dto.ReportTerms != null && dto.ReportTerms.Any())
+                {
+                    foreach (var termDto in dto.ReportTerms)
+                    {
+                        newTemplate.ReportTerms.Add(new DAL.Entities.ReportTerm
+                        {
+                            ReportTermId = Guid.NewGuid(),
+                            Content = termDto.Content,
+                            IsMandatory = termDto.IsMandatory
+                        });
+                    }
+                }
+
+                await _unitOfWork.ReportTemplateRepo.AddAsync(newTemplate);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    StatusCode = 201,
+                    IsSuccess = true,
+                    Message = "Tạo mẫu báo cáo thành công.",
+                    Result = newTemplate
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tạo mẫu báo cáo");
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = $"Lỗi khi tạo mẫu báo cáo: {ex.Message}"
+                };
+            }
+        }
+
+        // ✅ Cập nhật mẫu báo cáo
+        public async Task<ResponseDTO> UpdateReportTemplateAsync(Guid id, UpdateReportTemplateDTO dto)
+        {
+            try
+            {
+                var template = await _unitOfWork.ReportTemplateRepo
+                    .GetByIdWithTermsAsync(id);
+
+                if (template == null)
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 404,
+                        IsSuccess = false,
+                        Message = "Không tìm thấy mẫu báo cáo cần cập nhật."
+                    };
+                }
+
+                template.Version = dto.Version ?? template.Version;
+                template.CreatedAt = DateTime.UtcNow;
+
+                // Cập nhật lại các term (xóa cũ, thêm mới)
+                if (template.ReportTerms.Any())
+                {
+                    _unitOfWork.ReportTermRepo.RemoveRange(template.ReportTerms.ToList());
+                }
+
+                if (dto.ReportTerms != null && dto.ReportTerms.Any())
+                {
+                    foreach (var termDto in dto.ReportTerms)
+                    {
+                        template.ReportTerms.Add(new DAL.Entities.ReportTerm
+                        {
+                            ReportTermId = Guid.NewGuid(),
+                            Content = termDto.Content,
+                            IsMandatory = termDto.IsMandatory
+                        });
+                    }
+                }
+
+                _unitOfWork.ReportTemplateRepo.UpdateAsync(template);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsSuccess = true,
+                    Message = "Cập nhật mẫu báo cáo thành công.",
+                    Result = template
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật mẫu báo cáo");
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = $"Lỗi khi cập nhật mẫu báo cáo: {ex.Message}"
+                };
+            }
+        }
         // ✅ Lấy tất cả mẫu báo cáo
         public async Task<ResponseDTO> GetAllReportTemplatesAsync()
         {

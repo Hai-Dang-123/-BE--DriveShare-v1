@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,86 @@ namespace BLL.Services.Implement
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+        }
+        public async Task<ResponseDTO> CreateReportTermAsync(ReportTermDTO dto)
+        {
+            try
+            {
+                if (dto == null)
+                    return new ResponseDTO { StatusCode = 400, IsSuccess = false, Message = "Dữ liệu đầu vào không hợp lệ." };
+
+                var entity = new ReportTerm
+                {
+                    ReportTermId = Guid.NewGuid(),
+                    Content = dto.Content,
+                    IsMandatory = dto.IsMandatory,
+                    ReportTemplateId = dto.ReportTemplateId ?? Guid.Empty
+                };
+
+                await _unitOfWork.ReportTermRepo.AddAsync(entity);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    StatusCode = 201,
+                    IsSuccess = true,
+                    Message = "Tạo điều khoản báo cáo thành công.",
+                    Result = entity
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tạo điều khoản báo cáo.");
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = $"Lỗi khi tạo điều khoản báo cáo: {ex.Message}"
+                };
+            }
+        }
+
+        // 🟢 Cập nhật điều khoản báo cáo
+        public async Task<ResponseDTO> UpdateReportTermAsync(Guid id, ReportTermDTO dto)
+        {
+            try
+            {
+                var existing = await _unitOfWork.ReportTermRepo.GetByIdAsync(id);
+                if (existing == null)
+                {
+                    return new ResponseDTO
+                    {
+                        StatusCode = 404,
+                        IsSuccess = false,
+                        Message = "Không tìm thấy điều khoản báo cáo."
+                    };
+                }
+
+                existing.Content = dto.Content;
+                existing.IsMandatory = dto.IsMandatory;
+                existing.ReportTemplateId = dto.ReportTemplateId?? Guid.Empty;
+
+                await _unitOfWork.ReportTermRepo.UpdateAsync(existing);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    StatusCode = 200,
+                    IsSuccess = true,
+                    Message = "Cập nhật điều khoản báo cáo thành công.",
+                    Result = existing
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi cập nhật điều khoản báo cáo.");
+                return new ResponseDTO
+                {
+                    StatusCode = 500,
+                    IsSuccess = false,
+                    Message = $"Lỗi khi cập nhật điều khoản báo cáo: {ex.Message}"
+                };
+            }
         }
         public async Task<ResponseDTO> GetAllReportTermsAsync()
         {
