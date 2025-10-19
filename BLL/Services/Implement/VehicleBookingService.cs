@@ -10,16 +10,27 @@ namespace BLL.Services.Implement
 {
 
     // Create VehicleBookingService 
-    // - VehicleBookingId
-    // - PostVehicleId
+    // - VehicleBookingId ( new Guid )
+    // - PostVehicleId ( DTO truyền vào )
     // - RenterUserId ( UserUtility lấy từ token )
-    // - RentalStartDate
-    // - RentalEndDate
+    // - RentalStartDate ( từ DTO truyền vào )
+    // - RentalEndDate ( từ DTO truyền vào )
     // - TotalPrice ( tính từ PostVehicle.PricePerDay * số ngày thuê )
     // - Status ( Mặc định là PENDING )
     // - CreatedAt ( mặc định DateTime.UtcNow )
 
     // => ResponseDTO ( result : VehicleBookingId )
+
+    // --------------------------------------------------
+
+    // Change Status ( nhận VehicleBookingId và Status )
+
+    // --------------------------------------------------
+
+    // nếu có thời gian thì làm thêm:
+    // Get VehicleBooking by RenterUserId ( lấy danh sách các booking của user này )
+    // Get VehicleBooking by VehicleBookingId ( lấy chi tiết booking )
+
 
     public class VehicleBookingService
     {

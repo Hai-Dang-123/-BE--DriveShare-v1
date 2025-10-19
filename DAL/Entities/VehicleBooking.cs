@@ -10,7 +10,6 @@ namespace DAL.Entities
     public class VehicleBooking
     {
         public Guid VehicleBookingId { get; set; }
-
         public Guid PostVehicleId { get; set; }
         public PostVehicle PostVehicle { get; set; } = null!; // Bài đăng xe được thuê
 

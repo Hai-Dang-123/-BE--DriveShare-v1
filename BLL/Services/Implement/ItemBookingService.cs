@@ -20,6 +20,14 @@ namespace BLL.Services.Implement
     // - DeliveryDate ( null )
 
     // => ResponseDTO ( result : ItemBookingId )
+
+    // --------------------------------------------------
+
+    // Change Status ( nhận ItemBookingId và Status )
+    // nếu có thời gian thì làm thêm:
+    // Get ItemBooking by RenterUserId ( lấy danh sách các booking của user này )
+    // Get ItemBooking by VehicleBookingId ( lấy chi tiết booking )
+
     public class ItemBookingService
     {
     }
