@@ -8,7 +8,7 @@ namespace DAL.UnitOfWork
     {
 
 
-        IAddOptionRepository addOptionRepo { get; }
+        IAddOptionRepository AddOptionRepo { get; }
         IVehicleBookingRepository VehicleBookingRepo { get; }
         IItemBookingRepository ItemBookingRepo { get; }
 
@@ -32,13 +32,11 @@ namespace DAL.UnitOfWork
         IWalletRepository WalletRepo { get; }
         IContractTemplateRepository ContractTemplateRepo { get; }
         IClauseTemplateRepository ClauseTemplateRepo { get; }
-
-        //IClausesRepository ClausesRepo { get; }
         IPostItemRepository PostItemRepo { get; }
 
 
         IClauseTermRepository ClauseTermRepo { get; }
-        IVehicleContractRepository vehicleContractRepo { get; }
+        IVehicleContractRepository VehicleContractRepo { get; }
         IItemContractRepository ItemContractRepo { get; }
 
         IReportRepository ReportRepo { get; }

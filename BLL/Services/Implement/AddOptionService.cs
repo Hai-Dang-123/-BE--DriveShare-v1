@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BLL.Services.Implement
-{
-    using BLL.Services.Interface;
-    using Common.DTOs;
+﻿    using Common.DTOs;
     using Common.Messages;
     using DAL.Entities;
     using DAL.UnitOfWork;
@@ -60,7 +51,7 @@ namespace BLL.Services.Implement
 
             public async Task<ResponseDTO> GetAllAddOptionsAsync()
             {
-                var addOptions = await _unitOfWork.AddOptionRepo.GetAllAsync();
+                var addOptions =  _unitOfWork.AddOptionRepo.GetAll();
                 if (!addOptions.Any())
                 {
                     return new ResponseDTO("Không có AddOption nào.", 404, false);
@@ -116,7 +107,7 @@ namespace BLL.Services.Implement
 
                 try
                 {
-                    await _unitOfWork.AddOptionRepo.DeleteAsync(addOption);
+                    await _unitOfWork.AddOptionRepo.DeleteAsync(id);
                     await _unitOfWork.SaveChangeAsync();
                 }
                 catch (Exception ex)
@@ -129,4 +120,3 @@ namespace BLL.Services.Implement
             }
         }
     }
-}

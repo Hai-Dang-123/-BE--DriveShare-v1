@@ -6,6 +6,6 @@ namespace BLL.Services.Interface
 {
     public interface IClauseService
     {
-        Task<ResponseDTO> DeleteClauseAsync(Guid id);
+        //Task<ResponseDTO> DeleteClauseAsync(Guid id);
     }
 }

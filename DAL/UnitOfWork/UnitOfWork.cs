@@ -38,39 +38,30 @@ namespace DAL.UnitOfWork
             VehicleTypeRepo = new VehicleTypeRepository(_context);
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            ClausesRepo = new ClausesRepository(_context);
-=======
+
+
             ClauseTemplateRepo = new ClauseTemplateRepository(_context);
             ContractTemplateRepo = new ContractTemplateRepository(_context);
 
-          
-=======
-            ClauseTemplateRepo = new ClauseTemplateRepository(_context);
-            ContractTemplateRepo = new ContractTemplateRepository(_context);
+
 
             VehicleBookingRepo = new VehicleBookingRepository(_context);
->>>>>>> origin
             ItemBookingRepo = new ItemBookingRepository(_context);
 
             PostItemRepo = new PostItemRepository(_context);
 
             ClauseTermRepo = new ClauseTermRepository(_context);
-            vehicleContractRepo = new VehicleContractRepository(_context);
+            VehicleContractRepo = new VehicleContractRepository(_context);
             ItemContractRepo = new ItemContractRepository(_context);
 
             ReportRepo = new ReportRepository(_context);
             ReportTermRepo = new ReportTermRepository(_context);
             ReportTemplateRepo = new ReportTemplateRepository(_context);
-<<<<<<< HEAD
-            addOptionRepo = new AddOptionRepository(_context);
-            VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
-            ItemBookingReportRepo = new ItemBookingReportRepository(_context);
->>>>>>> Stashed changes
-=======
 
->>>>>>> origin
+            AddOptionRepo = new AddOptionRepository(_context);
+            //VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
+            ItemBookingReportRepo = new ItemBookingReportRepository(_context);
+
 
         }
 
@@ -126,32 +117,24 @@ namespace DAL.UnitOfWork
         public IVehicleTypeRepository VehicleTypeRepo { get; private set; }
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        public IClausesRepository ClausesRepo { get; private set; }
-=======
-=======
->>>>>>> origin
 
-        public IClauseTemplateRepository ClausesRepo { get; private set; }
+
         public IPostItemRepository PostItemRepo { get; private set; }
 
         public IClauseTemplateRepository ClauseTemplateRepo { get; private set; }
         public IContractTemplateRepository ContractTemplateRepo { get; private set; }
         public IClauseTermRepository ClauseTermRepo { get; private set; }
-        public IVehicleContractRepository vehicleContractRepo { get; private set; }
+        public IVehicleContractRepository VehicleContractRepo { get; private set; }
         public IItemContractRepository ItemContractRepo { get; private set; }
 
         public IReportRepository ReportRepo { get; }
         public IReportTermRepository ReportTermRepo { get; }
         public IReportTemplateRepository ReportTemplateRepo { get; }
-<<<<<<< HEAD
-        public IAddOptionRepository addOptionRepo { get; private set; }
+
+        public IAddOptionRepository AddOptionRepo { get; private set; }
         public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
         public IItemBookingReportRepository ItemBookingReportRepo { get; private set; }
->>>>>>> Stashed changes
-=======
->>>>>>> origin
+
 
         public async Task RollbackTransactionAsync()
         {

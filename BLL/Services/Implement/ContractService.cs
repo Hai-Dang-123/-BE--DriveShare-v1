@@ -264,7 +264,7 @@ namespace BLL.Services.Implement
                     Status = Common.Enums.ContractStatus.DRAFT,
                     VehicleBookingId = createVehicleContractDto.VehicleBookingId
                 };
-                await _unitOfWork.vehicleContractRepo.AddAsync(newContract);
+                await _unitOfWork.VehicleContractRepo.AddAsync(newContract);
                 await _unitOfWork.SaveChangeAsync();
                 return new ResponseDTO
                 {

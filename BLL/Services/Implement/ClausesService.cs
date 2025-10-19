@@ -25,24 +25,24 @@ namespace BLL.Services.Implement
             _userUtility = userUtility;
         }
 
-        public async Task<ResponseDTO> DeleteClauseAsync(Guid id)
-        {
-            var clause = await _unitOfWork.ClausesRepo.GetByIdAsync(id);
-            if (clause == null)
-            {
-                return new ResponseDTO ("Not found clause", 400, false);
-            }
-            try
-            {
-                await _unitOfWork.ClausesRepo.DeleteAsync(id);
-                await _unitOfWork.SaveAsync();
-            }catch (Exception ex)
-            {
-                return new ResponseDTO ($"Delete clause failed: {ex.Message}", 500, false);
-            }
+        //public async Task<ResponseDTO> DeleteClauseAsync(Guid id)
+        //{
+        //    var clause = await _unitOfWork.ClausesRepo.GetByIdAsync(id);
+        //    if (clause == null)
+        //    {
+        //        return new ResponseDTO ("Not found clause", 400, false);
+        //    }
+        //    try
+        //    {
+        //        await _unitOfWork.ClausesRepo.DeleteAsync(id);
+        //        await _unitOfWork.SaveAsync();
+        //    }catch (Exception ex)
+        //    {
+        //        return new ResponseDTO ($"Delete clause failed: {ex.Message}", 500, false);
+        //    }
 
-            return new ResponseDTO ("Delete clause successfully", 200, true);
-        }
+        //    return new ResponseDTO ("Delete clause successfully", 200, true);
+        //}
     }
 }
 
