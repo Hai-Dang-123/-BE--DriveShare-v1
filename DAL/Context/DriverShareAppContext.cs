@@ -292,7 +292,14 @@ namespace DAL.Context
             // PostVehicle ↔ ClauseTemplate
             modelBuilder.Entity<PostVehicle>()
                 .HasOne(pv => pv.ClauseTemplate)
-                .WithMany(ct => ct.Posts)
+                .WithMany(ct => ct.PostVehicles)
+                .HasForeignKey(pv => pv.ClauseTemplateId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // PostItem ↔ ClauseTemplate
+            modelBuilder.Entity<PostItem>()
+                .HasOne(pv => pv.ClauseTemplate)
+                .WithMany(ct => ct.PostItems)
                 .HasForeignKey(pv => pv.ClauseTemplateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -318,12 +325,12 @@ namespace DAL.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
             // ItemBooking ↔ Vehicle (used for transport)
-            modelBuilder.Entity<ItemBooking>()
-                .HasOne(ib => ib.Vehicle)
-                .WithMany() // Không có collection ngược trong Vehicle cho vai trò này
-                .HasForeignKey(ib => ib.VehicleId)
-                .IsRequired(false) // Vehicle có thể null nếu là external
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<ItemBooking>()
+            //    .HasOne(ib => ib.Vehicle)
+            //    .WithMany() // Không có collection ngược trong Vehicle cho vai trò này
+            //    .HasForeignKey(ib => ib.VehicleId)
+            //    .IsRequired(false) // Vehicle có thể null nếu là external
+            //    .OnDelete(DeleteBehavior.Restrict);
 
 
             // VehicleContract ↔ VehicleBooking (1-1)

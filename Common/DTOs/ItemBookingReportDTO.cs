@@ -10,11 +10,11 @@ namespace Common.DTOs
     public class ItemBookingReportDTO
     {
     }
-    public class CreateItemBookingReportDTO
-    {
-        public Guid ItemBookingId { get; set; }
-        public string ReportTitle { get; set; } = null!;
-        public ReportType ReportType { get; set; }
-        public string Version { get; set; } = null!;
-    }
+    //public class CreateItemBookingReportDTO
+    //{
+    //    public Guid ItemBookingId { get; set; }
+    //    public string ReportTitle { get; set; } = null!;
+    //    public ReportType ReportType { get; set; }
+    //    public string Version { get; set; } = null!;
+    //}
 }

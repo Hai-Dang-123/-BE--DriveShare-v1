@@ -27,11 +27,10 @@ namespace BLL.Services.Implement
         public async Task<ResponseDTO> CreatePostVehicleAsync(CreateRequestPostVehicleDTO dto)
         {
             var userId = _userUtility.GetUserIdFromToken();
-            //if (userId == Guid.Empty)
-            //{
-            //    return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
-            //}
-
+            if (userId == Guid.Empty)
+            {
+                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+            }
             var vehicle = await _unitOfWork.VehicleRepo.GetByIdAsync(dto.VehicleId);
             if (vehicle == null)
             {

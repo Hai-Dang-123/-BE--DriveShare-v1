@@ -19,7 +19,6 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
-        // 🔹 Get All
         public async Task<ResponseDTO> GetAllRulesAsync()
         {
             try
@@ -69,8 +68,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // 🔹 Get by Id
         public async Task<ResponseDTO> GetRuleByIdAsync(Guid id)
         {
             try
@@ -105,8 +102,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // 🔹 Create
         public async Task<ResponseDTO> CreateRuleAsync(CreateRuleDTO dto)
         {
             try
@@ -148,8 +143,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // 🔹 Update
         public async Task<ResponseDTO> UpdateRuleAsync(Guid id, UpdateRuleDTO dto)
         {
             try
@@ -198,8 +191,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // 🔹 Delete
         public async Task<ResponseDTO> DeleteRuleAsync(Guid id)
         {
             try

@@ -24,7 +24,6 @@ namespace DAL.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Một VehicleBooking sẽ có một VehicleContract
-        public Guid VehicleContractId { get; set; }
         public VehicleContract VehicleContract { get; set; } = null!;
 
         public ICollection<VehicleBookingReport> Reports { get; set; } = new List<VehicleBookingReport>();

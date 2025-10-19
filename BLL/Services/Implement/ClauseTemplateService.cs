@@ -185,5 +185,7 @@ namespace BLL.Services.Implement
                 Result = clauseTemplate
             };
         }
+
+        // DELETE Clause Template
     }
 }

@@ -12,12 +12,10 @@ namespace BLL.Services.Implement
     public class ReportTemplateService : IReportTemplateService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<ReportTemplateService> _logger;
 
-        public ReportTemplateService(IUnitOfWork unitOfWork, ILogger<ReportTemplateService> logger)
+        public ReportTemplateService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
 
 
@@ -59,7 +57,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi tạo mẫu báo cáo");
                 return new ResponseDTO
                 {
                     StatusCode = 500,
@@ -68,8 +65,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Cập nhật mẫu báo cáo
         public async Task<ResponseDTO> UpdateReportTemplateAsync(Guid id, UpdateReportTemplateDTO dto)
         {
             try
@@ -109,7 +104,7 @@ namespace BLL.Services.Implement
                     }
                 }
 
-                _unitOfWork.ReportTemplateRepo.UpdateAsync(template);
+                await _unitOfWork.ReportTemplateRepo.UpdateAsync(template);
                 await _unitOfWork.SaveChangeAsync();
 
                 return new ResponseDTO
@@ -122,7 +117,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi cập nhật mẫu báo cáo");
                 return new ResponseDTO
                 {
                     StatusCode = 500,
@@ -180,8 +174,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Lấy mẫu báo cáo theo ID
         public async Task<ResponseDTO> GetReportTemplateByIdAsync(Guid id)
         {
             try
@@ -229,8 +221,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Xoá mẫu báo cáo
         public async Task<ResponseDTO> DeleteReportTemplateAsync(Guid id)
         {
             try
@@ -251,7 +241,7 @@ namespace BLL.Services.Implement
                     _unitOfWork.ReportTermRepo.RemoveRange(template.ReportTerms.ToList());
                 }
 
-                _unitOfWork.ReportTemplateRepo.Delete(template);
+                await _unitOfWork.ReportTemplateRepo.DeleteAsync(id);
                 await _unitOfWork.SaveChangeAsync();
 
                 return new ResponseDTO
@@ -263,7 +253,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting report template");
                 return new ResponseDTO
                 {
                     StatusCode = 500,

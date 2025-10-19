@@ -11,6 +11,11 @@ using System.Web;
 
 namespace BLL.Services.Implement
 {
+
+    // Create Post Vehicle Booking Payment Url via Sepay QR Code
+    // Create Post Item Booking Payment Url via Sepay QR Code
+    
+
     public class SepayService : ISepayService
     {
         //private readonly IHttpClientFactory _httpClientFactory;

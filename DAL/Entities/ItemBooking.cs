@@ -17,8 +17,8 @@ namespace DAL.Entities
         public Guid DriverId { get; set; }
         public User Driver { get; set; } = null!;
 
-        public Guid VehicleId { get; set; }  // xe dùng để chở hàng (có thể là xe riêng hoặc thuê)
-        public Vehicle Vehicle { get; set; } = null!;
+        //public Guid VehicleId { get; set; }  // xe dùng để chở hàng (có thể là xe riêng hoặc thuê)
+        //public Vehicle Vehicle { get; set; } = null!;
 
         public decimal TotalPrice { get; set; }
         public BookingStatus Status { get; set; }

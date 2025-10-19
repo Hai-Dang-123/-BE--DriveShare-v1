@@ -82,7 +82,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
         public async Task<ResponseDTO> GetAllContractTemplateasync()
         {
             try
@@ -119,7 +118,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
         public async Task<ResponseDTO> GetContractTemplateByIdAsync(Guid id)
         {
             try
@@ -232,7 +230,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
         public async Task<ResponseDTO> DeleteContractTemplateAsync(Guid id)
         {
             try

@@ -12,7 +12,6 @@ namespace DAL.UnitOfWork
         IVehicleBookingRepository VehicleBookingRepo { get; }
         IItemBookingRepository ItemBookingRepo { get; }
 
-        IContractRepository ContractRepo { get; }
         IContractTermRepository ContractTermRepo { get; }
         INotificationRepository NotificationRepo { get; }
         IPostVehicleRepository PostVehicleRepo { get; }
@@ -48,7 +47,6 @@ namespace DAL.UnitOfWork
         IItemBookingReportRepository ItemBookingReportRepo { get; }
 
 
-        IItemBookingReportRepository ItemBookingReportRepo { get; }
 
 
         // Save changes

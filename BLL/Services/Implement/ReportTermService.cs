@@ -12,12 +12,10 @@ namespace BLL.Services.Implement
     public class ReportTermService : IReportTermService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<ReportTermService> _logger;
 
-        public ReportTermService(IUnitOfWork unitOfWork, ILogger<ReportTermService> logger)
+        public ReportTermService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
         public async Task<ResponseDTO> CreateReportTermAsync(ReportTermDTO dto)
         {
@@ -47,7 +45,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi tạo điều khoản báo cáo.");
                 return new ResponseDTO
                 {
                     StatusCode = 500,
@@ -56,8 +53,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // 🟢 Cập nhật điều khoản báo cáo
         public async Task<ResponseDTO> UpdateReportTermAsync(Guid id, ReportTermDTO dto)
         {
             try
@@ -90,7 +85,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi cập nhật điều khoản báo cáo.");
                 return new ResponseDTO
                 {
                     StatusCode = 500,
@@ -99,9 +93,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        
-
         public async Task<ResponseDTO> GetAllReportTermsAsync()
         {
             try
@@ -144,8 +135,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Lấy điều khoản báo cáo theo ID
         public async Task<ResponseDTO> GetReportTermByIdAsync(Guid id)
         {
             try
@@ -207,7 +196,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting report term");
                 return new ResponseDTO
                 {
                     StatusCode = 500,

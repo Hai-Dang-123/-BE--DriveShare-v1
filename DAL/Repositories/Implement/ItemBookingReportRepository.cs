@@ -19,9 +19,6 @@ namespace DAL.Repositories.Implement
         {
             _context = context;
         }
-
-
-
         public async Task<IEnumerable<ItemBookingReport>> GetAllByBookingIdAsync(Guid itemBookingId)
         {
             return await _context.ItemBookingReports

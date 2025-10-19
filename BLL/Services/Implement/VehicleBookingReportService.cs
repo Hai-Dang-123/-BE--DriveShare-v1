@@ -36,10 +36,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi lấy danh sách báo cáo: {ex.Message}", 500, false);
             }
         }
-
-        // ==========================================================
-        // 🔹 GET BY ID
-        // ==========================================================
         public async Task<ResponseDTO> GetVehicleBookingReportByIdAsync(Guid id)
             {
             try
@@ -59,9 +55,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi lấy báo cáo: {ex.Message}", 500, false);
             }
         }
-        // ==========================================================
-        // 🔹 CREATE
-        // ==========================================================
         public async Task<ResponseDTO> CreateVehicleBookingReportAsync(CreateVehicleBookingReportDTO dto)
         {
             try
@@ -92,12 +85,6 @@ namespace BLL.Services.Implement
 
                 return new ResponseDTO("Tạo VehicleBookingReport thành công.", 201, true);
         }
-
-        // ==========================================================
-        // 🔹 UPDATE
-        // ==========================================================
-
-
         public async Task<ResponseDTO> UpdateVehicleBookingReportAsync(Guid id, CreateVehicleBookingReportDTO dto)
         {
             var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
@@ -124,11 +111,6 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Cập nhật báo cáo thành công.", 200, true);
         }
-        // ==========================================================
-        // 🔹 DELETE
-        // ==========================================================
-
-
         public async Task<ResponseDTO> DeleteVehicleBookingReportAsync(Guid id)
         {
             var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
@@ -140,12 +122,6 @@ namespace BLL.Services.Implement
 
                 return new ResponseDTO("Xoá VehicleBookingReport thành công.", 200, true);
             }
-
-
-
-        // ==========================================================
-        // 🔹 (Tuỳ chọn) GET BY BOOKING ID
-        // ==========================================================
         public async Task<ResponseDTO> GetReportsByBookingIdAsync(Guid bookingId)
         {
             try

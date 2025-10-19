@@ -18,11 +18,6 @@ namespace BLL.Services.Implement
         private readonly IFirebaseUploadService _firebaseUpload;
         private readonly IEKYCService _ekycService;
 
-
-
-        // miss - ekyc
-        
-
         public VehicleService(IUnitOfWork unitOfWork, UserUtility userUtility, IFirebaseUploadService firebaseUpload,IEKYCService eKYCService)
         {
             _unitOfWork = unitOfWork;

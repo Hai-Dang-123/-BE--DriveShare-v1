@@ -39,7 +39,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi lấy danh sách báo cáo: {ex.Message}", 500, false);
             }
         }
-
         // GET BY ID
         public async Task<ResponseDTO> GetItemReportByIdAsync(Guid id)
         {
@@ -60,7 +59,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi lấy báo cáo: {ex.Message}", 500, false);
             }
         }
-
         // CREATE
         public async Task<ResponseDTO> CreateItemReportAsync(CreateItemBookingReportDTO dto)
         {
@@ -92,7 +90,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi tạo báo cáo: {ex.Message}", 500, false);
             }
         }
-
         // UPDATE
         public async Task<ResponseDTO> UpdateItemReportAsync(Guid id, CreateItemBookingReportDTO dto)
         {
@@ -121,7 +118,6 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Lỗi khi cập nhật báo cáo: {ex.Message}", 500, false);
             }
         }
-
         // DELETE
         public async Task<ResponseDTO> DeleteItemReportAsync(Guid id)
         {

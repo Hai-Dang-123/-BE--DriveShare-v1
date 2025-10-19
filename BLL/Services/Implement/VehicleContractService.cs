@@ -19,8 +19,6 @@ namespace BLL.Services.Implement
         {
             _unitOfWork = unitOfWork;
         }
-
-        // ✅ Lấy tất cả VehicleContract
         public async Task<ResponseDTO> GetAllVehicleContractsAsync()
         {
             try
@@ -66,8 +64,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Cập nhật VehicleContract
         public async Task<ResponseDTO> UpdateVehicleContractAsync(Guid id, CreateVehicleContractDto dto)
         {
             try
@@ -109,8 +105,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-
-        // ✅ Xoá VehicleContract
         public async Task<ResponseDTO> DeleteVehicleContractAsync(Guid id)
         {
             try

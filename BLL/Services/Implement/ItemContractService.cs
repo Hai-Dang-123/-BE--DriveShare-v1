@@ -11,13 +11,12 @@ namespace BLL.Services.Implement
     public class ItemContractService : IItemContractService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<ItemContractService> _logger;
-
-        public ItemContractService(IUnitOfWork unitOfWork, ILogger<ItemContractService> logger)
+        public ItemContractService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
+
+
 
         public async Task<ResponseDTO> GetAllItemContractsAsync()
         {
@@ -137,7 +136,6 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting item contract");
                 return new ResponseDTO
                 {
                     StatusCode = 500,

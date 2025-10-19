@@ -18,7 +18,6 @@ namespace BLL.Services.Implement
         public ContractTermService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            
         }
         public async Task<ResponseDTO> CreateContractTermsAsync(ContracttermDTO contractTermsDTO)
         {
