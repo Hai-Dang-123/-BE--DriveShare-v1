@@ -18,6 +18,18 @@ namespace BLL.Services.Implement
             _logger = logger;
         }
 
+        // GetAllVehicleReportsAsync
+        // GetVehicleReportByIdAsync
+        // CreateVehicleReportAsync
+        // UpdateVehicleReportAsync
+        // DeleteVehicleReportAsync
+
+        // GetAllItemReportsAsync
+        // GetItemReportByIdAsync
+        // CreateItemReportAsync
+        // UpdateItemReportAsync
+        // DeleteItemReportAsync
+
         public async Task<ResponseDTO> DeleteReportAsync(Guid id)
         {
             try

@@ -15,10 +15,12 @@ namespace DriverShareProject.Controllers
         public ItemBookingReportController(IItemBookingReportService service)
         {
             _service = service;
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
+
             => Ok(await _service.GetAllItemReportsAsync());
 
         [HttpGet("{id}")]
@@ -38,3 +40,7 @@ namespace DriverShareProject.Controllers
             => Ok(await _service.DeleteItemReportAsync(id));
     }
 }
+
+      
+    
+

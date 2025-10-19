@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interface
 {
-    public interface IVehicleBookingReportRepository : IGenericRepository<VehicleBookingReport>
+    public interface IAddOptionRepository : IGenericRepository<AddOption>
     {
-        Task<IEnumerable<VehicleBookingReport>> GetAllByBookingIdAsync(Guid vehicleBookingId);
+        Task<IEnumerable<AddOption>> GetAllByPostVehicleIdAsync(Guid postVehicleId);
     }
 }

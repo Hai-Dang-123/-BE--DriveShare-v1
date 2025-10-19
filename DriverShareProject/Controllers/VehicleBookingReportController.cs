@@ -40,7 +40,7 @@ namespace DriverShareProject.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicleBookingReportAsync(Guid id, [FromBody] CreateVehicleBookingReportDTO dto)
-        {
+            {
             var result = await _service.UpdateVehicleBookingReportAsync(id, dto);
             return StatusCode(result.StatusCode, result);
         }

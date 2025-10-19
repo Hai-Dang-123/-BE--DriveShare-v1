@@ -4,6 +4,7 @@ using Common.Enums;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace BLL.Services.Implement
         {
             _unitOfWork = unitOfWork;
         }
+
 
         // GET ALL
         public async Task<ResponseDTO> GetAllItemReportsAsync()
@@ -144,3 +146,5 @@ namespace BLL.Services.Implement
         }
     }
 }
+       
+    

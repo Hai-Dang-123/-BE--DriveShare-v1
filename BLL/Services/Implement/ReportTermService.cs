@@ -99,6 +99,9 @@ namespace BLL.Services.Implement
                 };
             }
         }
+
+        
+
         public async Task<ResponseDTO> GetAllReportTermsAsync()
         {
             try

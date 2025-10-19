@@ -9,11 +9,10 @@ namespace BLL.Services.Interface
 {
     public interface IClausesTemplateService
     {
-        Task<ResponseDTO> CreateClauseAsync(CreateClauseTemplateDTO createClauseDTO);
-        
-        Task<ResponseDTO> UpdateClauseAsync(UpdateClauseTemplateDTO updateClauseDTO);
-        Task<ResponseDTO> GetClauseByIdAsync(Guid clauseId);
-        Task<ResponseDTO> GetAllClausesAsync();
+        Task<ResponseDTO> CreateClauseTemplateAsync(CreateClauseTemplateDTO createClauseDTO);
+        Task<ResponseDTO> UpdateClauseTemplateAsync(UpdateClauseTemplateDTO updateClauseDTO);
+        Task<ResponseDTO> GetClauseTemplateByIdAsync(Guid clauseId);
+        Task<ResponseDTO> GetAllClausesTemplateAsync();
 
     }
 }

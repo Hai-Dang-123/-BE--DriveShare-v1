@@ -20,6 +20,7 @@ namespace BLL.Services.Implement
             _logger = logger;
         }
 
+
         public async Task<ResponseDTO> CreateReportTemplateAsync(CreateReportTemplateDTO dto)
         {
             try
@@ -130,7 +131,6 @@ namespace BLL.Services.Implement
                 };
             }
         }
-        // ✅ Lấy tất cả mẫu báo cáo
         public async Task<ResponseDTO> GetAllReportTemplatesAsync()
         {
             try

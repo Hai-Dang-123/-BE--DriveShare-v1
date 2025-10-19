@@ -41,8 +41,12 @@ namespace DAL.UnitOfWork
 
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
+
+
             ClauseTemplateRepo = new ClauseTemplateRepository(_context);
             ContractTemplateRepo = new ContractTemplateRepository(_context);
+
+
 
             VehicleBookingRepo = new VehicleBookingRepository(_context);
             ItemBookingRepo = new ItemBookingRepository(_context);
@@ -50,12 +54,14 @@ namespace DAL.UnitOfWork
             PostItemRepo = new PostItemRepository(_context);
 
             ClauseTermRepo = new ClauseTermRepository(_context);
-            vehicleContractRepo = new VehicleContractRepository(_context);
+            VehicleContractRepo = new VehicleContractRepository(_context);
             ItemContractRepo = new ItemContractRepository(_context);
 
             ReportRepo = new ReportRepository(_context);
             ReportTermRepo = new ReportTermRepository(_context);
             ReportTemplateRepo = new ReportTemplateRepository(_context);
+            AddOptionRepo = new AddOptionRepository(_context);
+            //VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
 
             ItemBookingReportRepo = new ItemBookingReportRepository(_context);
 
@@ -115,13 +121,13 @@ namespace DAL.UnitOfWork
         public IVehicleImagesRepository VehicleImagesRepo { get; private set; }
         public IPostVehicleRepository PostVehicleRepo { get; private set; }
 
-        public IClauseTemplateRepository ClausesRepo { get; private set; }
+
         public IPostItemRepository PostItemRepo { get; private set; }
 
         public IClauseTemplateRepository ClauseTemplateRepo { get; private set; }
         public IContractTemplateRepository ContractTemplateRepo { get; private set; }
         public IClauseTermRepository ClauseTermRepo { get; private set; }
-        public IVehicleContractRepository vehicleContractRepo { get; private set; }
+        public IVehicleContractRepository VehicleContractRepo { get; private set; }
         public IItemContractRepository ItemContractRepo { get; private set; }
 
         public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
@@ -130,7 +136,12 @@ namespace DAL.UnitOfWork
         public IReportTermRepository ReportTermRepo { get; }
         public IReportTemplateRepository ReportTemplateRepo { get; }
 
+
         public IItemBookingReportRepository ItemBookingReportRepo { get; }
+
+        public IAddOptionRepository AddOptionRepo { get; private set; }
+        public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
+        public IItemBookingReportRepository ItemBookingReportRepo { get; private set; }
         public async Task RollbackTransactionAsync()
         {
             if (_transaction != null)
