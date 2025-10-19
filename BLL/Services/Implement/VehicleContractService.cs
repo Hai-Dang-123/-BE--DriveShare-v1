@@ -25,7 +25,7 @@ namespace BLL.Services.Implement
         {
             try
             {
-                var contracts = await _unitOfWork.vehicleContractRepo.GetAll().ToListAsync();
+                var contracts = await _unitOfWork.VehicleContractRepo.GetAll().ToListAsync();
 
                 if (!contracts.Any())
                     return new ResponseDTO
@@ -72,7 +72,7 @@ namespace BLL.Services.Implement
         {
             try
             {
-                var existing = await _unitOfWork.vehicleContractRepo.GetByIdAsync(id);
+                var existing = await _unitOfWork.VehicleContractRepo.GetByIdAsync(id);
 
                 if (existing == null)
                     return new ResponseDTO
@@ -88,7 +88,7 @@ namespace BLL.Services.Implement
                 existing.SignedAt = DateTime.UtcNow;
                 existing.Status = ContractStatus.ACTIVE;
 
-                _unitOfWork.vehicleContractRepo.UpdateAsync(existing);
+                _unitOfWork.VehicleContractRepo.UpdateAsync(existing);
                 await _unitOfWork.SaveChangeAsync();
 
                 return new ResponseDTO
@@ -115,7 +115,7 @@ namespace BLL.Services.Implement
         {
             try
             {
-                var contract = await _unitOfWork.vehicleContractRepo.GetByIdAsync(id);
+                var contract = await _unitOfWork.VehicleContractRepo.GetByIdAsync(id);
                 if (contract == null)
                     return new ResponseDTO
                     {
@@ -124,7 +124,7 @@ namespace BLL.Services.Implement
                         Message = "Không tìm thấy hợp đồng xe để xoá."
                     };
 
-                _unitOfWork.vehicleContractRepo.Delete(contract);
+                _unitOfWork.VehicleContractRepo.Delete(contract);
                 await _unitOfWork.SaveChangeAsync();
 
                 return new ResponseDTO

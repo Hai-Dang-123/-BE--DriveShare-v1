@@ -45,7 +45,6 @@ namespace DAL.UnitOfWork
         IReportRepository ReportRepo { get; }
         IReportTermRepository ReportTermRepo { get; }
         IReportTemplateRepository ReportTemplateRepo { get; }
-        IVehicleBookingReportRepository VehicleBookingReportRepo { get; }
         IItemBookingReportRepository ItemBookingReportRepo { get; }
 
 

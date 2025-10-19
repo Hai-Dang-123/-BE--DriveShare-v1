@@ -79,7 +79,6 @@ namespace BLL.Services.Implement
                 Version = dto.Version,
                     Status = ReportStatus.PENDING,
                     ReportTemplateId = dto.ReportTemplateId,
-                    VehicleBookingId = dto.VehicleBookingId,
                     CreatedAt = DateTime.UtcNow
             };
 
@@ -91,26 +90,15 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("Đã xảy ra lỗi khi tạo báo cáo.", 500, false);
             }
 
-                return new ResponseDTO("Tạo VehicleBookingReport thành công.", 201, true, entity);
+                return new ResponseDTO("Tạo VehicleBookingReport thành công.", 201, true);
         }
-            catch (Exception ex)
-        {
-                return new ResponseDTO($"Lỗi khi tạo báo cáo: {ex.Message}", 500, false);
-            }
 
-            return new ResponseDTO("Lấy danh sách báo cáo thành công.", 200, true, reports);
-        }
         // ==========================================================
         // 🔹 UPDATE
         // ==========================================================
-        public async Task<ResponseDTO> UpdateVehicleBookingReportAsync(Guid id, CreateVehicleBookingReportDTO dto)
-        {
-            try
-            {
-                var report = await _unitOfWork.VehicleBookingReportRepo.GetAll()
-                    .FirstOrDefaultAsync(r => r.ReportId == id);
 
-        public async Task<ResponseDTO> UpdateReportAsync(Guid id, CreateVehicleBookingReportDTO dto)
+
+        public async Task<ResponseDTO> UpdateVehicleBookingReportAsync(Guid id, CreateVehicleBookingReportDTO dto)
         {
             var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
             if (report == null)
@@ -139,14 +127,9 @@ namespace BLL.Services.Implement
         // ==========================================================
         // 🔹 DELETE
         // ==========================================================
-        public async Task<ResponseDTO> DeleteVehicleBookingReportAsync(Guid id)
-        {
-            try
-            {
-                var report = await _unitOfWork.VehicleBookingReportRepo.GetAll()
-                    .FirstOrDefaultAsync(r => r.ReportId == id);
 
-        public async Task<ResponseDTO> DeleteReportAsync(Guid id)
+
+        public async Task<ResponseDTO> DeleteVehicleBookingReportAsync(Guid id)
         {
             var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
             if (report == null)
@@ -157,11 +140,7 @@ namespace BLL.Services.Implement
 
                 return new ResponseDTO("Xoá VehicleBookingReport thành công.", 200, true);
             }
-            catch (Exception ex)
-            {
-                return new ResponseDTO($"Lỗi khi xoá báo cáo: {ex.Message}", 500, false);
-            }
-            }
+
 
 
         // ==========================================================

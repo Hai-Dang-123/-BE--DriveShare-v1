@@ -137,7 +137,6 @@ namespace DAL.UnitOfWork
         public IReportTemplateRepository ReportTemplateRepo { get; }
 
         public IAddOptionRepository AddOptionRepo { get; private set; }
-        public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
         public IItemBookingReportRepository ItemBookingReportRepo { get; private set; }
 
 

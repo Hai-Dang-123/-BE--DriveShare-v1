@@ -31,7 +31,7 @@ namespace BLL.Services.Implement
                     IsMandatory = clauseTermDTO.IsMandatory,
                     DisplayOrder = clauseTermDTO.DisplayOrder
                 };
-                _unitOfWork.ClauseTermRepo.AddAsync(clauseTerm);
+                await _unitOfWork.ClauseTermRepo.AddAsync(clauseTerm);
                 await _unitOfWork.SaveChangeAsync();
                 var responseClauseTermDTO = new ResponseClauseTermDTO
                 {

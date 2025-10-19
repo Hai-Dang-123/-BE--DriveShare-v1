@@ -25,12 +25,9 @@ namespace Common.DTOs
     public class CreateVehicleBookingReportDTO
     {
         public string ReportTitle { get; set; } = string.Empty;
-        public int ReportType { get; set; }
         public string Version { get; set; } = string.Empty;
         public Guid ReportTemplateId { get; set; }
         public Guid VehicleBookingId { get; set; }
-        public string ReportTitle { get; set; } = null!;
         public ReportType ReportType { get; set; }
-        public string Version { get; set; } = null!;
     }
 }
