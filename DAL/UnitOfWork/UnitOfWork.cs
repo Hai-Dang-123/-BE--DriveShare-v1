@@ -36,6 +36,9 @@ namespace DAL.UnitOfWork
             TransactionRepo = new TransactionRepository(_context);
             VehicleRepo = new VehicleRepository(_context);
             VehicleTypeRepo = new VehicleTypeRepository(_context);
+
+            VehicleBookingReportRepo = new VehicleBookingReportRepository(_context);
+
             VehicleImagesRepo = new VehicleImagesRepository(_context);
             PostVehicleRepo = new PostVehicleRepository(_context);
 
@@ -126,6 +129,8 @@ namespace DAL.UnitOfWork
         public IClauseTermRepository ClauseTermRepo { get; private set; }
         public IVehicleContractRepository VehicleContractRepo { get; private set; }
         public IItemContractRepository ItemContractRepo { get; private set; }
+
+        public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
 
         public IReportRepository ReportRepo { get; }
         public IReportTermRepository ReportTermRepo { get; }

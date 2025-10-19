@@ -14,11 +14,11 @@ namespace BLL.Services.Implement
     public class ContractTermService : IContractTermService
     {
         private readonly IUnitOfWork _unitOfWork;
-
+        
         public ContractTermService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-
+            
         }
         public async Task<ResponseDTO> CreateContractTermsAsync(ContracttermDTO contractTermsDTO)
         {

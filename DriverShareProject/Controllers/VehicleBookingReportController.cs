@@ -10,56 +10,46 @@ namespace DriverShareProject.Controllers
     [Route("api/[controller]")]
     public class VehicleBookingReportController : ControllerBase
     {
-        private readonly IVehicleBookingReportService _reportService;
+        private readonly IVehicleBookingReportService _service;
 
-        public VehicleBookingReportController(IVehicleBookingReportService reportService)
+        public VehicleBookingReportController(IVehicleBookingReportService service)
         {
-            _reportService = reportService;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllVehicleBookingReportsAsync()
         {
-            var response = await _reportService.GetAllReportsAsync();
-            return StatusCode(response.StatusCode, response);
+            var result = await _service.GetAllVehicleBookingReportsAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicleBookingReportByIdAsync(Guid id)
         {
-            var response = await _reportService.GetReportByIdAsync(id);
-            return StatusCode(response.StatusCode, response);
+            var result = await _service.GetVehicleBookingReportByIdAsync(id);
+            return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateVehicleBookingReportDTO dto)
+        public async Task<IActionResult> CreateVehicleBookingReportAsync([FromBody] CreateVehicleBookingReportDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new ResponseDTO("Dữ liệu không hợp lệ.", 400, false));
-            }
-
-            var response = await _reportService.CreateReportAsync(dto);
-            return StatusCode(response.StatusCode, response);
+            var result = await _service.CreateVehicleBookingReportAsync(dto);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CreateVehicleBookingReportDTO dto)
-        {
-            if (!ModelState.IsValid)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicleBookingReportAsync(Guid id, [FromBody] CreateVehicleBookingReportDTO dto)
             {
-                return BadRequest(new ResponseDTO("Dữ liệu không hợp lệ.", 400, false));
-            }
-
-            var response = await _reportService.UpdateReportAsync(id, dto);
-            return StatusCode(response.StatusCode, response);
+            var result = await _service.UpdateVehicleBookingReportAsync(id, dto);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicleBookingReportAsync(Guid id)
         {
-            var response = await _reportService.DeleteReportAsync(id);
-            return StatusCode(response.StatusCode, response);
+            var result = await _service.DeleteVehicleBookingReportAsync(id);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

@@ -38,5 +38,20 @@ namespace DriverShareProject.Controllers
             var response = await _contractTemplateService.GetContractTemplateByIdAsync(id);
             return StatusCode(response.StatusCode, response);
         }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateContractTemplateAsync(Guid id, [FromBody] ContractTemplateDTO dto)
+        {
+            var result = await _contractTemplateService.UpdateContractTemplateAsync(id, dto);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteContractTemplateAsync(Guid id)
+        {
+            var result = await _contractTemplateService.DeleteContractTemplateAsync(id);
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

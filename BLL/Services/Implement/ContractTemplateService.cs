@@ -168,5 +168,112 @@ namespace BLL.Services.Implement
                 };
             }
         }
+        public async Task<ResponseDTO> UpdateContractTemplateAsync(Guid id, ContractTemplateDTO dto)
+        {
+            try
+            {
+                var existing = await _unitOfWork.ContractTemplateRepo.GetByIdWithTermsAsync(id);
+                if (existing == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Message = "Không tìm thấy mẫu hợp đồng để cập nhật."
+                    };
+                }
+
+                // ✅ Cập nhật thông tin cơ bản
+                existing.Name = dto.Name;
+                existing.Version = dto.Version;
+
+                // ✅ Cập nhật điều khoản (xoá cũ - thêm mới)
+                if (existing.ContractTerms != null && existing.ContractTerms.Any())
+                {
+                    _unitOfWork.ContractTermRepo.RemoveRange(existing.ContractTerms.ToList());
+                }
+
+                if (dto.Terms != null && dto.Terms.Any())
+                {
+                    var newTerms = dto.Terms.Select(t => new ContractTerm
+                    {
+                        ContractTermId = Guid.NewGuid(),
+                        ContractTemplateId = existing.ContractTemplateId,
+                        Content = t.Content,
+                        IsMandatory = t.IsMandatory
+                    }).ToList();
+
+                    _unitOfWork.ContractTermRepo.AddRange(newTerms);
+                }
+
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Cập nhật mẫu hợp đồng thành công.",
+                    Result = new
+                    {
+                        existing.ContractTemplateId,
+                        existing.Name,
+                        existing.Version,
+                        Terms = dto.Terms
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Message = $"Lỗi khi cập nhật mẫu hợp đồng: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseDTO> DeleteContractTemplateAsync(Guid id)
+        {
+            try
+            {
+                var existing = await _unitOfWork.ContractTemplateRepo.GetByIdWithTermsAsync(id);
+                if (existing == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Message = "Không tìm thấy mẫu hợp đồng để xoá."
+                    };
+                }
+
+                // 🔹 Xoá điều khoản trước
+                if (existing.ContractTerms != null && existing.ContractTerms.Any())
+                {
+                    _unitOfWork.ContractTermRepo.RemoveRange(existing.ContractTerms.ToList());
+                }
+
+                _unitOfWork.ContractTemplateRepo.Delete(existing);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Xoá mẫu hợp đồng thành công."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Message = $"Lỗi khi xoá mẫu hợp đồng: {ex.Message}"
+                };
+            }
+        }
+
     }
 }

@@ -13,5 +13,7 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> GetAllContractTemplateasync();
         Task<ResponseDTO> GetContractTemplateByIdAsync(Guid id);
 
+        Task<ResponseDTO> UpdateContractTemplateAsync(Guid id, ContractTemplateDTO dto);
+        Task<ResponseDTO> DeleteContractTemplateAsync(Guid id);
     }
 }

@@ -32,6 +32,9 @@ namespace DAL.UnitOfWork
         IWalletRepository WalletRepo { get; }
         IContractTemplateRepository ContractTemplateRepo { get; }
         IClauseTemplateRepository ClauseTemplateRepo { get; }
+
+        IVehicleBookingReportRepository VehicleBookingReportRepo { get; }
+
         IPostItemRepository PostItemRepo { get; }
 
 
