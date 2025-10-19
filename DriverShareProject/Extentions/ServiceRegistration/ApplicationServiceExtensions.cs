@@ -29,7 +29,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             //services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IFirebaseUploadService , FirebaseUploadService>();
 
-            services.AddScoped<IClausesTemplateService, ClausesService>();
+            services.AddScoped<IClausesTemplateService, ClauseTemplateService>();
             services.AddScoped<IPostVehicleService, PostVehicleService>();
             services.AddScoped<IItemContractService, ItemContractService>();
             services.AddScoped<IReportService, ReportService>();

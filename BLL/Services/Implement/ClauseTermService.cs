@@ -3,18 +3,18 @@ using Common.DTOs;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services.Implement
 {
-    public class ClauseTermServices : IClauseTermServices
+    public class ClauseTermService : IClauseTermService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ClauseTermServices(IUnitOfWork unitOfWork)
+
+
+        public ClauseTermService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

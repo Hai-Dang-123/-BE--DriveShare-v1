@@ -20,6 +20,10 @@ namespace BLL.Services.Implement
             _logger = logger;
         }
 
+        // CreateReportTemplateAsync
+        // UpdateReportTemplateAsync
+        
+
         // ✅ Lấy tất cả mẫu báo cáo
         public async Task<ResponseDTO> GetAllReportTemplatesAsync()
         {

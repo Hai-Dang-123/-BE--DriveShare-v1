@@ -18,6 +18,10 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
+
+        
+        
+
         public async Task<ResponseDTO> GetAllReportTermsAsync()
         {
             try

@@ -1,6 +1,7 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
 using Common.Enums;
+using Common.Messages;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("Lấy danh sách VehicleBookingReport thành công.", 200, true, reports);
             }
             catch (Exception ex)
-            {
+        {
                 return new ResponseDTO($"Lỗi khi lấy danh sách báo cáo: {ex.Message}", 500, false);
             }
         }
@@ -40,7 +41,7 @@ namespace BLL.Services.Implement
         // 🔹 GET BY ID
         // ==========================================================
         public async Task<ResponseDTO> GetVehicleBookingReportByIdAsync(Guid id)
-        {
+            {
             try
             {
                 var report = await _unitOfWork.VehicleBookingReportRepo.GetAll()
@@ -70,26 +71,34 @@ namespace BLL.Services.Implement
                     return new ResponseDTO("Không tìm thấy VehicleBooking tương ứng.", 404, false);
 
                 var entity = new VehicleBookingReport
-                {
-                    ReportId = Guid.NewGuid(),
-                    ReportTitle = dto.ReportTitle,
+            {
+                ReportId = Guid.NewGuid(),
+                VehicleBookingId = dto.VehicleBookingId,
+                ReportTitle = dto.ReportTitle,
                     ReportType = (ReportType)dto.ReportType,
-                    Version = dto.Version,
+                Version = dto.Version,
                     Status = ReportStatus.PENDING,
                     ReportTemplateId = dto.ReportTemplateId,
                     VehicleBookingId = dto.VehicleBookingId,
                     CreatedAt = DateTime.UtcNow
-                };
+            };
 
                 await _unitOfWork.VehicleBookingReportRepo.AddAsync(entity);
                 await _unitOfWork.SaveChangeAsync();
+            }
+            catch (Exception)
+            {
+                return new ResponseDTO("Đã xảy ra lỗi khi tạo báo cáo.", 500, false);
+            }
 
                 return new ResponseDTO("Tạo VehicleBookingReport thành công.", 201, true, entity);
-            }
+        }
             catch (Exception ex)
-            {
+        {
                 return new ResponseDTO($"Lỗi khi tạo báo cáo: {ex.Message}", 500, false);
             }
+
+            return new ResponseDTO("Lấy danh sách báo cáo thành công.", 200, true, reports);
         }
         // ==========================================================
         // 🔹 UPDATE
@@ -101,15 +110,20 @@ namespace BLL.Services.Implement
                 var report = await _unitOfWork.VehicleBookingReportRepo.GetAll()
                     .FirstOrDefaultAsync(r => r.ReportId == id);
 
-                if (report == null)
+        public async Task<ResponseDTO> UpdateReportAsync(Guid id, CreateVehicleBookingReportDTO dto)
+        {
+            var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
+            if (report == null)
                     return new ResponseDTO("Không tìm thấy báo cáo để cập nhật.", 404, false);
 
-                report.ReportTitle = dto.ReportTitle;
+            report.ReportTitle = dto.ReportTitle;
                 report.ReportType = (ReportType)dto.ReportType;
-                report.Version = dto.Version;
+            report.Version = dto.Version;
                 report.ReportTemplateId = dto.ReportTemplateId;
                 report.VehicleBookingId = dto.VehicleBookingId;
 
+            try
+            {
                 await _unitOfWork.VehicleBookingReportRepo.UpdateAsync(report);
                 await _unitOfWork.SaveChangeAsync();
 
@@ -119,6 +133,8 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO($"Lỗi khi cập nhật báo cáo: {ex.Message}", 500, false);
             }
+
+            return new ResponseDTO("Cập nhật báo cáo thành công.", 200, true);
         }
         // ==========================================================
         // 🔹 DELETE
@@ -130,7 +146,10 @@ namespace BLL.Services.Implement
                 var report = await _unitOfWork.VehicleBookingReportRepo.GetAll()
                     .FirstOrDefaultAsync(r => r.ReportId == id);
 
-                if (report == null)
+        public async Task<ResponseDTO> DeleteReportAsync(Guid id)
+        {
+            var report = await _unitOfWork.VehicleBookingReportRepo.GetByIdAsync(id);
+            if (report == null)
                     return new ResponseDTO("Không tìm thấy báo cáo để xoá.", 404, false);
 
                  _unitOfWork.VehicleBookingReportRepo.Delete(report);
@@ -142,7 +161,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO($"Lỗi khi xoá báo cáo: {ex.Message}", 500, false);
             }
-        }
+            }
 
 
         // ==========================================================
@@ -163,6 +182,8 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO($"Lỗi khi lấy báo cáo theo BookingId: {ex.Message}", 500, false);
             }
+
+            return new ResponseDTO("Xóa báo cáo thành công.", 200, true);
         }
     }
 }

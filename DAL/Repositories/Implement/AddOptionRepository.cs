@@ -10,20 +10,19 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-
-    public class PostItemRepository : GenericRepository<PostItem>, IPostItemRepository
+    public class AddOptionRepository : GenericRepository<AddOption>, IAddOptionRepository
     {
         private readonly DriverShareAppContext _context;
-        public PostItemRepository(DriverShareAppContext context) : base(context)
 
+        public AddOptionRepository(DriverShareAppContext context) : base(context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<VehicleBookingReport>> GetAllByBookingIdAsync(Guid vehicleBookingId)
+        public async Task<IEnumerable<AddOption>> GetAllByPostVehicleIdAsync(Guid postVehicleId)
         {
-            return await _context.VehicleBookingReports
-                .Where(r => r.VehicleBookingId == vehicleBookingId)
+            return await _context.AddOptions
+                .Where(a => a.PostVehicleId == postVehicleId)
                 .ToListAsync();
         }
     }
