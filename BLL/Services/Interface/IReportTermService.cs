@@ -9,5 +9,7 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> DeleteReportTermAsync(Guid id);
         Task<ResponseDTO> GetAllReportTermsAsync();
         Task<ResponseDTO> GetReportTermByIdAsync(Guid id);
+        Task<ResponseDTO> CreateReportTermAsync(ReportTermDTO dto);
+        Task<ResponseDTO> UpdateReportTermAsync(Guid id, ReportTermDTO dto);
     }
 }

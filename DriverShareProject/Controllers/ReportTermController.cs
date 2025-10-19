@@ -1,4 +1,6 @@
-﻿using BLL.Services.Interface;
+﻿using BLL.Services.Implement;
+using BLL.Services.Interface;
+using Common.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -15,7 +17,19 @@ namespace DriverShareProject.Controllers
         {
             _reportTermService = reportTermService;
         }
-       
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateReportTerm([FromBody] ReportTermDTO dto)
+        {
+            var result = await _reportTermService.CreateReportTermAsync(dto);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateReportTerm(Guid id, [FromBody] ReportTermDTO dto)
+        {
+            var result = await _reportTermService.UpdateReportTermAsync(id, dto);
+            return StatusCode(result.StatusCode, result);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllReportTerms()
@@ -37,5 +51,7 @@ namespace DriverShareProject.Controllers
             var response = await _reportTermService.DeleteReportTermAsync(id);
             return StatusCode(response.StatusCode, response);
         }
+
+
     }
 }

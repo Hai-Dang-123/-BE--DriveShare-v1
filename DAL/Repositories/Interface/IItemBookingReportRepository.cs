@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace DAL.Repositories.Interface
     public interface IItemBookingReportRepository : IGenericRepository<ItemBookingReport>
     {
         Task<IEnumerable<ItemBookingReport>> GetAllByBookingIdAsync(Guid itemBookingId);
+
     }
 }

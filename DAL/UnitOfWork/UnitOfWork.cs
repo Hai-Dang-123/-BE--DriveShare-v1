@@ -60,9 +60,9 @@ namespace DAL.UnitOfWork
             ReportRepo = new ReportRepository(_context);
             ReportTermRepo = new ReportTermRepository(_context);
             ReportTemplateRepo = new ReportTemplateRepository(_context);
-
             AddOptionRepo = new AddOptionRepository(_context);
             //VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
+
             ItemBookingReportRepo = new ItemBookingReportRepository(_context);
 
 
@@ -136,10 +136,11 @@ namespace DAL.UnitOfWork
         public IReportTermRepository ReportTermRepo { get; }
         public IReportTemplateRepository ReportTemplateRepo { get; }
 
+
+        public IItemBookingReportRepository ItemBookingReportRepo { get; }
+
         public IAddOptionRepository AddOptionRepo { get; private set; }
         public IItemBookingReportRepository ItemBookingReportRepo { get; private set; }
-
-
         public async Task RollbackTransactionAsync()
         {
             if (_transaction != null)

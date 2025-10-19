@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace DAL.Repositories.Implement
 {
     public class ItemBookingReportRepository : GenericRepository<ItemBookingReport>, IItemBookingReportRepository
@@ -19,11 +20,14 @@ namespace DAL.Repositories.Implement
             _context = context;
         }
 
+
+
         public async Task<IEnumerable<ItemBookingReport>> GetAllByBookingIdAsync(Guid itemBookingId)
         {
             return await _context.ItemBookingReports
                 .Where(r => r.ItemBookingId == itemBookingId)
                 .ToListAsync();
         }
+
     }
 }

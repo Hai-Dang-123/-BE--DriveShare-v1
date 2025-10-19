@@ -9,5 +9,8 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> DeleteReportTemplateAsync(Guid id);
         Task<ResponseDTO> GetAllReportTemplatesAsync();
         Task<ResponseDTO> GetReportTemplateByIdAsync(Guid id);
+        Task<ResponseDTO> CreateReportTemplateAsync(CreateReportTemplateDTO dto);
+        Task<ResponseDTO> UpdateReportTemplateAsync(Guid id, UpdateReportTemplateDTO dto);
+
     }
 }

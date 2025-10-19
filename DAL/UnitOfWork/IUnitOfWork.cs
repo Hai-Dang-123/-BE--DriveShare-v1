@@ -48,6 +48,8 @@ namespace DAL.UnitOfWork
         IItemBookingReportRepository ItemBookingReportRepo { get; }
 
 
+        IItemBookingReportRepository ItemBookingReportRepo { get; }
+
 
         // Save changes
 
