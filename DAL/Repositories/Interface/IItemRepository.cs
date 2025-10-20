@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interface
 {
     public interface IItemRepository : IGenericRepository<Item>
     {
+        Task<IEnumerable<Item>> GetAllItemsAsync();
     }
 }

@@ -28,4 +28,14 @@ namespace Common.DTOs
         public decimal WeightKg { get; set; }
         public decimal VolumeM3 { get; set; }
     }
+    public class ItemResponseDTO
+    {
+        public Guid ItemId { get; set; }
+        public string ItemName { get; set; } 
+        public string? Description { get; set; } 
+        public int Quantity { get; set; }
+        public string? Unit { get; set; }
+        public decimal WeightKg { get; set; }
+        public decimal VolumeM3 { get; set; }
+    }
 }

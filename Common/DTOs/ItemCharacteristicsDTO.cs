@@ -23,4 +23,18 @@ namespace Common.DTOs
         public string? OtherRequirements { get; set; }
         public Guid ItemId { get; set; }
     }
+    public class ItemCharacteristicsResponseDTO
+    {
+        public bool IsFragile { get; set; }
+        public bool IsFlammable { get; set; }
+        public bool IsPerishable { get; set; }
+        public bool RequiresRefrigeration { get; set; }
+        public bool IsOversized { get; set; }
+        public bool IsHazardous { get; set; }
+        public bool IsProhibited { get; set; }
+        public bool RequiresInsurance { get; set; }
+        public bool RequiresSpecialHandling { get; set; }
+        public string? OtherRequirements { get; set; }
+        public Guid ItemId { get; set; }
+    }
 }

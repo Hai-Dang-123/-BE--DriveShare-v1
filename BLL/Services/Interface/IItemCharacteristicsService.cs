@@ -11,5 +11,8 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> CreateItemCharacteristicsAsnc(CreateItemCharacteristicsDTO createItemCharacteristicsDTO);
         Task<ResponseDTO> UpdateItemCharacteristicsAsync(CreateItemCharacteristicsDTO updateItemCharacteristicsDTO);
+        Task<ResponseDTO> GetItemCharacteristicsByIdAsync(Guid itemCharacteristicsId);
+        Task<ResponseDTO> GetAllItemCharacteristicsAsync();
+        //Task<ResponseDTO> DeleteItemCharacteristicsAsync(Guid itemCharacteristicsId);
     }
 }

@@ -4,6 +4,7 @@ using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Operators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,101 @@ namespace BLL.Services.Implement
                     IsSuccess = true,
                     StatusCode = StatusCodes.Status201Created,
                     Message = "Item characteristics created successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<ResponseDTO> GetAllItemCharacteristicsAsync()
+        {
+            try
+            {
+                var ItemCharacteristics = await _unitOfWork.ItemCharacteristicsRepo.GetAllItemCharacteristicsAsync();
+                if (ItemCharacteristics == null || !ItemCharacteristics.Any())
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "No item characteristics found"
+                    };
+                }
+                var ItemCharacteristicsDTOs = ItemCharacteristics.Select(c => new CreateItemCharacteristicsDTO
+                {
+                    ItemId = c.ItemId,
+                    IsFragile = c.IsFragile,
+                    IsFlammable = c.IsFlammable,
+                    IsPerishable = c.IsPerishable,
+                    RequiresRefrigeration = c.RequiresRefrigeration,
+                    IsOversized = c.IsOversized,
+                    IsHazardous = c.IsHazardous,
+                    IsProhibited = c.IsProhibited,
+                    RequiresInsurance = c.RequiresInsurance,
+                    RequiresSpecialHandling = c.RequiresSpecialHandling,
+                    OtherRequirements = c.OtherRequirements
+                }).ToList();
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Item characteristics retrieved successfully",
+                    Result = ItemCharacteristicsDTOs
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = ex.Message
+                };
+            }
+
+            }
+
+        public async Task<ResponseDTO> GetItemCharacteristicsByIdAsync(Guid itemCharacteristicsId)
+        {
+            try
+            {
+                var characteristics = await _unitOfWork.ItemCharacteristicsRepo.GetByIdAsync(itemCharacteristicsId);
+                if (characteristics == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Item characteristics not found"
+                    };
+                }
+                var characteristicsDTO = new CreateItemCharacteristicsDTO
+                {
+                    ItemId = characteristics.ItemId,
+                    IsFragile = characteristics.IsFragile,
+                    IsFlammable = characteristics.IsFlammable,
+                    IsPerishable = characteristics.IsPerishable,
+                    RequiresRefrigeration = characteristics.RequiresRefrigeration,
+                    IsOversized = characteristics.IsOversized,
+                    IsHazardous = characteristics.IsHazardous,
+                    IsProhibited = characteristics.IsProhibited,
+                    RequiresInsurance = characteristics.RequiresInsurance,
+                    RequiresSpecialHandling = characteristics.RequiresSpecialHandling,
+                    OtherRequirements = characteristics.OtherRequirements
+                };
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Item characteristics retrieved successfully",
+                    Result = characteristicsDTO
                 };
             }
             catch (Exception ex)

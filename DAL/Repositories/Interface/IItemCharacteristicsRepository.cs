@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interface
 {
     public interface IItemCharacteristicsRepository : IGenericRepository<ItemCharacteristics>
     {
+        Task<IEnumerable<ItemCharacteristics>> GetAllItemCharacteristicsAsync();
     }
 }

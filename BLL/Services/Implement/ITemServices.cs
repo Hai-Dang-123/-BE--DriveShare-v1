@@ -51,6 +51,95 @@ namespace BLL.Services.Implement
                 };
             }
         }
+
+        public async Task<ResponseDTO> GetAllItemsAsync()
+        {
+            try
+            {
+                var items = await _unitOfWork.ItemRepo.GetAllItemsAsync();
+                if (items == null || !items.Any())
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "No Items found"
+                    };
+                }
+                var itemDTOs = items.Select(item => new ItemResponseDTO
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Description = item.Description,
+                    Unit = item.Unit,
+                    VolumeM3 = item.VolumeM3,
+                    WeightKg = item.WeightKg,
+                    Quantity = item.Quantity
+                }).ToList();
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Items retrieved successfully",
+                    Result = itemDTOs
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = ex.Message
+                };
+
+            }
+        }
+
+        public async Task<ResponseDTO> GetItemByIdAsync(Guid itemId)
+        {
+            try
+            {
+                var item = await _unitOfWork.ItemRepo.GetByIdAsync(itemId);
+                if (item == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Item not found"
+                    };
+                }
+                var itemDTO = new ItemResponseDTO
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Description = item.Description,
+                    Unit = item.Unit,
+                    VolumeM3 = item.VolumeM3,
+                    WeightKg = item.WeightKg,
+                    Quantity = item.Quantity
+                };
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Item retrieved successfully",
+                    Result = itemDTO
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = ex.Message
+                };
+            }
+        }
+
         public async Task<ResponseDTO> UpdateItemAsync(UpdateItemDTO updateItemDTO)
         {
             try

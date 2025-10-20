@@ -25,6 +25,18 @@ namespace DriverShareProject.Controllers
             var result = await _itemCharacteristicsService.UpdateItemCharacteristicsAsync(updateItemCharacteristicsDTO);
             return StatusCode(result.StatusCode, result);
         }
+        [HttpGet("get-item-characteristics/{itemId}")]
+        public async Task<IActionResult> GetItemCharacteristicsByItemId([FromRoute] Guid itemId)
+        {
+            var result = await _itemCharacteristicsService.GetItemCharacteristicsByIdAsync(itemId);
+            return StatusCode(result.StatusCode, result);
+        }
+        [HttpGet("get-all-item-characteristics")]
+        public async Task<IActionResult> GetAllItemCharacteristics()
+        {
+            var result = await _itemCharacteristicsService.GetAllItemCharacteristicsAsync();
+            return StatusCode(result.StatusCode, result);
+        }
 
     }
 }
