@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interface
 {
-    public interface IPostItemRepository : IGenericRepository<PostItem>
+    public interface IItemCharacteristicsRepository : IGenericRepository<ItemCharacteristics>
     {
-        Task<IEnumerable<PostItem>> GetAllPostItemsAsync();
+        Task<IEnumerable<ItemCharacteristics>> GetAllItemCharacteristicsAsync();
     }
 }

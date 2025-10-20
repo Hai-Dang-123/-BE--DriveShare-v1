@@ -35,6 +35,12 @@ namespace DriverShareProject.Controllers
             var response = await _clauseTemplateService.GetAllClausesTemplateAsync();
             return StatusCode(response.StatusCode, response);
         }
+        [HttpDelete("Delete-Clause")]
+        public async Task<IActionResult> DeleteClauseAsync(Guid clauseId)
+        {
+            var response = await _clauseTemplateService.DeleteClauseTemplateAsync(clauseId);
+            return StatusCode(response.StatusCode, response);
+        }
 
 
     }
