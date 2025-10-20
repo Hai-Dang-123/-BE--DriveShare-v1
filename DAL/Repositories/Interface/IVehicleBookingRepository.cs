@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interface
 {
     public interface IVehicleBookingRepository : IGenericRepository<VehicleBooking>
     {
+        Task<VehicleBooking?> GetByIdIncludePostVehicleAsync(Guid bookingId);
     }
 }

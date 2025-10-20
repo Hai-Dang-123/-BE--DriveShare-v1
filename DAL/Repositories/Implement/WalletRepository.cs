@@ -16,5 +16,11 @@ namespace DAL.Repositories.Implement
         {
             _context = context;
         }
+
+        // GetByUserIdAsync
+        public async Task<Wallet> GetByUserIdAsync(Guid userId)
+        {
+            return await Task.FromResult(_context.Wallets.FirstOrDefault(w => w.UserId == userId));
+        }
     }
 }

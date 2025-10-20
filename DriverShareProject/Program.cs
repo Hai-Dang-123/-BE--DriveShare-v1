@@ -18,7 +18,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
 
 // ✅ Đăng ký DbContext (fix lỗi ConnectionString)
 builder.Services.AddApplicationServices(builder.Configuration);
@@ -40,7 +42,6 @@ builder.AddAppConfiguration();
 
 //Add CORS policy
 builder.Services.AddAuthorizationPolicies();
-
 
 
 

@@ -13,6 +13,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
         {
             //services.AddAutoMapper(typeof(AutoMapperProfile));
 
+
             services.AddDbContext<DriverShareAppContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
@@ -38,11 +39,18 @@ namespace DriverShareProject.Extentions.ServiceRegistration
          
             services.AddScoped<IRuleService, RuleService>();
             services.AddScoped<IVehicleContractService, VehicleContractService>();
+            services.AddScoped<IWalletService, WalletService>();
+            services.AddScoped<ISepayService, SepayService>();
+
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IITemServices, ITemServices>();
             services.AddScoped<IItemCharacteristicsService,ItemCharacteristicsService>();
             services.AddScoped<IPostItemService, PostItemService>();
             services.AddScoped<IPostItemShippingRouteService, PostItemShippingRouteService>();
+
+            services.AddScoped<IVehicleBookingService, VehicleBookingService>();
+
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();

@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interface
 {
     public interface IItemBookingRepository : IGenericRepository<ItemBooking>
     {
+        Task<ItemBooking?> GetByIdIncludePostItemAsync(Guid bookingId);
     }
 }
