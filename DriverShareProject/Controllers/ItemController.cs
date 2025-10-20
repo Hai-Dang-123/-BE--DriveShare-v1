@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interface;
+﻿using BLL.Services.Implement;
+using BLL.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,13 @@ namespace DriverShareProject.Controllers
         {
             var result = await _itemServices.GetAllItemsAsync();
             return StatusCode(result.StatusCode, result);
+        }
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeletePostItem(Guid ItemId)
+        {
+            var response = await _itemServices.DeleteItemAsync(ItemId);
+
+            return StatusCode(response.StatusCode, response);
         }
     }
     }

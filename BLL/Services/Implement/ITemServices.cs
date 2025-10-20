@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using Common.Enums;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,8 @@ namespace BLL.Services.Implement
             {
                 var newItem = new Item
                 {
+                    ItemId = Guid.NewGuid(),
+                    Status = ItemStatus.ACTIVE,
                     ItemName = createItemDTO.ItemName,
                     Description = createItemDTO.Description,
                     Unit = createItemDTO.Unit,
@@ -50,6 +53,29 @@ namespace BLL.Services.Implement
                     Message = ex.Message
                 };
             }
+        }
+
+        public async Task<ResponseDTO> DeleteItemAsync(Guid itemId)
+        {
+            var Item = await _unitOfWork.ItemRepo.GetByIdAsync(itemId);
+            if (Item == null)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "Item not found",
+                    StatusCode = StatusCodes.Status404NotFound,
+                };
+            }
+            Item.Status = ItemStatus.DELETED;
+            await _unitOfWork.ItemRepo.UpdateAsync(Item);
+            await _unitOfWork.SaveChangeAsync();
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = StatusCodes.Status200OK,
+                Message = "Update Item Succes"
+            };
         }
 
         public async Task<ResponseDTO> GetAllItemsAsync()

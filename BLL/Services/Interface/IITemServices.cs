@@ -12,7 +12,7 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> CreateItemAsync(CreateItemDTO createItemDTO);
         Task<ResponseDTO> UpdateItemAsync(UpdateItemDTO updateItemDTO);
         Task<ResponseDTO> GetItemByIdAsync(Guid itemId);
-        //Task<ResponseDTO> DeleteItemAsync(Guid itemId);
+        Task<ResponseDTO> DeleteItemAsync(Guid itemId);
         Task<ResponseDTO> GetAllItemsAsync();
     }
 }
