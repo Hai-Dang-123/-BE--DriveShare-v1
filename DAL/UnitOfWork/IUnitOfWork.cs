@@ -48,6 +48,7 @@ namespace DAL.UnitOfWork
 
         IItemRepository ItemRepo { get; }
         IItemCharacteristicsRepository ItemCharacteristicsRepo { get; }
+        IPostItemShippingRouteRepository PostItemShippingRouteRepo { get; }
 
         // Save changes
 

@@ -42,7 +42,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IITemServices, ITemServices>();
             services.AddScoped<IItemCharacteristicsService,ItemCharacteristicsService>();
             services.AddScoped<IPostItemService, PostItemService>();
-
+            services.AddScoped<IPostItemShippingRouteService, PostItemShippingRouteService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();
