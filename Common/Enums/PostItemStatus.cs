@@ -13,5 +13,6 @@ namespace Common.Enums
         BOOKED,
         COMPLETED,
         CANCELLED,
+        DELETED,
     }
 }
