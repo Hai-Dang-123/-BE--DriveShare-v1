@@ -39,7 +39,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IRuleService, RuleService>();
             services.AddScoped<IVehicleContractService, VehicleContractService>();
             services.AddScoped<IReviewService, ReviewService>();
-
+            services.AddScoped<IITemServices, ITemServices>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserUtility>();

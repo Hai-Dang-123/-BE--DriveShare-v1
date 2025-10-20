@@ -46,7 +46,7 @@ namespace DAL.UnitOfWork
         IReportTemplateRepository ReportTemplateRepo { get; }
         IItemBookingReportRepository ItemBookingReportRepo { get; }
 
-
+        IItemRepository ItemRepo { get; }
 
 
         // Save changes

@@ -63,7 +63,7 @@ namespace DAL.UnitOfWork
             //VehicleBookingReportRepo =   new VehicleBookingReportRepository(_context);
 
             ItemBookingReportRepo = new ItemBookingReportRepository(_context);
-
+            ItemRepo = new ItemRepository(_context);
 
         }
 
@@ -127,15 +127,12 @@ namespace DAL.UnitOfWork
         public IClauseTermRepository ClauseTermRepo { get; private set; }
         public IVehicleContractRepository VehicleContractRepo { get; private set; }
         public IItemContractRepository ItemContractRepo { get; private set; }
-
         public IVehicleBookingReportRepository VehicleBookingReportRepo { get; private set; }
-
         public IReportRepository ReportRepo { get; }
         public IReportTermRepository ReportTermRepo { get; }
-        public IReportTemplateRepository ReportTemplateRepo { get; }
-
-
+        public IReportTemplateRepository ReportTemplateRepo { get; }      
         public IItemBookingReportRepository ItemBookingReportRepo { get; }
+        public IItemRepository ItemRepo { get; }
 
         public IAddOptionRepository AddOptionRepo { get; private set; }
         public async Task RollbackTransactionAsync()
