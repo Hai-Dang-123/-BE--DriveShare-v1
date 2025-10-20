@@ -47,7 +47,7 @@ namespace DAL.UnitOfWork
         IItemBookingReportRepository ItemBookingReportRepo { get; }
 
         IItemRepository ItemRepo { get; }
-
+        IItemCharacteristicsRepository ItemCharacteristicsRepo { get; }
 
         // Save changes
 

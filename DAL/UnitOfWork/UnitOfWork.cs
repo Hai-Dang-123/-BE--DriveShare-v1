@@ -64,6 +64,7 @@ namespace DAL.UnitOfWork
 
             ItemBookingReportRepo = new ItemBookingReportRepository(_context);
             ItemRepo = new ItemRepository(_context);
+            ItemCharacteristicsRepo = new ItemCharacteristicsRepository(_context);
 
         }
 
@@ -134,6 +135,7 @@ namespace DAL.UnitOfWork
         public IItemBookingReportRepository ItemBookingReportRepo { get; }
         public IItemRepository ItemRepo { get; }
 
+        public IItemCharacteristicsRepository ItemCharacteristicsRepo { get; }
         public IAddOptionRepository AddOptionRepo { get; private set; }
         public async Task RollbackTransactionAsync()
         {
