@@ -42,6 +42,7 @@ namespace DriverShareProject.Extentions.ServiceRegistration
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<ISepayService, SepayService>();
 
+            services.AddScoped<IVehicleBookingService, VehicleBookingService>();
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
