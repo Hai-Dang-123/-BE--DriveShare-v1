@@ -14,4 +14,9 @@ namespace Common.DTOs
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
+
+    public class ChangeBookingStatusDTO
+    {
+        public Common.Enums.BookingStatus Status { get; set; }
+    }
 }
