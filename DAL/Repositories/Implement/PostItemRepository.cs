@@ -20,11 +20,19 @@ namespace DAL.Repositories.Implement
             _context = context;
         }
 
-        public async Task<IEnumerable<VehicleBookingReport>> GetAllByBookingIdAsync(Guid vehicleBookingId)
+        public async Task<IEnumerable<PostItem>> GetAllPostItemsAsync()
         {
-            return await _context.VehicleBookingReports
-                .Where(r => r.VehicleBookingId == vehicleBookingId)
-                .ToListAsync();
+            return await _context.PostItems.ToListAsync();
         }
+
+        //public async Task<IEnumerable<VehicleBookingReport>> GetAllByBookingIdAsync(Guid vehicleBookingId)
+        //{
+        //    return await _context.VehicleBookingReports
+        //        .Where(r => r.VehicleBookingId == vehicleBookingId)
+        //        .ToListAsync();
+        //}
+
+
+
     }
 }
