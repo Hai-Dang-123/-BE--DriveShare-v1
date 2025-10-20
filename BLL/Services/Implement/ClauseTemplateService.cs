@@ -1,7 +1,9 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using Common.Enums;
 using DAL.Entities;
 using DAL.UnitOfWork;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,9 @@ namespace BLL.Services.Implement
                 ClauseId = Guid.NewGuid(),
                 Version = dto.Version,
                 Title = dto.Title,
-                Terms = new List<ClauseTerm>()
+                Terms = new List<ClauseTerm>(),
+                Status = ClauseTemplateStatus.ACTIVE
+
             };
 
             if (dto.ClauseContents != null && dto.ClauseContents.Any())
@@ -66,6 +70,41 @@ namespace BLL.Services.Implement
                     })
                 }
             };
+        }
+
+        public async Task<ResponseDTO> DeleteClauseTemplateAsync(Guid clauseId)
+        {
+            try
+            {
+                var clauseTemplate = await _unitOfWork.ClauseTemplateRepo.GetByIdAsync(clauseId);
+                if (clauseTemplate == null)
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        StatusCode = StatusCodes.Status404NotFound,
+                        Message = "Không tìm thấy mẫu điều khoản"
+                    };
+                }
+                clauseTemplate.Status = ClauseTemplateStatus.DELETED;
+                await _unitOfWork.ClauseTemplateRepo.UpdateAsync(clauseTemplate);
+                await _unitOfWork.SaveChangeAsync();
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    StatusCode = StatusCodes.Status200OK,
+                    Message = "Xóa mẫu điều khoản thành công"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = $"Lỗi khi xóa mẫu điều khoản: {ex.Message}"
+                };
+            }
         }
 
         public async Task<ResponseDTO> GetAllClausesTemplateAsync()
@@ -186,6 +225,6 @@ namespace BLL.Services.Implement
             };
         }
 
-        // DELETE Clause Template
+        
     }
 }

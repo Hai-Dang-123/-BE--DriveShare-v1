@@ -12,6 +12,7 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> CreateClauseTemplateAsync(CreateClauseTemplateDTO createClauseDTO);
         Task<ResponseDTO> UpdateClauseTemplateAsync(UpdateClauseTemplateDTO updateClauseDTO);
         Task<ResponseDTO> GetClauseTemplateByIdAsync(Guid clauseId);
+        Task<ResponseDTO> DeleteClauseTemplateAsync(Guid clauseId);
         Task<ResponseDTO> GetAllClausesTemplateAsync();
 
     }
