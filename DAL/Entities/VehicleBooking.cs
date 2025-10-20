@@ -16,6 +16,7 @@ namespace DAL.Entities
         public Guid RenterUserId { get; set; } // Đổi RenterId thành RenterUserId
         public User RenterUser { get; set; } = null!;
 
+        public string VehicleBookingCode { get; set; } = null!; // Mã đặt xe
         public decimal TotalPrice { get; set; }
         public DateTime RentalStartDate { get; set; } // Đổi StartDate
         public DateTime RentalEndDate { get; set; } // Đổi EndDate

@@ -9,5 +9,6 @@ namespace DAL.Repositories.Interface
 {
     public interface IWalletRepository : IGenericRepository<Wallet>
     {
+        Task<Wallet> GetByUserIdAsync(Guid userId);
     }
 }

@@ -303,6 +303,13 @@ namespace DAL.Context
                 .HasForeignKey(pv => pv.ClauseTemplateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // PostItem ↔ Vehicle
+            modelBuilder.Entity<PostItem>()
+                .HasOne(pv => pv.Vehicle)
+                .WithMany(v => v.PostItems)
+                .HasForeignKey(pv => pv.VehicleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // AddOption ↔ PostVehicle
             modelBuilder.Entity<AddOption>()
                 .HasOne(ao => ao.PostVehicle)
