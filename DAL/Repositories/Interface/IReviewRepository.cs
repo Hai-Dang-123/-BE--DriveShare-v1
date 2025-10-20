@@ -9,5 +9,8 @@ namespace DAL.Repositories.Interface
 {
     public interface IReviewRepository : IGenericRepository<Review>
     {
+        Task<IEnumerable<Review>> GetAllCReviewAsync();
+
+        Task<IEnumerable<Review>> GetReviewsByToUserIdAsync(Guid userId);
     }
 }

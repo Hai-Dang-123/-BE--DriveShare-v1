@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Entities;
 using DAL.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,19 @@ namespace DAL.Repositories.Implement
         public ReviewRepository(DriverShareAppContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<Review>> GetAllCReviewAsync()
+        {
+            return await _context.Reviews.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Review>> GetReviewsByToUserIdAsync(Guid userId)
+        {
+            return await _context.Reviews
+               .Where(r => r.ToUserId == userId)
+               .AsNoTracking()
+               .ToListAsync();
         }
     }
 }
