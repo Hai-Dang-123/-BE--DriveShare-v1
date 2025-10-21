@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DriverShareProject.Controllers
 {
     [ApiController]
-    [Route("api/vehicle/verification")]
+    [Route("api/verification")]
     public class VerificationController : ControllerBase
     {
         private readonly IVerificationService _verificationService;
@@ -53,7 +53,6 @@ namespace DriverShareProject.Controllers
         }
         // ✅ Lấy danh sách trạng thái xác minh của user hiện tại (CCCD, Bằng lái, Giấy xe,...)
         [HttpGet("my-status")]
-        
         public async Task<IActionResult> GetMyStatus()
         {
             var result = await _verificationService.GetMyVerificationStatusAsync();
