@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interface;
+﻿using BLL.Services.Implement;
+using BLL.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,13 @@ namespace DriverShareProject.Controllers
         {
             var result = await _itemCharacteristicsService.GetAllItemCharacteristicsAsync();
             return StatusCode(result.StatusCode, result);
+        }
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeletePostItem(Guid ItemCharacteristicId)
+        {
+            var response = await _itemCharacteristicsService.DeleteItemCharacteristicsAsync(ItemCharacteristicId);
+
+            return StatusCode(response.StatusCode, response);
         }
 
     }

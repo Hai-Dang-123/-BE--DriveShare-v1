@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace DAL.Entities
         public string? Unit { get; set; }
         public decimal WeightKg { get; set; }
         public decimal VolumeM3 { get; set; }
+        public ItemStatus Status { get; set; }
         public ItemCharacteristics Characteristics { get; set; } = new ItemCharacteristics();
     }
 }
