@@ -120,14 +120,6 @@ namespace Common.DTOs
         public List<ClauseContentResponseDTO> ClauseContents { get; set; } = new();
     }
 
-    //// ====== Nội dung điều khoản con ======
-    //public class ClauseContentResponseDTO
-    //{
-    //    public Guid ClauseTermId { get; set; }
-    //    public string Content { get; set; } = null!;
-    //    public bool IsMandatory { get; set; }
-    //    public int DisplayOrder { get; set; }
-    //}
 
     // ====== Tùy chọn thêm của bài đăng (AddOptions) ======
     public class AddOptionResponseDTO
