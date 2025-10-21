@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,5 +38,8 @@ namespace Common.DTOs
         public string? Unit { get; set; }
         public decimal WeightKg { get; set; }
         public decimal VolumeM3 { get; set; }
+        public ItemStatus status { get; set; }
+        public ItemCharacteristicsDTO? Characteristics { get; set; }
+
     }
 }

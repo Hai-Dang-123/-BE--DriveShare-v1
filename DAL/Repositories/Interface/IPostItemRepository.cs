@@ -10,5 +10,6 @@ namespace DAL.Repositories.Interface
     public interface IPostItemRepository : IGenericRepository<PostItem>
     {
         Task<IEnumerable<PostItem>> GetAllPostItemsAsync();
+         Task<PostItem> GetItemByIdAsync( Guid id);
     }
 }
