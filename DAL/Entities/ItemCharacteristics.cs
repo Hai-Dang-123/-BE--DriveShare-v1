@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace DAL.Entities
         public bool RequiresInsurance { get; set; }
         public bool RequiresSpecialHandling { get; set; }
         public string? OtherRequirements { get; set; }
+        public ItemCharacteristicsStatus Status { get; set; }
         public Guid ItemId { get; set; }
         public Item Item { get; set; } = null!;
     }

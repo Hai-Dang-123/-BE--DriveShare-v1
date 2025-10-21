@@ -19,8 +19,6 @@ namespace Common.DTOs
         public decimal PricePerUnit { get; set; }
         public Guid ItemId { get; set; }
         public bool IsAvailable { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
         public Guid ClauseTemplateId { get; set; }
     }
     public class UpdatePostItemDTO

@@ -26,14 +26,15 @@ namespace BLL.Services.Implement
             {
                 var postItem = new PostItem
                 {
+                    PostItemId = Guid.NewGuid(),
                     Title = createPostItemDTO.Title,
                     Description = createPostItemDTO.Description,
                     PricePerUnit = createPostItemDTO.PricePerUnit,
                     ItemId = createPostItemDTO.ItemId,
                     IsAvailable = createPostItemDTO.IsAvailable,
                     Status = PostItemStatus.DRAFT,
-                    CreatedAt = createPostItemDTO.CreatedAt,
-                    UpdatedAt = createPostItemDTO.UpdatedAt,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
                     ClauseTemplateId = createPostItemDTO.ClauseTemplateId
                 };
                 await _unitOfWork.PostItemRepo.AddAsync(postItem);

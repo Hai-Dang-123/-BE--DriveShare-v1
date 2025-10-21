@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using Common.Enums;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +38,8 @@ namespace BLL.Services.Implement
                     IsProhibited = createItemCharacteristicsDTO.IsProhibited,
                     RequiresInsurance = createItemCharacteristicsDTO.RequiresInsurance,
                     RequiresSpecialHandling = createItemCharacteristicsDTO.RequiresSpecialHandling,
-                    OtherRequirements = createItemCharacteristicsDTO.OtherRequirements
+                    OtherRequirements = createItemCharacteristicsDTO.OtherRequirements,
+                    Status = ItemCharacteristicsStatus.ACTIVE,
                 };
 
                 await _unitOfWork.ItemCharacteristicsRepo.AddAsync(characteristics);
@@ -59,6 +61,30 @@ namespace BLL.Services.Implement
                     Message = ex.Message
                 };
             }
+        }
+
+        public async Task<ResponseDTO> DeleteItemCharacteristicsAsync(Guid itemCharacteristicsId)
+        {
+            var itemcharacter = await _unitOfWork.ItemCharacteristicsRepo.GetByIdAsync(itemCharacteristicsId);
+            if (itemcharacter == null)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCodes.Status404NotFound,
+                    Message = "ItemCharacteristic is not fond"
+                };
+            }
+            itemcharacter.Status = ItemCharacteristicsStatus.DELETED;
+            await _unitOfWork.ItemCharacteristicsRepo.UpdateAsync(itemcharacter);
+            await _unitOfWork.SaveChangeAsync();
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                StatusCode = StatusCodes.Status200OK,
+                Message = "Update itemCharacteristics succes "
+            };
+             
         }
 
         public async Task<ResponseDTO> GetAllItemCharacteristicsAsync()
