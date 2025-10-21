@@ -111,7 +111,6 @@ namespace BLL.Services.Implement
         {
 
             var clauseTemplates = await _unitOfWork.ClauseTemplateRepo.GetAllWithTermsAsync();
-
             if (clauseTemplates == null || !clauseTemplates.Any())
             {
                 return new ResponseDTO

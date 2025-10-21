@@ -17,49 +17,49 @@ namespace DriverShareProject.Controllers
             _postVehicleService = postVehicleService;
         }
 
-        [HttpPost("Create PostVehicle")]
+        [HttpPost]
         public async Task<IActionResult> CreatePostVehicle(CreateRequestPostVehicleDTO dto)
         {
             var response = await _postVehicleService.CreatePostVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
-        [HttpPut("Update PostVehicle")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePostVehicle(UpdateRequestPostVehicleDTO dto)
         {
             var response = await _postVehicleService.UpdatePostVehicleAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
-        [HttpGet("Get All PostVehicles of Owner")]
+        [HttpGet("owner")]
         public async Task<IActionResult> GetAllPostVehiclesOfOwner()
         {
             var response = await _postVehicleService.GetAllPostVehiclesOwner();
             return StatusCode(response.StatusCode, response);
         }
-        [HttpGet("Get PostVehicle by Id")]
+        [HttpGet("id")]
         public async Task<IActionResult> GetPostVehicleById(Guid postId)
         {
             var response = await _postVehicleService.GetPostVehicleByIdAsync(postId);
             return StatusCode(response.StatusCode, response);
         }
-        [HttpDelete("Delete PostVehicle")]
+        [HttpDelete]
         public async Task<IActionResult> DeletePostVehicle(Guid postId)
         {
             var response = await _postVehicleService.DeletePostVehicleAsync(postId);
             return StatusCode(response.StatusCode, response);
         }
-        [HttpGet("Get All PostVehicles")]
+        [HttpGet("driver")]
         public async Task<IActionResult> GetAllPostVehicles()
         {
             var response = await _postVehicleService.GetAllPostVehicleAsync();
             return StatusCode(response.StatusCode, response);
         }
-        [HttpGet("Get All PostVehicles by Status")]
+        [HttpGet("status")]
         public async Task<IActionResult> GetAllPostVehiclesByStatus(PostStatus postStatus)
         {
             var response = await _postVehicleService.GetAllPostVehiclesByStatusAsync(postStatus);
             return StatusCode(response.StatusCode, response);
         }
-        [HttpPut("Update Status")]
+        [HttpPut("status")]
         public async Task<IActionResult> ChangePostVehicleStatus(ChangeStatusPostVehicleDTO dto)
         {
             var response = await _postVehicleService.ChangePostVehicleStatusAsync(dto);
