@@ -118,7 +118,7 @@ namespace BLL.Services.Implement
 
                 var result = posts.Select(p => new GetPostVehicleDTO
                 {
-                    ClauseId = p.ClauseTemplateId,
+
                     DailyPrice = p.DailyPrice,
                     EndDate = p.AvailableEndDate,
                     OwnerName = p.Owner?.Username ?? "N/A",

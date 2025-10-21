@@ -194,7 +194,7 @@ namespace BLL.Services.Implement
                 if (booking == null)
                     return new ResponseDTO("Không tìm thấy booking hoặc bạn không có quyền truy cập.", 404, false);
 
-                var result = new
+                var result = new 
                 {
                     booking.VehicleBookingId,
                     booking.TotalPrice,
@@ -206,7 +206,6 @@ namespace BLL.Services.Implement
                     {
                         booking.PostVehicle.PostVehicleId,
                         VehicleName = booking.PostVehicle.Vehicle.Brand + " " + booking.PostVehicle.Vehicle.Model,
-
                         booking.PostVehicle.DailyPrice
                     },
                     RenterInfo = new
