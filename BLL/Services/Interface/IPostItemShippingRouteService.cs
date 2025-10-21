@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Services.Implement
+namespace BLL.Services.Interface
 {
     public interface IPostItemShippingRouteService
     {

@@ -215,19 +215,54 @@ namespace BLL.Services.Implement
                 {
                     return new ResponseDTO(PostMessages.POST_NOT_FOUND, 404, false);
                 }
-                var result = new GetPostVehicleDTO
-                {   ClauseId = postVehicle.ClauseTemplateId,
-                    OwnerName = postVehicle.Owner.Username,
-                    OwnerPhone = postVehicle.Owner.PhoneNumber,
+                var result = new PostVehicleResponseDTO
+                {
+                    PostVehicleId = postVehicle.PostVehicleId,
                     DailyPrice = postVehicle.DailyPrice,
+                    Description = postVehicle.Description,
                     Status = postVehicle.Status,
-                    StartDate = postVehicle.AvailableStartDate,
-                    EndDate = postVehicle.AvailableEndDate,
-                    VehicleBrand = postVehicle.Vehicle.Brand,
-                    VehicleModel = postVehicle.Vehicle.Model,
-                    VehicleType = postVehicle.Vehicle.VehicleType.Name,
-                    PlateNumber = postVehicle.Vehicle.PlateNumber,
-                    ImageUrls = postVehicle.Vehicle.Images.Select(img => img.ImageUrl).ToList()
+                    AvailableStartDate = postVehicle.AvailableStartDate,
+                    AvailableEndDate = postVehicle.AvailableEndDate,
+
+                    Vehicle = new VehicleSummaryDTO
+                    {
+                        VehicleId = postVehicle.Vehicle.VehicleId,
+                        Brand = postVehicle.Vehicle.Brand,
+                        Model = postVehicle.Vehicle.Model,
+                        VehicleType = postVehicle.Vehicle.VehicleType.Name,
+                        PlateNumber = postVehicle.Vehicle.PlateNumber,
+                        ImageUrls = postVehicle.Vehicle.Images.Select(i => i.ImageUrl).ToList()
+                    },
+
+                    Owner = new OwnerSummaryDTO
+                    {
+                        OwnerId = postVehicle.Owner.UserId,
+                        OwnerName = postVehicle.Owner.Username,
+                        OwnerPhone = postVehicle.Owner.PhoneNumber
+                    },
+
+                    ClauseTemplate = new ClauseTemplateResponseDTO
+                    {
+                        ClauseId = postVehicle.ClauseTemplate.ClauseId,
+                        Version = postVehicle.ClauseTemplate.Version,
+                        Title = postVehicle.ClauseTemplate.Title,
+                        Status = postVehicle.ClauseTemplate.Status,
+                        ClauseContents = postVehicle.ClauseTemplate.Terms
+                            .Select(c => new ClauseContentResponseDTO
+                            {
+                                ClauseTermId = c.ClauseTermId,
+                                Content = c.Content,
+                                IsMandatory = c.IsMandatory,
+                                DisplayOrder = c.DisplayOrder
+                            }).ToList()
+                    },
+
+                    AddOptions = postVehicle.AddOptions
+        .Select(a => new AddOptionResponseDTO
+        {
+            AddOptionId = a.AddOptionId,
+            Description = a.Description
+        }).ToList()
                 };
                 return new ResponseDTO(PostMessages.GET_POST_SUCCESS, 200, true, result);
             }

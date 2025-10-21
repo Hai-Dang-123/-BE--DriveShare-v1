@@ -39,5 +39,23 @@ namespace Common.DTOs
         public bool IsMandatory { get; set; }
         public int DisplayOrder { get; set; }
     }
+    // respones
+    public class ClauseResponseDTO
+    {
+        public Guid ClauseId { get; set; }
+        public string Title { get; set; } = null!;
+        public string Version { get; set; } = null!;
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public List<ClauseContentResponseDTO>? ClauseContents { get; set; }
+    }
+
+    public class ClauseContentResponseDTO
+    {
+        public Guid ClauseTermId { get; set; }
+        public string Content { get; set; } = null!;
+        public bool IsMandatory { get; set; }
+        public int DisplayOrder { get; set; }
+    }
 
 }

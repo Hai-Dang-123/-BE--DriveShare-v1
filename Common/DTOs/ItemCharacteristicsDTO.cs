@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.DTOs
 {
-    public class ItemCharacteristicsDTO
-    {
-    }
+
     public class CreateItemCharacteristicsDTO
     {
         public bool IsFragile { get; set; }
