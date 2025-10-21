@@ -61,14 +61,16 @@ namespace DAL.Repositories.Implement
         public async Task<PostVehicle?> GetPostByIdAsync(Guid postId)
         {
             return await _context.PostVehicles
-                .Where(v => v.PostVehicleId == postId && v.Status != PostStatus.DELETED)
-                .Include(v => v.Vehicle)
-                    .ThenInclude(v => v.VehicleType)
-                .Include(v => v.Vehicle)
-                   .ThenInclude(v => v.Images)
-                .Include(v => v.Owner)
-                .Include(v => v.ClauseTemplate)  
-                .FirstOrDefaultAsync();
+        .Where(v => v.PostVehicleId == postId && v.Status != PostStatus.DELETED)
+        .Include(v => v.Vehicle)
+            .ThenInclude(v => v.VehicleType)
+        .Include(v => v.Vehicle)
+            .ThenInclude(v => v.Images)
+        .Include(v => v.Owner)
+        .Include(v => v.ClauseTemplate)
+            .ThenInclude(ct => ct.Terms)
+        .Include(v => v.AddOptions)
+        .FirstOrDefaultAsync();
         }
 
     }

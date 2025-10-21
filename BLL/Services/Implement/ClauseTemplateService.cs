@@ -112,25 +112,35 @@ namespace BLL.Services.Implement
 
             var clauseTemplates = await _unitOfWork.ClauseTemplateRepo.GetAllWithTermsAsync();
 
-            var result = clauseTemplates.Select(ct => new
+            if (clauseTemplates == null || !clauseTemplates.Any())
             {
-                ct.ClauseId,
-                ct.Title,
-                ct.Version,
-                Terms = ct.Terms.Select(t => new
+                return new ResponseDTO
                 {
-                    t.ClauseTermId,
-                    t.Content,
-                    t.IsMandatory,
-                    t.DisplayOrder
-                })
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Không tìm thấy mẫu điều khoản nào."
+                };
+            }
+
+            var result = clauseTemplates.Select(ct => new ClauseResponseDTO
+            {
+                ClauseId = ct.ClauseId,
+                Title = ct.Title,
+                Version = ct.Version,
+                ClauseContents = ct.Terms.Select(t => new ClauseContentResponseDTO
+                {
+                    ClauseTermId = t.ClauseTermId,
+                    Content = t.Content,
+                    IsMandatory = t.IsMandatory,
+                    DisplayOrder = t.DisplayOrder
+                }).ToList()
             }).ToList();
 
             return new ResponseDTO
             {
                 IsSuccess = true,
                 StatusCode = 200,
-                Message = "Lấy danh sách mẫu điều khoản thành công",
+                Message = "Lấy danh sách mẫu điều khoản thành công.",
                 Result = result
             };
         }
@@ -149,18 +159,18 @@ namespace BLL.Services.Implement
                 };
             }
 
-            var result = new
+            var result = new ClauseResponseDTO
             {
-                clauseTemplate.ClauseId,
-                clauseTemplate.Title,
-                clauseTemplate.Version,
-                Terms = clauseTemplate.Terms.Select(t => new
+                ClauseId = clauseTemplate.ClauseId,
+                Title = clauseTemplate.Title,
+                Version = clauseTemplate.Version,
+                ClauseContents = clauseTemplate.Terms.Select(t => new ClauseContentResponseDTO
                 {
-                    t.ClauseTermId,
-                    t.Content,
-                    t.IsMandatory,
-                    t.DisplayOrder
-                })
+                    ClauseTermId = t.ClauseTermId,
+                    Content = t.Content,
+                    IsMandatory = t.IsMandatory,
+                    DisplayOrder = t.DisplayOrder
+                }).ToList()
             };
 
             return new ResponseDTO

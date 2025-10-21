@@ -74,6 +74,67 @@ namespace Common.DTOs
         public PostStatus Status { get; set; }
     }
 
+    public class PostVehicleResponseDTO
+    {
+        public Guid PostVehicleId { get; set; }
+        public decimal DailyPrice { get; set; }
+        public string? Description { get; set; }
+        public PostStatus Status { get; set; }
+        public DateTime AvailableStartDate { get; set; }
+        public DateTime AvailableEndDate { get; set; }
+
+        // ====== Quan hệ ======
+        public VehicleSummaryDTO Vehicle { get; set; } = null!;
+        public OwnerSummaryDTO Owner { get; set; } = null!;
+        public ClauseTemplateResponseDTO ClauseTemplate { get; set; } = null!;
+        public List<AddOptionResponseDTO> AddOptions { get; set; } = new();
+    }
+
+    // ====== Tóm tắt xe (Vehicle) ======
+    public class VehicleSummaryDTO
+    {
+        public Guid VehicleId { get; set; }
+        public string Brand { get; set; } = null!;
+        public string Model { get; set; } = null!;
+        public string VehicleType { get; set; } = null!;
+        public string PlateNumber { get; set; } = null!;
+        public List<string> ImageUrls { get; set; } = new();
+    }
+
+    // ====== Chủ xe (Owner) ======
+    public class OwnerSummaryDTO
+    {
+        public Guid OwnerId { get; set; }
+        public string OwnerName { get; set; } = null!;
+        public string OwnerPhone { get; set; } = null!;
+    }
+
+    // ====== Mẫu điều khoản (Clause Template) ======
+    public class ClauseTemplateResponseDTO
+    {
+        public Guid ClauseId { get; set; }
+        public string Version { get; set; } = null!;
+        public string Title { get; set; } = null!;
+        public ClauseTemplateStatus Status { get; set; }
+
+        public List<ClauseContentResponseDTO> ClauseContents { get; set; } = new();
+    }
+
+    //// ====== Nội dung điều khoản con ======
+    //public class ClauseContentResponseDTO
+    //{
+    //    public Guid ClauseTermId { get; set; }
+    //    public string Content { get; set; } = null!;
+    //    public bool IsMandatory { get; set; }
+    //    public int DisplayOrder { get; set; }
+    //}
+
+    // ====== Tùy chọn thêm của bài đăng (AddOptions) ======
+    public class AddOptionResponseDTO
+    {
+        public Guid AddOptionId { get; set; }
+        public string Description { get; set; } = null!;
+    }
 
 
 }
