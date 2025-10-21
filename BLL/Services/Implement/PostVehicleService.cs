@@ -56,20 +56,9 @@ namespace BLL.Services.Implement
                 Status = PostStatus.DRAFT,
                 AvailableStartDate = dto.StartDate,
                 AvailableEndDate = dto.EndDate,
-                AddOptions = new List<AddOption>()
+                
             };
-            if (dto.AddOptions != null && dto.AddOptions.Any())
-            {
-                foreach (var option in dto.AddOptions)
-                {
-                    newPostVehicle.AddOptions.Add(new AddOption
-                    {
-                        AddOptionId = Guid.NewGuid(),
-                        Description = option.Description,
-                        PostVehicleId = newPostVehicle.PostVehicleId
-                    });
-                }
-            }
+           
             
             try
             {

@@ -28,8 +28,7 @@ namespace Common.DTOs
 
         // Upload ảnh kèm theo
 
-        public int year { get; set; }
-        public string color { get; set; }  
+        public int Year { get; set; }
         public List<IFormFile> Files { get; set; }
 
     }

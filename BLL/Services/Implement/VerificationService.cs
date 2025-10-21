@@ -192,7 +192,7 @@ namespace BLL.Services.Implement
         {
             var userId = _userUtility.GetUserIdFromToken();
             if (userId == Guid.Empty)
-                return new ResponseDTO(UserMessages.UNAUTHORIZED, 401, false);
+                return new ResponseDTO(UserMessages.UNAUTHORIZED, 200, false);
 
             // 🔹 Lấy danh sách xe mà user này sở hữu
             var vehicles = await _unitOfWork.VehicleRepo.GetAllByListAsync(v => v.OwnerUserId == userId);
@@ -203,7 +203,7 @@ namespace BLL.Services.Implement
                 v.UserId == userId || (v.VehicleId != null && vehicleIds.Contains(v.VehicleId.Value)));
 
             if (verifications == null || !verifications.Any())
-                return new ResponseDTO("No verifications found for this user", 404, false);
+                return new ResponseDTO("No verifications found for this user", 200, false);
 
             // 🔹 Map dữ liệu ra DTO
             var result = verifications.Select(v => new VerificationStatusReadDTO

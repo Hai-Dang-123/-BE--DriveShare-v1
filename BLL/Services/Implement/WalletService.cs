@@ -87,12 +87,12 @@ namespace BLL.Services.Implement
             var userId = _userUtility.GetUserIdFromToken();
             if (userId == Guid.Empty)
             {
-                return new ResponseDTO("Invalid user.", 400, false);
+                return new ResponseDTO("Invalid user.", 200, false);
             }
             var wallet = await _unitOfWork.WalletRepo.GetByUserIdAsync(userId);
             if (wallet == null)
             {
-                return new ResponseDTO("Wallet not found.", 404, false);
+                return new ResponseDTO("Wallet not found.", 200, false);
             }
 
             var walletDTO = new WalletDTO

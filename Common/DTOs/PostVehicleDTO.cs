@@ -31,7 +31,7 @@ namespace Common.DTOs
         public DateTime EndDate { get; set; }
 
 
-        public List<AddOptionDTO>? AddOptions { get; set; }
+        //public List<AddOptionDTO>? AddOptions { get; set; }
 
 
 

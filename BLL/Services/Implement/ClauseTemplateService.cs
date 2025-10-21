@@ -112,7 +112,7 @@ namespace BLL.Services.Implement
 
             var clauseTemplates = await _unitOfWork.ClauseTemplateRepo.GetAllWithTermsAsync();
 
-            var result = clauseTemplates.Select(ct => new
+            var result = clauseTemplates.Select(ct => new 
             {
                 ct.ClauseId,
                 ct.Title,
