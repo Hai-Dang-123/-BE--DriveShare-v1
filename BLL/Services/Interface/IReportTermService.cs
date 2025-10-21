@@ -6,10 +6,10 @@ namespace BLL.Services.Interface
 {
     public interface IReportTermService
     {
-        Task<ResponseDTO> DeleteReportTermAsync(Guid id);
+        Task<ResponseDTO> CreateReportTermAsync(CreateReportTermDTO dto);
+        Task<ResponseDTO> UpdateReportTermAsync(Guid id, CreateReportTermDTO dto);
         Task<ResponseDTO> GetAllReportTermsAsync();
         Task<ResponseDTO> GetReportTermByIdAsync(Guid id);
-        Task<ResponseDTO> CreateReportTermAsync(ReportTermDTO dto);
-        Task<ResponseDTO> UpdateReportTermAsync(Guid id, ReportTermDTO dto);
+        Task<ResponseDTO> DeleteReportTermAsync(Guid id);
     }
 }

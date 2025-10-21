@@ -24,7 +24,7 @@ namespace DriverShareProject.Controllers
             return StatusCode(result.StatusCode, result);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItemContractAsync(Guid id, [FromBody] CreateItemContractDto dto)
+        public async Task<IActionResult> UpdateItemContractAsync(Guid id, [FromBody] CreateItemContractDTO dto)
         {
             var result = await _itemContractService.UpdateItemContractAsync(id, dto);
             return StatusCode(result.StatusCode, result);
