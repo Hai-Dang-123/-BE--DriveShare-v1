@@ -3,8 +3,8 @@ using Common.DTOs;
 using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Services.Implement
@@ -17,191 +17,136 @@ namespace BLL.Services.Implement
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<ResponseDTO> CreateReportTermAsync(ReportTermDTO dto)
+
+        // ✅ CREATE
+        public async Task<ResponseDTO> CreateReportTermAsync(CreateReportTermDTO dto)
         {
             try
             {
                 if (dto == null)
-                    return new ResponseDTO { StatusCode = 400, IsSuccess = false, Message = "Dữ liệu đầu vào không hợp lệ." };
+                    return new ResponseDTO("Dữ liệu đầu vào không hợp lệ.", 400, false);
 
                 var entity = new ReportTerm
                 {
                     ReportTermId = Guid.NewGuid(),
                     Content = dto.Content,
-                    IsMandatory = dto.IsMandatory,
-                    ReportTemplateId = dto.ReportTemplateId ?? Guid.Empty
+                    IsMandatory = dto.IsMandatory
                 };
 
                 await _unitOfWork.ReportTermRepo.AddAsync(entity);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
+                var result = new ReportTermDTO
                 {
-                    StatusCode = 201,
-                    IsSuccess = true,
-                    Message = "Tạo điều khoản báo cáo thành công.",
-                    Result = entity
+                    ReportTermId = entity.ReportTermId,
+                    Content = entity.Content,
+                    IsMandatory = entity.IsMandatory
                 };
+
+                return new ResponseDTO("Tạo điều khoản báo cáo thành công.", 201, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi tạo điều khoản báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi tạo điều khoản báo cáo: {ex.Message}", 500, false);
             }
         }
-        public async Task<ResponseDTO> UpdateReportTermAsync(Guid id, ReportTermDTO dto)
+
+        // ✅ UPDATE
+        public async Task<ResponseDTO> UpdateReportTermAsync(Guid id, CreateReportTermDTO dto)
         {
             try
             {
                 var existing = await _unitOfWork.ReportTermRepo.GetByIdAsync(id);
                 if (existing == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không tìm thấy điều khoản báo cáo."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy điều khoản báo cáo.", 404, false);
 
                 existing.Content = dto.Content;
                 existing.IsMandatory = dto.IsMandatory;
-                existing.ReportTemplateId = dto.ReportTemplateId?? Guid.Empty;
 
                 await _unitOfWork.ReportTermRepo.UpdateAsync(existing);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
+                var result = new ReportTermDTO
                 {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Cập nhật điều khoản báo cáo thành công.",
-                    Result = existing
+                    ReportTermId = existing.ReportTermId,
+                    Content = existing.Content,
+                    IsMandatory = existing.IsMandatory
                 };
+
+                return new ResponseDTO("Cập nhật điều khoản báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi cập nhật điều khoản báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi cập nhật điều khoản báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ GET ALL
         public async Task<ResponseDTO> GetAllReportTermsAsync()
         {
             try
             {
                 var terms = await _unitOfWork.ReportTermRepo.GetAll().ToListAsync();
 
-                if (terms == null || !terms.Any())
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không có điều khoản báo cáo nào."
-                    };
-                }
+                if (!terms.Any())
+                    return new ResponseDTO("Không có điều khoản báo cáo nào.", 404, false);
 
-                var result = terms.Select(t => new
+                var result = terms.Select(t => new ReportTermDTO
                 {
-                    t.ReportTermId,
-                    t.Content,
-                    t.IsMandatory,
-                    t.ReportTemplateId
-                });
+                    ReportTermId = t.ReportTermId,
+                    Content = t.Content,
+                    IsMandatory = t.IsMandatory
+                }).ToList();
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Lấy danh sách điều khoản báo cáo thành công.",
-                    Result = result
-                };
+                return new ResponseDTO("Lấy danh sách điều khoản báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi lấy điều khoản báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi lấy điều khoản báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ GET BY ID
         public async Task<ResponseDTO> GetReportTermByIdAsync(Guid id)
         {
             try
             {
                 var term = await _unitOfWork.ReportTermRepo.GetByIdAsync(id);
-
                 if (term == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không tìm thấy điều khoản báo cáo."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy điều khoản báo cáo.", 404, false);
 
-                return new ResponseDTO
+                var result = new ReportTermDTO
                 {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Lấy điều khoản báo cáo thành công.",
-                    Result = term
+                    ReportTermId = term.ReportTermId,
+                    Content = term.Content,
+                    IsMandatory = term.IsMandatory
                 };
+
+                return new ResponseDTO("Lấy điều khoản báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi lấy điều khoản báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi lấy điều khoản báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ DELETE
         public async Task<ResponseDTO> DeleteReportTermAsync(Guid id)
         {
             try
             {
                 var term = await _unitOfWork.ReportTermRepo.GetByIdAsync(id);
                 if (term == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Report term not found."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy điều khoản để xoá.", 404, false);
 
                 _unitOfWork.ReportTermRepo.Delete(term);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Report term deleted successfully."
-                };
+                return new ResponseDTO("Xoá điều khoản báo cáo thành công.", 200, true);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Error deleting report term: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi xoá điều khoản báo cáo: {ex.Message}", 500, false);
             }
         }
     }

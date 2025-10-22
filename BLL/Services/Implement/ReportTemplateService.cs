@@ -1,11 +1,12 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace BLL.Services.Implement
 {
@@ -18,162 +19,133 @@ namespace BLL.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
-
+        // ✅ CREATE
         public async Task<ResponseDTO> CreateReportTemplateAsync(CreateReportTemplateDTO dto)
         {
             try
             {
-                var newTemplate = new DAL.Entities.ReportTemplate
+                var newTemplate = new ReportTemplate
                 {
                     ReportTemplateId = Guid.NewGuid(),
                     Version = dto.Version,
                     CreatedAt = DateTime.UtcNow,
-                };
-
-                // Nếu có term thì thêm vào
-                if (dto.ReportTerms != null && dto.ReportTerms.Any())
-                {
-                    foreach (var termDto in dto.ReportTerms)
+                    ReportTerms = dto.ReportTerms?.Select(termDto => new ReportTerm
                     {
-                        newTemplate.ReportTerms.Add(new DAL.Entities.ReportTerm
-                        {
-                            ReportTermId = Guid.NewGuid(),
-                            Content = termDto.Content,
-                            IsMandatory = termDto.IsMandatory
-                        });
-                    }
-                }
+                        ReportTermId = Guid.NewGuid(),
+                        Content = termDto.Content,
+                        IsMandatory = termDto.IsMandatory
+                    }).ToList() ?? new List<ReportTerm>()
+                };
 
                 await _unitOfWork.ReportTemplateRepo.AddAsync(newTemplate);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
+                var result = new ReportTemplateDTO
                 {
-                    StatusCode = 201,
-                    IsSuccess = true,
-                    Message = "Tạo mẫu báo cáo thành công.",
-                    Result = newTemplate
+                    ReportTemplateId = newTemplate.ReportTemplateId,
+                    Version = newTemplate.Version,
+                    CreatedAt = newTemplate.CreatedAt,
+                    ReportTerms = newTemplate.ReportTerms.Select(t => new ReportTermDTO
+                    {
+                        ReportTermId = t.ReportTermId,
+                        Content = t.Content,
+                        IsMandatory = t.IsMandatory
+                    }).ToList()
                 };
+
+                return new ResponseDTO("Tạo mẫu báo cáo thành công.", 201, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi tạo mẫu báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi tạo mẫu báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ UPDATE
         public async Task<ResponseDTO> UpdateReportTemplateAsync(Guid id, UpdateReportTemplateDTO dto)
         {
             try
             {
-                var template = await _unitOfWork.ReportTemplateRepo
-                    .GetByIdWithTermsAsync(id);
+                var template = await _unitOfWork.ReportTemplateRepo.GetByIdWithTermsAsync(id);
 
                 if (template == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không tìm thấy mẫu báo cáo cần cập nhật."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy mẫu báo cáo cần cập nhật.", 404, false);
 
                 template.Version = dto.Version ?? template.Version;
                 template.CreatedAt = DateTime.UtcNow;
 
-                // Cập nhật lại các term (xóa cũ, thêm mới)
-                if (template.ReportTerms.Any())
-                {
-                    _unitOfWork.ReportTermRepo.RemoveRange(template.ReportTerms.ToList());
-                }
-
+                // Xóa toàn bộ term cũ rồi thêm lại
+                template.ReportTerms.Clear();
                 if (dto.ReportTerms != null && dto.ReportTerms.Any())
                 {
-                    foreach (var termDto in dto.ReportTerms)
+                    template.ReportTerms = dto.ReportTerms.Select(termDto => new ReportTerm
                     {
-                        template.ReportTerms.Add(new DAL.Entities.ReportTerm
-                        {
-                            ReportTermId = Guid.NewGuid(),
-                            Content = termDto.Content,
-                            IsMandatory = termDto.IsMandatory
-                        });
-                    }
+                        ReportTermId = Guid.NewGuid(),
+                        Content = termDto.Content,
+                        IsMandatory = termDto.IsMandatory
+                    }).ToList();
                 }
 
                 await _unitOfWork.ReportTemplateRepo.UpdateAsync(template);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
+                var result = new ReportTemplateDTO
                 {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Cập nhật mẫu báo cáo thành công.",
-                    Result = template
+                    ReportTemplateId = template.ReportTemplateId,
+                    Version = template.Version,
+                    CreatedAt = template.CreatedAt,
+                    ReportTerms = template.ReportTerms.Select(t => new ReportTermDTO
+                    {
+                        ReportTermId = t.ReportTermId,
+                        Content = t.Content,
+                        IsMandatory = t.IsMandatory
+                    }).ToList()
                 };
+
+                return new ResponseDTO("Cập nhật mẫu báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi cập nhật mẫu báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi cập nhật mẫu báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ GET ALL
         public async Task<ResponseDTO> GetAllReportTemplatesAsync()
         {
             try
             {
-                var templates = await _unitOfWork.ReportTemplateRepo.GetAll()
+                var templates = await _unitOfWork.ReportTemplateRepo
+                    .GetAll()
                     .Include(t => t.ReportTerms)
+                    .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
 
                 if (templates == null || !templates.Any())
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không có mẫu báo cáo nào."
-                    };
-                }
+                    return new ResponseDTO("Không có mẫu báo cáo nào.", 404, false);
 
-                var result = templates.Select(t => new
+                var result = templates.Select(t => new ReportTemplateDTO
                 {
-                    t.ReportTemplateId,
-                    t.Version,
-                    t.CreatedAt,
-                    Terms = t.ReportTerms.Select(term => new
+                    ReportTemplateId = t.ReportTemplateId,
+                    Version = t.Version,
+                    CreatedAt = t.CreatedAt,
+                    ReportTerms = t.ReportTerms.Select(term => new ReportTermDTO
                     {
-                        term.ReportTermId,
-                        term.Content,
-                        term.IsMandatory
-                    })
-                });
+                        ReportTermId = term.ReportTermId,
+                        Content = term.Content,
+                        IsMandatory = term.IsMandatory
+                    }).ToList()
+                }).ToList();
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Lấy danh sách mẫu báo cáo thành công.",
-                    Result = result
-                };
+                return new ResponseDTO("Lấy danh sách mẫu báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi lấy danh sách mẫu báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi lấy danh sách mẫu báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ GET BY ID
         public async Task<ResponseDTO> GetReportTemplateByIdAsync(Guid id)
         {
             try
@@ -181,84 +153,47 @@ namespace BLL.Services.Implement
                 var template = await _unitOfWork.ReportTemplateRepo.GetByIdWithTermsAsync(id);
 
                 if (template == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Không tìm thấy mẫu báo cáo."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy mẫu báo cáo.", 404, false);
 
-                var result = new
+                var result = new ReportTemplateDTO
                 {
-                    template.ReportTemplateId,
-                    template.Version,
-                    template.CreatedAt,
-                    Terms = template.ReportTerms.Select(term => new
+                    ReportTemplateId = template.ReportTemplateId,
+                    Version = template.Version,
+                    CreatedAt = template.CreatedAt,
+                    ReportTerms = template.ReportTerms.Select(term => new ReportTermDTO
                     {
-                        term.ReportTermId,
-                        term.Content,
-                        term.IsMandatory
-                    })
+                        ReportTermId = term.ReportTermId,
+                        Content = term.Content,
+                        IsMandatory = term.IsMandatory
+                    }).ToList()
                 };
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Lấy mẫu báo cáo thành công.",
-                    Result = result
-                };
+                return new ResponseDTO("Lấy mẫu báo cáo thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Lỗi khi lấy mẫu báo cáo: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi lấy mẫu báo cáo: {ex.Message}", 500, false);
             }
         }
+
+        // ✅ DELETE
         public async Task<ResponseDTO> DeleteReportTemplateAsync(Guid id)
         {
             try
             {
-                var template = await _unitOfWork.ReportTemplateRepo.GetByIdAsync(id);
+                var template = await _unitOfWork.ReportTemplateRepo.GetByIdWithTermsAsync(id);
                 if (template == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Report template not found."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy mẫu báo cáo để xoá.", 404, false);
 
-                if (template.ReportTerms != null && template.ReportTerms.Count > 0)
-                {
-                    _unitOfWork.ReportTermRepo.RemoveRange(template.ReportTerms.ToList());
-                }
-
+                _unitOfWork.ReportTermRepo.RemoveRange(template.ReportTerms.ToList());
                 await _unitOfWork.ReportTemplateRepo.DeleteAsync(id);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Report template deleted successfully."
-                };
+                return new ResponseDTO("Xoá mẫu báo cáo thành công.", 200, true);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Error deleting report template: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi xoá mẫu báo cáo: {ex.Message}", 500, false);
             }
         }
     }

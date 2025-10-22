@@ -1,9 +1,11 @@
 ﻿using BLL.Services.Interface;
 using Common.DTOs;
+using Common.Enums;
+using DAL.Entities;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Services.Implement
@@ -11,12 +13,11 @@ namespace BLL.Services.Implement
     public class ItemContractService : IItemContractService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public ItemContractService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-
-
 
         public async Task<ResponseDTO> GetAllItemContractsAsync()
         {
@@ -27,122 +28,73 @@ namespace BLL.Services.Implement
                     .Include(c => c.ItemBooking)
                     .ToListAsync();
 
-                if (!contracts.Any())
+                var result = contracts.Select(c => new ItemContractDTO
                 {
-                    return new ResponseDTO
-                    {
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Message = "Không có hợp đồng hàng hoá nào."
-                    };
-                }
-
-                var result = contracts.Select(c => new
-                {
-                    c.ContractId,
-                    c.Version,
-                    c.Status,
-                    c.OwnerSigned,
-                    c.RenterSigned,
-                    c.CreatedAt,
-                    c.SignedAt,
-                    c.ItemBookingId
+                    ContractId = c.ContractId,
+                    Version = c.Version,
+                    Status = c.Status,
+                    OwnerSigned = c.OwnerSigned,
+                    RenterSigned = c.RenterSigned,
+                    CreatedAt = c.CreatedAt,
+                    SignedAt = c.SignedAt,
+                    ItemBookingId = c.ItemBookingId
                 }).ToList();
 
-                return new ResponseDTO
-                {
-                    IsSuccess = true,
-                    StatusCode = 200,
-                    Message = "Lấy danh sách hợp đồng hàng hoá thành công.",
-                    Result = result
-                };
+                return new ResponseDTO("Lấy danh sách hợp đồng hàng hoá thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    IsSuccess = false,
-                    StatusCode = 500,
-                    Message = $"Lỗi khi lấy danh sách hợp đồng: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi lấy danh sách hợp đồng: {ex.Message}", 500, false);
             }
         }
-        public async Task<ResponseDTO> UpdateItemContractAsync(Guid id, CreateItemContractDto dto)
+
+        public async Task<ResponseDTO> UpdateItemContractAsync(Guid id, CreateItemContractDTO dto)
         {
             try
             {
                 var existing = await _unitOfWork.ItemContractRepo.GetByIdAsync(id);
                 if (existing == null)
-                {
-                    return new ResponseDTO
-                    {
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Message = "Không tìm thấy hợp đồng để cập nhật."
-                    };
-                }
+                    return new ResponseDTO("Không tìm thấy hợp đồng để cập nhật.", 404, false);
 
-                existing.Version = dto.version;
+                existing.Version = dto.Version;
                 existing.ContractTemplateId = dto.ContractTemplateId;
                 existing.ItemBookingId = dto.ItemBookingId;
                 existing.SignedAt = DateTime.UtcNow;
-                existing.Status = Common.Enums.ContractStatus.ACTIVE;
+                existing.Status = ContractStatus.ACTIVE;
 
                 await _unitOfWork.ItemContractRepo.UpdateAsync(existing);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
+                var result = new ItemContractDTO
                 {
-                    IsSuccess = true,
-                    StatusCode = 200,
-                    Message = "Cập nhật hợp đồng hàng hoá thành công.",
-                    Result = existing
+                    ContractId = existing.ContractId,
+                    Version = existing.Version,
+                    Status = existing.Status,
+                    OwnerSigned = existing.OwnerSigned,
+                    RenterSigned = existing.RenterSigned,
+                    CreatedAt = existing.CreatedAt,
+                    SignedAt = existing.SignedAt,
+                    ItemBookingId = existing.ItemBookingId
                 };
+
+                return new ResponseDTO("Cập nhật hợp đồng hàng hoá thành công.", 200, true, result);
             }
             catch (Exception ex)
             {
-                return new ResponseDTO
-                {
-                    IsSuccess = false,
-                    StatusCode = 500,
-                    Message = $"Lỗi khi cập nhật hợp đồng hàng hoá: {ex.Message}"
-                };
+                return new ResponseDTO($"Lỗi khi cập nhật hợp đồng hàng hoá: {ex.Message}", 500, false);
             }
         }
+
         public async Task<ResponseDTO> DeleteItemContractAsync(Guid id)
         {
-            try
-            {
-                var itemContract = await _unitOfWork.ItemContractRepo.GetByIdAsync(id);
-                if (itemContract == null)
-                {
-                    return new ResponseDTO
-                    {
-                        StatusCode = 404,
-                        IsSuccess = false,
-                        Message = "Item contract not found."
-                    };
-                }
+            var itemContract = await _unitOfWork.ItemContractRepo.GetByIdAsync(id);
+            if (itemContract == null)
+                return new ResponseDTO("Không tìm thấy hợp đồng để xoá.", 404, false);
 
-                _unitOfWork.ItemContractRepo.Delete(itemContract);
-                await _unitOfWork.SaveChangeAsync();
+            _unitOfWork.ItemContractRepo.Delete(itemContract);
+            await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO
-                {
-                    StatusCode = 200,
-                    IsSuccess = true,
-                    Message = "Item contract deleted successfully."
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseDTO
-                {
-                    StatusCode = 500,
-                    IsSuccess = false,
-                    Message = $"Error deleting item contract: {ex.Message}"
-                };
-            }
+            return new ResponseDTO("Xoá hợp đồng hàng hoá thành công.", 200, true);
         }
     }
 }

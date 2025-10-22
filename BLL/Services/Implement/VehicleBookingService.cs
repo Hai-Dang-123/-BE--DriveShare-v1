@@ -90,12 +90,20 @@ namespace BLL.Services.Implement
                 await _unitOfWork.VehicleBookingRepo.AddAsync(booking);
                 await _unitOfWork.SaveChangeAsync();
 
-                return new ResponseDTO("Tạo booking thành công.", 201, true, new
+                var bookingDTO = new VehicleBookingDTO
                 {
-                    booking.VehicleBookingId,
-                    booking.TotalPrice,
-                    booking.Status
-                });
+                    VehicleBookingId = booking.VehicleBookingId,
+                    PostVehicleId = booking.PostVehicleId,
+                    RenterUserId = booking.RenterUserId,
+                    RentalStartDate = booking.RentalStartDate,
+                    RentalEndDate = booking.RentalEndDate,
+                    TotalPrice = booking.TotalPrice,
+                    Status = booking.Status,
+                    CreatedAt = booking.CreatedAt
+                };
+
+                return new ResponseDTO("Tạo booking thành công.", 201, true, bookingDTO);
+
             }
             catch (Exception ex)
             {
@@ -194,29 +202,36 @@ namespace BLL.Services.Implement
                 if (booking == null)
                     return new ResponseDTO("Không tìm thấy booking hoặc bạn không có quyền truy cập.", 404, false);
 
-                var result = new 
+                var bookingDTO = new VehicleBookingDTO
                 {
-                    booking.VehicleBookingId,
-                    booking.TotalPrice,
-                    booking.RentalStartDate,
-                    booking.RentalEndDate,
-                    booking.Status,
-                    booking.CreatedAt,
-                    VehicleInfo = new
+                    VehicleBookingId = booking.VehicleBookingId,
+                    PostVehicleId = booking.PostVehicleId,
+                    RenterUserId = booking.RenterUserId,
+                    RentalStartDate = booking.RentalStartDate,
+                    RentalEndDate = booking.RentalEndDate,
+                    TotalPrice = booking.TotalPrice,
+                    Status = booking.Status,
+                    CreatedAt = booking.CreatedAt,
+                    VehicleInfo = new VehicleBasicDTO
                     {
-                        booking.PostVehicle.PostVehicleId,
-                        VehicleName = booking.PostVehicle.Vehicle.Brand + " " + booking.PostVehicle.Vehicle.Model,
-                        booking.PostVehicle.DailyPrice
+                        VehicleId = booking.PostVehicle.Vehicle.VehicleId,
+                        Brand = booking.PostVehicle.Vehicle.Brand,
+                        Model = booking.PostVehicle.Vehicle.Model,
+                        VehicleTypeName = booking.PostVehicle.Vehicle.VehicleType?.Name?? string.Empty,
+                        LicensePlate = booking.PostVehicle.Vehicle.PlateNumber,
+                        Color = booking.PostVehicle.Vehicle.Color
                     },
-                    RenterInfo = new
+
+                    RenterInfo = new UserDTO
                     {
-                        booking.RenterUser.UserId,
-                        booking.RenterUser.Username,
-                        booking.RenterUser.Email
+                        UserId = booking.RenterUser.UserId,
+                        Username = booking.RenterUser.Username,
+                        Email = booking.RenterUser.Email
                     }
                 };
 
-                return new ResponseDTO("Lấy chi tiết booking thành công.", 200, true, result);
+                return new ResponseDTO("Lấy chi tiết booking thành công.", 200, true, bookingDTO);
+
             }
             catch (Exception ex)
             {
